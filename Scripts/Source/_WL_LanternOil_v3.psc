@@ -132,7 +132,7 @@ GlobalVariable property _WL_gToggle auto
 GlobalVariable property _WL_HasFuel auto
 GlobalVariable property _WL_AutoModeLightOn auto
 
-int iOilCounter = 0
+int oil_update_counter = 0
 float fLastOilLevel = 0.0
 float last_oil_level = 0.0
 int iPollenCounter = 0
@@ -181,10 +181,10 @@ endEvent
 
 Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
 	if akBaseObject == Torch01
-		WLDebug(3, "OnObjectEquipped Event, Torch")
+		WLDebug(1, "OnObjectEquipped Event, Torch")
 		LanternMutex(akBaseObject)
 	elseif (akBaseObject as Armor).IsShield() || (akBaseObject as Weapon && PlayerRef.GetEquippedItemType(0) <= 4)	;I equipped a shield or off-hand weapon
-		WLDebug(3, "OnObjectEquipped Event, Weapon or Shield")
+		WLDebug(1, "OnObjectEquipped Event, Weapon or Shield")
 		DropLantern()
 		RegisterForSingleUpdate(0.1)
     elseif akBaseObject == _WL_WearableLanternInvDisplay
@@ -207,7 +207,7 @@ Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
 		SetLantern(5, LANTERN_TORCHBUGEMPTY, "Empty Torchbug")
 		_WL_TorchbugEmptyEquip.Show()
 	elseif akBaseObject == fCandleLanternHeld
-		WLDebug(3, "OnObjectEquipped Event, Candle Lantern")
+		WLDebug(1, "OnObjectEquipped Event, Candle Lantern")
 		LanternMutex(akBaseObject)
 	endif
 endEvent
@@ -215,19 +215,19 @@ endEvent
 Event OnObjectUnequipped(Form akBaseObject, ObjectReference akReference)
 	if akBaseObject == _WL_WearableLanternInvDisplay || akBaseObject == _WL_WearablePaperInvDisplay
 		;Stop the lantern and save oil (if applicable)
-		WLDebug(3, "OnObjectUnequipped Event, Lantern/paper")
+		WLDebug(1, "OnObjectUnequipped Event, Lantern/paper")
 		DestroyNonDisplayLantern(akBaseObject)
         ; ReclaimOil()
 	elseif akBaseObject == _WL_WearableTorchbugInvDisplay || akBaseObject == _WL_WearableTorchbugInvDisplayRED
 		;Stop the torchbug light and save pollen (if applicable)
-		WLDebug(3, "OnObjectUnequipped Event, Torchbug/red")
+		WLDebug(1, "OnObjectUnequipped Event, Torchbug/red")
 		DestroyNonDisplayLantern(akBaseObject)
 		; ReclaimPollen(akBaseObject)
     endif
 endEvent
 
 function SetLantern(int aiLanternIndex, int aiLanternState, string asTorchTypeDebug)
-	WLDebug(3, "OnObjectEquipped Event, " + asTorchTypeDebug)
+	WLDebug(1, "Setting lantern: " + asTorchTypeDebug)
 	LanternMutex(akBaseObject)						;Prevent using more than one light source
 	DestroyNonDisplayLantern(akBaseObject)
 	EquipNonPlayableLantern(aiLanternIndex)			;Equip the "real" lantern
@@ -269,7 +269,9 @@ Event OnUpdate()
 		endif
 
 		if _WL_SettingOil.GetValueInt() == 2
-			WLDebug(3, "[Wearable Lantern] =========last_oil_level = " + last_oil_level + ", oil_level = " + oil_level)
+			float oil_level = _WL_OilLevel.GetValue()
+			WLDebug(0, "last_oil_level = " + last_oil_level + ", oil_level = " + oil_level)
+
 			if last_oil_level < oil_level
 				_WL_LanternOilUsed.Show(oil_level) 
 				_WL_HasFuel.SetValueInt(1)
@@ -288,15 +290,15 @@ Event OnUpdate()
 				_WL_HasFuel.SetValueInt(1)
 			endif
 			
-			if iOilCounter >= 6             	  ;30 seconds have passed, reduce oil in player's lantern
+			if oil_update_counter >= 6             	  ;30 seconds have passed, reduce oil in player's lantern
 				if oil_level >= 0.5
 					oil_level -= 0.5
 					_WL_OilLevel.SetValue(oil_level)
-					iOilCounter = 0
+					oil_update_counter = 0
 				endif
-				WLDebug(4, "[Wearable Lantern] Oil Level: " + oil_level)
+				WLDebug(1, "[Wearable Lantern] Oil Level: " + oil_level)
 			else
-				iOilCounter += 1
+				oil_update_counter += 1
 			endif
 			
 			;Attempt to refill the player's lantern
@@ -371,22 +373,20 @@ Event OnUpdate()
 		endif
 
 		; Ensure that lantern lights aren't on
-		iOilCounter = 0
+		oil_update_counter = 0
 		pHasLantern = false
 		pHasTorchbugEmpty = false
 	
 	elseif current_lantern == LANTERN_TORCHBUGEMPTY
 		TryToCatchTorchbug()
 	else						; Reset counters
-		iOilCounter = 0
+		oil_update_counter = 0
 		iPollenCounter = 0	
 	endif
 	
-	WLDebug(2, "Lantern " + pHasLantern + ", Torchbug " + pHasTorchbug + ", Empty Torchbug " + pHasTorchbugEmpty)
-	WLDebug(4, "Current light level: " + PlayerRef.GetLightLevel())
+	WLDebug(0, "Current light level: " + PlayerRef.GetLightLevel())
 	
 	RegisterForSingleUpdate(5)
-	
 endEvent
 
 function TryToCatchTorchbug()
@@ -511,7 +511,7 @@ endFunction
 function DisplayThreadTime()
 	float fThreadTimeDelta = GetCurrentGameTime() - pfThreadLastUpdateTime			;(difference in game-time days)
 	float fThreadTimeDeltaSec = (fThreadTimeDelta * 86400)/20						;(difference in real seconds, using 20:1 timescale)
-	WLDebug(4, "Update interval " + fThreadTimeDeltaSec + "sec")
+	WLDebug(0, "Update interval " + fThreadTimeDeltaSec + "sec")
 	pfThreadLastUpdateTime = GetCurrentGameTime()
 endFunction
 
@@ -556,7 +556,7 @@ function DropLantern()
 		int iPosition = _WL_SettingPosition.GetValueInt()
 		if PlayerRef.IsEquipped(_WL_WearableLanternInvDisplay) && iPosition == 2
 			if _WL_SettingOil.GetValueInt() == 2
-				if oil_level > 0.0 	;Player must have oil to drop lit lantern. Not strictly enforced but helps verisimilitude.
+				if _WL_Oillevel.GetValue() > 0.0 	;Player must have oil to drop lit lantern. Not strictly enforced but helps verisimilitude.
 					PlayerRef.UnequipItem(_WL_WearableLanternInvDisplay, abSilent = true)
 					PlayerRef.RemoveItem(_WL_WearableLanternInvDisplay, abSilent = true)
 					PlayerRef.PlaceAtMe(_WL_LanternDroppedLit)
@@ -615,7 +615,7 @@ function DropLantern()
 			endif
 		elseif PlayerRef.IsEquipped(_WL_WearablePaperInvDisplay) && iPosition == 2
 			if _WL_SettingOil.GetValueInt() == 2
-				if oil_level > 0.0 	;Player must have oil to drop lit lantern. Not strictly enforced but helps verisimilitude.
+				if _WL_Oillevel.GetValue() > 0.0 	;Player must have oil to drop lit lantern. Not strictly enforced but helps verisimilitude.
 					PlayerRef.UnequipItem(_WL_WearablePaperInvDisplay, abSilent = true)
 					PlayerRef.RemoveItem(_WL_WearablePaperInvDisplay, abSilent = true)
 					PlayerRef.PlaceAtMe(_WL_PaperHeldDroppedLit)
@@ -704,6 +704,12 @@ function RefillTorchbug()
 endFunction
 
 function RefillLantern()
+	int bottle_count = PlayerRef.GetItemCount(_WL_LanternOil4)
+	if bottle_count >= 0
+		_WL_OilLevel.SetValue(16.0)
+		PlayerRef.RemoveItem(_WL_LanternOil4, 1, true)
+	endif
+
 	;/float fOilUsed = 0
 
 	;How much fuel is needed?
@@ -756,7 +762,7 @@ function RefillLantern()
 	endif
 	
 	;Reset the oil timer
-	iOilCounter = 0
+	oil_update_counter = 0
 	
 	;Subtract the right bottles from the player's inventory, starting with the smallest
 	
@@ -895,19 +901,19 @@ bool function CheckPlayerSituation()
 		;bool bInExteriorActingLikeInterior = CheckWorldspace()
 		if PlayerRef.IsInInterior(); || bInExteriorActingLikeInterior == true											;Inside?
 			if myLoc.HasKeyword(LocTypeCastle) || myLoc.HasKeyword(LocTypeGuild) || myLoc.HasKeyword(LocTypeInn) || myLoc.HasKeyword(LocTypeHouse) || myLoc.HasKeyword(LocTypePlayerHouse) || myLoc.HasKeyword(LocTypeStore)		;Is it a restricted location?
-				WLDebug(6, "Inside, in house, try to stop...")								;Yes, stop
+				WLDebug(0, "Inside, in house, try to stop...")								;Yes, stop
 				return false
 			else																						;No, start
-				WLDebug(6, "Inside, not in house, try to start")
+				WLDebug(0, "Inside, not in house, try to start")
 				return true
 			endif
 		else																							;Outside
-			WLDebug(6, "Outside...")
+			WLDebug(0, "Outside...")
 			if GameHour.GetValue() >= 19.0 || GameHour.GetValue() <= 7.0								;Is it between 7PM and 7AM?
-				WLDebug(6, "Nighttime, try to start")
+				WLDebug(0, "Nighttime, try to start")
 				return true
 			else
-				WLDebug(6, "Daytime, try to stop")
+				WLDebug(0, "Daytime, try to stop")
 				return false
 			endif
 		endif
@@ -925,7 +931,16 @@ bool function CheckWorldspace()
 endFunction
 
 function WLDebug(int iSeverity, string sMessage)
-	if iSeverity == _WL_Debug.GetValueInt()
-		trace("[Wearable Lantern] " + sMessage)
+	int LOG_LEVEL = _WL_Debug.GetValueInt()
+	if LOG_LEVEL <= aiSeverity
+		if aiSeverity == 0
+			debug.trace("[Wearable Lanterns][Debug] " + asLogMessage)
+		elseif aiSeverity == 1
+			debug.trace("[Wearable Lanterns][Info] " + asLogMessage)
+		elseif aiSeverity == 2
+			debug.trace("[Wearable Lanterns][Warning] " + asLogMessage)
+		elseif aiSeverity == 3
+			debug.trace("[Wearable Lanterns][ERROR] " + asLogMessage)
+		endif
 	endif
 endFunction
