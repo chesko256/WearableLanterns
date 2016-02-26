@@ -122,10 +122,6 @@ int property LANTERN_NORMAL = 1 auto hidden
 int property LANTERN_TORCHBUG = 2 auto hidden
 int property LANTERN_TORCHBUGEMPTY = 3 auto hidden
 
-
-bool property pHasLantern = false auto hidden
-bool property pHasTorchbug = false auto hidden
-bool property pHasTorchbugEmpty = false auto hidden
 GlobalVariable property _WL_OilLevel auto
 GlobalVariable property _WL_PollenLevel auto
 GlobalVariable property _WL_gToggle auto
@@ -133,9 +129,8 @@ GlobalVariable property _WL_HasFuel auto
 GlobalVariable property _WL_AutoModeLightOn auto
 
 int oil_update_counter = 0
-float fLastOilLevel = 0.0
 float last_oil_level = 0.0
-int iPollenCounter = 0
+int pollen_update_counter = 0
 int iLastPollenLevel = 0
 int iLastPollenLevel2 = 0
 
@@ -215,7 +210,6 @@ Event OnObjectUnequipped(Form akBaseObject, ObjectReference akReference)
 		;Stop the lantern and save oil (if applicable)
 		WLDebug(1, "OnObjectUnequipped Event, Lantern/paper")
 		DestroyNonDisplayLantern(akBaseObject)
-        ; ReclaimOil()
 	elseif akBaseObject == _WL_WearableTorchbugInvDisplay || akBaseObject == _WL_WearableTorchbugInvDisplayRED
 		;Stop the torchbug light and save pollen (if applicable)
 		WLDebug(1, "OnObjectUnequipped Event, Torchbug/red")
@@ -309,9 +303,7 @@ Event OnUpdate()
 		endif
 		
 		;Ensure that torchbug lights aren't on
-		iPollenCounter = 0
-		pHasTorchbug = false
-		pHasTorchbugEmpty = false
+		pollen_update_counter = 0
 
 	elseif current_lantern == LANTERN_TORCHBUG
 
@@ -352,15 +344,15 @@ Event OnUpdate()
 				_WL_HasFuel.SetValueInt(1)
 			endif
 		
-			if iPollenCounter >= 14
+			if pollen_update_counter >= 14
 				if pPollenLevel >= 1
 					pPollenLevel -= 1
 					
 					;Reset the counter
-					iPollenCounter = 0
+					pollen_update_counter = 0
 				endif
 			else
-				iPollenCounter += 2
+				pollen_update_counter += 2
 			endif
 			
 			RefillTorchbug()
@@ -372,14 +364,12 @@ Event OnUpdate()
 
 		; Ensure that lantern lights aren't on
 		oil_update_counter = 0
-		pHasLantern = false
-		pHasTorchbugEmpty = false
 	
 	elseif current_lantern == LANTERN_TORCHBUGEMPTY
 		TryToCatchTorchbug()
 	else						; Reset counters
 		oil_update_counter = 0
-		iPollenCounter = 0	
+		pollen_update_counter = 0	
 	endif
 	
 	WLDebug(0, "Current light level: " + PlayerRef.GetLightLevel())
@@ -514,7 +504,7 @@ function DisplayThreadTime()
 endFunction
 
 function ReclaimPollen(Form akBaseObject)
-	if _WL_SettingFeeding.GetValueInt() == 2
+	;/ if _WL_SettingFeeding.GetValueInt() == 2
 		;Recover any pollen
 		PlayerRef.AddItem(_WL_Pollen, pPollenLevel)
 		
@@ -527,26 +517,6 @@ function ReclaimPollen(Form akBaseObject)
 	
 	;Clear the current lantern
 	pHasTorchbug = false
-endFunction
-
-function ReclaimOil()
-	;/if _WL_SettingOil.GetValueInt() == 2
-		;Save oil as necessary.
-		int i = ((oil_level * 2) - 1) as int
-		if i >= 0 && i < 32
-			PlayerRef.AddItem(LanternFuelFormArray[i])
-		endif
-		
-		;Remove oil from lantern
-		oil_level = 0
-		
-		;Reset counters
-		fLastOilLevel = 0
-		last_oil_level = 0
-	endif
-	
-	;Clear the current lantern
-	pHasLantern = false
 	/;
 endFunction
 
@@ -708,91 +678,6 @@ function RefillLantern()
 		_WL_OilLevel.SetValue(16.0)
 		PlayerRef.RemoveItem(_WL_LanternOil4, 1, true)
 	endif
-
-	;/float fOilUsed = 0
-
-	;How much fuel is needed?
-	float fOilNeeded = 16 - oil_level
-	
-	if fOilNeeded == 0
-		WLDebug(3, "I am returning fOilNeeded == 0")
-		return
-	endif
-	
-	;Check fuel array
-	WLDebug(3, "Check the fuel arrays")
-	CheckFuelArrays()
-	
-	;How much fuel do I have?	
-	int i = 0
-	float fOilTotal
-	while i < 32
-		fOilTotal += (PlayerRef.GetItemCount(LanternFuelFormArray[i]) * ((i + 1.0) / 2.0))
-		i += 1
-		WLDebug(3, "fOilTotal is now " + fOilTotal)
-	endwhile
-	
-	if fOilTotal == 0
-		if fLastOilLevel != oil_level
-			if oil_level > 0
-				;notification("Your lantern has " + oil_level + " ounces of lantern oil remaining.")
-			else
-				;notification("Your lantern has run out of oil.")
-				_WL_LanternOilDepleted.Show()
-			endif
-		endif
-		;Record the oil level to control messages
-		fLastOilLevel = oil_level
-		return
-	elseif fOilTotal >= fOilNeeded
-		WLDebug(3, "fOilTotal >= fOilNeeded")
-		WLDebug(3, fOilTotal + " " + fOilNeeded)
-		oil_level = 16
-		fOilUsed = fOilNeeded
-	else
-		WLDebug(3, "fOilTotal < fOilNeeded")
-		oil_level += fOilTotal
-		fOilUsed = fOilTotal
-	endif 
-	
-	;notification("You use " + fOilUsed + " ounces of lantern oil.")
-	if fOilUsed > 0.5
-		_WL_LanternOilUsed.Show(fOilUsed)
-	endif
-	
-	;Reset the oil timer
-	oil_update_counter = 0
-	
-	;Subtract the right bottles from the player's inventory, starting with the smallest
-	
-	float fOilToSubtract = fOilUsed
-	
-	int j = 0
-	While j < 32
-		While fOilToSubtract > 0 && PlayerRef.GetItemCount(LanternFuelFormArray[j]) > 0
-			PlayerRef.RemoveItem(LanternFuelFormArray[j], 1, true)		
-			if fOilToSubtract >= ((j + 1.0) / 2.0)
-				fOilToSubtract -= ((j + 1.0) / 2.0)
-				WLDebug(3, "fOilToSubtract = " + fOilToSubtract)
-			else
-				WLDebug(3, "j = " + j)
-				float fRemainder = ((j + 1.0) / 2.0) - fOilToSubtract
-				WLDebug(3, "fRemainder = " + fRemainder)
-				WLDebug(3, "fOilToSubtract = " + fOilToSubtract)
-				int k = ((fRemainder * 2) - 1) as int
-				WLDebug(3, "k index = " + k)
-				if k >= 0 && k < 32
-					PlayerRef.AddItem(LanternFuelFormArray[k], 1, true)
-					fOilToSubtract = 0
-				else
-					;Something went wrong, bail out
-					fOilToSubtract = 0
-				endif
-			endif
-		endWhile
-		j += 1
-	endWhile
-	/;
 endFunction    
 
 function CheckFuelArrays()
