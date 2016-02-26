@@ -1,14 +1,6 @@
 scriptname _WL_LanternOil_v3 extends ReferenceAlias
 
-; #SUMMARY# =====================================================================================================================
-; Name ...................: _WL_LanternOil_v3
-; Attached To (EditorID)..: _WL_Player on _WL_LanternQuest(n)
-; Description ............: Main script. Controls all light functions for the player and assigning Reference Aliases for followers.
-; Author .................: Chesko
-; Last Approved (version) : 3.0
-; Status .................: Complete
-; Remarks ................: 
-; ===============================================================================================================================
+; Main script. Controls all light functions for the player and assigning Reference Aliases for followers.
 
 import debug
 import utility
@@ -122,6 +114,15 @@ message property _WL_TorchbugFlowersUsed auto
 message property _WL_LanternOilRemaining auto
 message property _WL_LanternOilUsed auto
 
+; enum
+int current_lantern = 0
+
+int LANTERN_NONE = 0
+int LANTERN_NORMAL = 1
+int LANTERN_TORCHBUG = 2
+int LANTERN_TORCHBUGEMPTY = 3
+
+
 bool property pHasLantern = false auto hidden
 bool property pHasTorchbug = false auto hidden
 bool property pHasTorchbugEmpty = false auto hidden
@@ -151,8 +152,6 @@ Keyword property LocTypeGuild auto
 Keyword property LocTypePlayerHouse auto
 Keyword property LocTypeStore auto
 
-Keyword property ArmorShield auto
-
 form fCandleLanternHeld
 form fCandleLanternHeldDroppedLit
 
@@ -178,83 +177,45 @@ Event OnLocationChange(Location akOldLoc, Location akNewLoc)
 	myLoc = akNewLoc
 endEvent
 
+function SetLantern(int aiLanternIndex, int aiLanternState, string asTorchTypeDebug)
+	WLDebug(3, "OnObjectEquipped Event, " + asTorchTypeDebug)
+	LanternMutex(akBaseObject)						;Prevent using more than one light source
+	DestroyNonDisplayLantern(akBaseObject)
+	EquipNonPlayableLantern(aiLanternIndex)			;Equip the "real" lantern
+	;The player has a lantern
+	_WL_gToggle.SetValueInt(1)
+	current_lantern = aiLanternState
+	RegisterForSingleUpdate(0.1)
+endFunction
+
+
 Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
 	if akBaseObject == Torch01
 		WLDebug(3, "OnObjectEquipped Event, Torch")
 		LanternMutex(akBaseObject)
-	elseif (akBaseObject as Armor && akBaseObject.HasKeyword(ArmorShield)) || (akBaseObject as Weapon && PlayerRef.GetEquippedItemType(0) <= 4)	;I equipped a shield or off-hand weapon
+	elseif (akBaseObject as Armor).IsShield() || (akBaseObject as Weapon && PlayerRef.GetEquippedItemType(0) <= 4)	;I equipped a shield or off-hand weapon
 		WLDebug(3, "OnObjectEquipped Event, Weapon or Shield")
-		DropLitLantern()
+		DropLantern()
 		RegisterForSingleUpdate(0.1)
     elseif akBaseObject == _WL_WearableLanternInvDisplay
-  
-		WLDebug(3, "OnObjectEquipped Event, Lantern")
-		LanternMutex(akBaseObject)						;Prevent using more than one light source
-		DestroyNonDisplayLantern(akBaseObject)
-		EquipNonPlayableLantern(0)						;Equip the "real" lantern
-		;The player has a lantern
-		_WL_gToggle.SetValueInt(1)
-		pHasLantern = true
-		pHasTorchbugEmpty = false
-		pHasTorchbug = false
-		RegisterForSingleUpdate(0.1)
+    	SetLantern(0, LANTERN_NORMAL, "Lantern")
 	elseif akBaseObject == _WL_WearableTorchbugInvDisplay
-		WLDebug(3, "OnObjectEquipped Event, Torchbug")
-		LanternMutex(akBaseObject)						;Prevent using more than one light source
-		DestroyNonDisplayLantern(akBaseObject)
-		EquipNonPlayableLantern(1)						;Equip the "real" lantern
-		wait(0.5)										;Let the script settle
-		;The player has a torchbug
-		_WL_gToggle.SetValueInt(1)
-		pHasLantern = false
-		pHasTorchbugEmpty = false
-		pHasTorchbug = true
-		RegisterForSingleUpdate(0.1)
+		SetLantern(1, LANTERN_TORCHBUG, "Torchbug")
 	elseif akBaseObject == _WL_WearableTorchbugInvDisplayRED
-		WLDebug(3, "OnObjectEquipped Event, Torchbug")
-		LanternMutex(akBaseObject)						;Prevent using more than one light source
-		DestroyNonDisplayLantern(akBaseObject)
-		EquipNonPlayableLantern(2)						;Equip the "real" lantern
-		wait(0.5)										;Let the script settle
-		;The player has a torchbug
-		_WL_gToggle.SetValueInt(1)
-		pHasLantern = false
-		pHasTorchbugEmpty = false
-		pHasTorchbug = true
-		RegisterForSingleUpdate(0.1)
+		SetLantern(2, LANTERN_TORCHBUG, "Torchbug")
 	elseif akBaseObject == _WL_WearablePaperInvDisplay
 		;Check Compatibility for Dragonborn loaded
-		WLDebug(3, "OnObjectEquipped Event, Paper")
 		if Compatibility.bIsDLC2Loaded
-			LanternMutex(akBaseObject)						;Prevent using more than one light source
-			DestroyNonDisplayLantern(akBaseObject)
-			EquipNonPlayableLantern(3)						;Equip the "real" lantern
-			wait(0.5)										;Let the script settle
-			;The player has a lantern
-			_WL_gToggle.SetValueInt(1)
-			pHasLantern = true
-			pHasTorchbugEmpty = false
-			pHasTorchbug = false
-			RegisterForSingleUpdate(0.1)
+			SetLantern(3, LANTERN_NORMAL, "Paper")
 		else
 			debug.notification("Dragonborn not installed.")
 			while PlayerRef.GetItemCount(_WL_WearablePaperInvDisplay) > 0
 				PlayerRef.Removeitem(_WL_WearablePaperInvDisplay)
 			endwhile
 		endif
-	;elseif akBaseObject == _WL_WearableCandleInvDisplay
-		;EquipNonPlayableLantern(4)
 	elseif akBaseObject == _WL_WearableTorchbugApparel_EmptyInvDisplay
-		WLDebug(3, "OnObjectEquipped Event, Empty Torchbug")
-		LanternMutex(akBaseObject)						;Prevent using more than one light source
-		EquipNonPlayableLantern(5)						;Equip the "real" lantern
-		wait(0.5)										;Let the script settle
-		pHasLantern = false
-		pHasTorchbug = false
-		pHasTorchbugEmpty = true
+		SetLantern(5, LANTERN_TORCHBUGEMPTY, "Empty Torchbug")
 		_WL_TorchbugEmptyEquip.Show()
-		RegisterForSingleUpdate(0.1)
-		
 	elseif akBaseObject == fCandleLanternHeld
 		WLDebug(3, "OnObjectEquipped Event, Candle Lantern")
 		LanternMutex(akBaseObject)
@@ -595,7 +556,7 @@ function ReclaimOil()
 	pHasLantern = false
 endFunction
 
-function DropLitLantern()
+function DropLantern()
 	if _WL_SettingDropLit.GetValueInt() == 2 && !IsInMenuMode()
 		int iPosition = _WL_SettingPosition.GetValueInt()
 		if PlayerRef.IsEquipped(_WL_WearableLanternInvDisplay) && iPosition == 2
