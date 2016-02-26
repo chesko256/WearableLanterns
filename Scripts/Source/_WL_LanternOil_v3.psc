@@ -14,13 +14,13 @@ _WL_Compatibility property Compatibility auto
 FormList property _WL_InteriorWorldspaces auto
 
 ;Settings
-globalvariable property _WL_SettingOil auto
-globalvariable property _WL_SettingFeeding auto
-globalvariable property _WL_SettingPosition auto
-globalvariable property _WL_SettingAutomatic auto
-globalvariable property _WL_SettingDropLit auto
-globalvariable property _WL_Debug auto
-globalvariable property GameHour auto
+GlobalVariable property _WL_SettingOil auto
+GlobalVariable property _WL_SettingFeeding auto
+GlobalVariable property _WL_SettingPosition auto
+GlobalVariable property _WL_SettingAutomatic auto
+GlobalVariable property _WL_SettingDropLit auto
+GlobalVariable property _WL_Debug auto
+GlobalVariable property GameHour auto
 
 Formlist property _WL_AllLanterns auto
 Formlist property _WL_GlowingBugList auto
@@ -126,18 +126,20 @@ int LANTERN_TORCHBUGEMPTY = 3
 bool property pHasLantern = false auto hidden
 bool property pHasTorchbug = false auto hidden
 bool property pHasTorchbugEmpty = false auto hidden
+GlobalVariable property _WL_OilLevel auto
+GlobalVariable property _WL_PollenLevel auto
 GlobalVariable property _WL_gToggle auto
 GlobalVariable property _WL_HasFuel auto
 GlobalVariable property _WL_AutoModeLightOn auto
 
 int iOilCounter = 0
 float fLastOilLevel = 0.0
-float fLastOilLevel2 = 0.0
+float last_oil_level = 0.0
 int iPollenCounter = 0
 int iLastPollenLevel = 0
 int iLastPollenLevel2 = 0
 
-float property pOilLevel = 0.0 auto hidden
+float property oil_level = 0.0 auto hidden
 int property pPollenLevel = 0 auto hidden
 
 ;Timer variables (for debug purposes)
@@ -156,7 +158,7 @@ form fCandleLanternHeld
 form fCandleLanternHeldDroppedLit
 
 ;--------------
-;	States		\						APPROVED 3.0
+;	States		\
 ;------------------------------------------------------------------------------------
 
 State BlockEvents
@@ -167,7 +169,7 @@ State BlockEvents
 endState
 
 ;--------------
-;	Events		\						APPROVED 3.0
+;	Events		\
 ;------------------------------------------------------------------------------------
 Event OnInit()
 	RegisterForSingleUpdate(0.1)
@@ -176,18 +178,6 @@ endEvent
 Event OnLocationChange(Location akOldLoc, Location akNewLoc)
 	myLoc = akNewLoc
 endEvent
-
-function SetLantern(int aiLanternIndex, int aiLanternState, string asTorchTypeDebug)
-	WLDebug(3, "OnObjectEquipped Event, " + asTorchTypeDebug)
-	LanternMutex(akBaseObject)						;Prevent using more than one light source
-	DestroyNonDisplayLantern(akBaseObject)
-	EquipNonPlayableLantern(aiLanternIndex)			;Equip the "real" lantern
-	;The player has a lantern
-	_WL_gToggle.SetValueInt(1)
-	current_lantern = aiLanternState
-	RegisterForSingleUpdate(0.1)
-endFunction
-
 
 Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
 	if akBaseObject == Torch01
@@ -227,14 +217,25 @@ Event OnObjectUnequipped(Form akBaseObject, ObjectReference akReference)
 		;Stop the lantern and save oil (if applicable)
 		WLDebug(3, "OnObjectUnequipped Event, Lantern/paper")
 		DestroyNonDisplayLantern(akBaseObject)
-        ReclaimOil()
+        ; ReclaimOil()
 	elseif akBaseObject == _WL_WearableTorchbugInvDisplay || akBaseObject == _WL_WearableTorchbugInvDisplayRED
 		;Stop the torchbug light and save pollen (if applicable)
 		WLDebug(3, "OnObjectUnequipped Event, Torchbug/red")
 		DestroyNonDisplayLantern(akBaseObject)
-		ReclaimPollen(akBaseObject)
+		; ReclaimPollen(akBaseObject)
     endif
 endEvent
+
+function SetLantern(int aiLanternIndex, int aiLanternState, string asTorchTypeDebug)
+	WLDebug(3, "OnObjectEquipped Event, " + asTorchTypeDebug)
+	LanternMutex(akBaseObject)						;Prevent using more than one light source
+	DestroyNonDisplayLantern(akBaseObject)
+	EquipNonPlayableLantern(aiLanternIndex)			;Equip the "real" lantern
+	;The player has a lantern
+	_WL_gToggle.SetValueInt(1)
+	current_lantern = aiLanternState
+	RegisterForSingleUpdate(0.1)
+endFunction
 
 Event OnItemRemoved(Form akBaseItem, int aiItemCount, ObjectReference akItemReference, ObjectReference akDestContainer)
 	if _WL_InvBugLanterns.HasForm(akBaseItem) && akDestContainer == none && PlayerRef.IsSneaking()
@@ -245,7 +246,7 @@ endEvent
 Event OnUpdate()
 	DisplayThreadTime()
 	
-	if pHasLantern == true										;The player has a lantern equipped
+	if current_lantern == LANTERN_NORMAL
 		bool bLightTime
 		if _WL_SettingAutomatic.GetValueInt() == 2
 			bLightTime = CheckPlayerSituation()
@@ -267,40 +268,41 @@ Event OnUpdate()
 			endif
 		endif
 
-		;Is the player using the oil-burning mechanic?
 		if _WL_SettingOil.GetValueInt() == 2
-			WLDebug(3, "[Wearable Lantern] =========fLastOilLevel2 = " + fLastOilLevel2 + ", pOilLevel = " + pOilLevel)
-			if fLastOilLevel2 < pOilLevel
-				_WL_LanternOilUsed.Show(pOilLevel)
+			WLDebug(3, "[Wearable Lantern] =========last_oil_level = " + last_oil_level + ", oil_level = " + oil_level)
+			if last_oil_level < oil_level
+				_WL_LanternOilUsed.Show(oil_level) 
 				_WL_HasFuel.SetValueInt(1)
-				fLastOilLevel2 = pOilLevel			;Record the oil level
-			elseif fLastOilLevel2 > pOilLevel
-				if pOilLevel == 12.0 || pOilLevel == 8.0 || pOilLevel == 4.0
-					_WL_LanternOilRemaining.Show(pOilLevel)
+				last_oil_level = oil_level
+			elseif last_oil_level > oil_level
+				if oil_level == 12.0 || oil_level == 8.0 || oil_level == 4.0
+					_WL_LanternOilRemaining.Show(oil_level)
 					_WL_HasFuel.SetValueInt(1)
 				else
 					_WL_HasFuel.SetValueInt(1)
 				endif
-				fLastOilLevel2 = pOilLevel			;Record the oil level
-			elseif pOilLevel == 0					;Useful when fLastOilLevel2 and pOilLevel both equal 0
+				last_oil_level = oil_level
+			elseif oil_level == 0					;Useful when last_oil_level and oil_level both equal 0
 				_WL_HasFuel.SetValueInt(2)
 			else									;Oil did not increase, decrease below a threshold, but is not zero; make sure it's running
 				_WL_HasFuel.SetValueInt(1)
 			endif
 			
-			if iOilCounter >= 14             	  ;30 seconds have passed, reduce oil in player's lantern
-				if pOilLevel >= 0.5
-					pOilLevel -= 0.5
+			if iOilCounter >= 6             	  ;30 seconds have passed, reduce oil in player's lantern
+				if oil_level >= 0.5
+					oil_level -= 0.5
+					_WL_OilLevel.SetValue(oil_level)
 					iOilCounter = 0
 				endif
-				WLDebug(4, "[Wearable Lantern] Oil Level: " + pOilLevel)
+				WLDebug(4, "[Wearable Lantern] Oil Level: " + oil_level)
 			else
-				iOilCounter += 2
+				iOilCounter += 1
 			endif
 			
 			;Attempt to refill the player's lantern
-			RefillLantern()			
-		
+			if oil_level == 0
+				RefillLantern()
+			endif
 		else
 			;Player is not using the oil-burning mechanic
 			_WL_HasFuel.SetValueInt(0)
@@ -311,7 +313,7 @@ Event OnUpdate()
 		pHasTorchbug = false
 		pHasTorchbugEmpty = false
 
-	elseif pHasTorchbug == true
+	elseif current_lantern == LANTERN_TORCHBUG
 
 		bool bLightTime
 		if _WL_SettingAutomatic.GetValueInt() == 2
@@ -339,14 +341,14 @@ Event OnUpdate()
 			if iLastPollenLevel2 < pPollenLevel
 				_WL_TorchbugFlowersUsed.Show(pPollenLevel)
 				_WL_HasFuel.SetValueInt(1)
-				iLastPollenLevel2 = pPollenLevel			;Record the pollen level
+				iLastPollenLevel2 = pPollenLevel			; Record the pollen level
 			elseif (iLastPollenLevel2 > pPollenLevel && pPollenLevel == 24) || (iLastPollenLevel2 > pPollenLevel && pPollenLevel == 16) || (iLastPollenLevel2 > pPollenLevel && pPollenLevel == 8)
 				_WL_TorchbugRemainingFlowers.Show(pPollenLevel)
 				_WL_HasFuel.SetValueInt(1)
-				iLastPollenLevel2 = pPollenLevel			;Record the pollen level
+				iLastPollenLevel2 = pPollenLevel			; Record the pollen level
 			elseif pPollenLevel == 0
-				_WL_HasFuel.SetValueInt(2)					;Useful with both iLastPollenLevel2 and pPollenLevel both equal 0
-			else											;Oil did not increase, decrease below a threshold, but is not zero; make sure it's running
+				_WL_HasFuel.SetValueInt(2)					; Useful with both iLastPollenLevel2 and pPollenLevel both equal 0
+			else											; Oil did not increase, decrease below a threshold, but is not zero; make sure it's running
 				_WL_HasFuel.SetValueInt(1)
 			endif
 		
@@ -364,18 +366,18 @@ Event OnUpdate()
 			RefillTorchbug()
 		
 		else
-								;The player is not using the feeding mechanic
+								; The player is not using the feeding mechanic
 			_WL_HasFuel.SetValueInt(0)	
 		endif
 
-		;Ensure that lantern lights aren't on
+		; Ensure that lantern lights aren't on
 		iOilCounter = 0
 		pHasLantern = false
 		pHasTorchbugEmpty = false
 	
-	elseif pHasTorchbugEmpty == true
+	elseif current_lantern == LANTERN_TORCHBUGEMPTY
 		TryToCatchTorchbug()
-	else						;None are true, reset counters
+	else						; Reset counters
 		iOilCounter = 0
 		iPollenCounter = 0	
 	endif
@@ -383,12 +385,12 @@ Event OnUpdate()
 	WLDebug(2, "Lantern " + pHasLantern + ", Torchbug " + pHasTorchbug + ", Empty Torchbug " + pHasTorchbugEmpty)
 	WLDebug(4, "Current light level: " + PlayerRef.GetLightLevel())
 	
-	RegisterForSingleUpdate(2)
+	RegisterForSingleUpdate(5)
 	
 endEvent
 
 function TryToCatchTorchbug()
-	;Drives torchbug catching mechanics. Support for additional glowing bugs from 101BUGS.	
+	; Drives torchbug catching mechanics. Support for additional glowing bugs from 101BUGS.	
 	ObjectReference oFoundTorchbug = Game.FindClosestReferenceOfAnyTypeInListFromRef(_WL_GlowingBugList, PlayerRef, 200.0)
 	if oFoundTorchbug != none
 		if oFoundTorchbug.GetBaseObject() == CritterFirefly
@@ -420,7 +422,7 @@ function TryToCatchTorchbug()
 endFunction
 
 ;-----------------------
-;	Menu Functions		\				APPROVED 3.0
+;	Menu Functions		\
 ;------------------------------------------------------------------------------------
 function ReleaseTorchbugMenu(Form akBaseObject)
 	int ibutton = _WL_TorchbugDropRelease.Show()
@@ -454,9 +456,8 @@ ObjectReference function FindAndDropEmptyBugLantern(Form akBaseObject)
 endFunction
 
 ;-------------------------------
-;	Generic Light Functions		\		APPROVED 3.0
+;	Generic Light Functions		\
 ;------------------------------------------------------------------------------------
-
 function EquipNonPlayableLantern(int iLanternIndex)
 	int iPosition = _WL_SettingPosition.GetValueInt()
 	if iLanternIndex == 0 					;Travel
@@ -492,13 +493,7 @@ function EquipNonPlayableLantern(int iLanternIndex)
 			PlayerRef.EquipItem(_WL_PaperHeld, abSilent = true)
 		endif
 	elseif iLanternIndex == 4 				;Candle
-		;/if iPosition == 0
-			PlayerRef.EquipItem()
-		elseif iPosition == 1
-			PlayerRef.EquipItem()
-		elseif iPosition == 2
-			PlayerRef.EquipItem()
-		endif/;
+		; pass
 	elseif iLanternIndex == 5 				;Empty Torchbug
 		if iPosition == 0
 			PlayerRef.EquipItem(_WL_WearableTorchbugApparel_Empty, abSilent = true)
@@ -539,17 +534,17 @@ endFunction
 function ReclaimOil()
 	if _WL_SettingOil.GetValueInt() == 2
 		;Save oil as necessary.
-		int i = ((pOilLevel * 2) - 1) as int
+		int i = ((oil_level * 2) - 1) as int
 		if i >= 0 && i < 32
 			PlayerRef.AddItem(LanternFuelFormArray[i])
 		endif
 		
 		;Remove oil from lantern
-		pOilLevel = 0
+		oil_level = 0
 		
 		;Reset counters
 		fLastOilLevel = 0
-		fLastOilLevel2 = 0
+		last_oil_level = 0
 	endif
 	
 	;Clear the current lantern
@@ -561,7 +556,7 @@ function DropLantern()
 		int iPosition = _WL_SettingPosition.GetValueInt()
 		if PlayerRef.IsEquipped(_WL_WearableLanternInvDisplay) && iPosition == 2
 			if _WL_SettingOil.GetValueInt() == 2
-				if pOilLevel > 0.0 	;Player must have oil to drop lit lantern. Not strictly enforced but helps verisimilitude.
+				if oil_level > 0.0 	;Player must have oil to drop lit lantern. Not strictly enforced but helps verisimilitude.
 					PlayerRef.UnequipItem(_WL_WearableLanternInvDisplay, abSilent = true)
 					PlayerRef.RemoveItem(_WL_WearableLanternInvDisplay, abSilent = true)
 					PlayerRef.PlaceAtMe(_WL_LanternDroppedLit)
@@ -620,7 +615,7 @@ function DropLantern()
 			endif
 		elseif PlayerRef.IsEquipped(_WL_WearablePaperInvDisplay) && iPosition == 2
 			if _WL_SettingOil.GetValueInt() == 2
-				if pOilLevel > 0.0 	;Player must have oil to drop lit lantern. Not strictly enforced but helps verisimilitude.
+				if oil_level > 0.0 	;Player must have oil to drop lit lantern. Not strictly enforced but helps verisimilitude.
 					PlayerRef.UnequipItem(_WL_WearablePaperInvDisplay, abSilent = true)
 					PlayerRef.RemoveItem(_WL_WearablePaperInvDisplay, abSilent = true)
 					PlayerRef.PlaceAtMe(_WL_PaperHeldDroppedLit)
@@ -637,7 +632,6 @@ function DropLantern()
 endFunction
 
 function RefillTorchbug()
-	
 	int iPollenUsed = 0
 	
 	;How much pollen is needed?
@@ -710,11 +704,10 @@ function RefillTorchbug()
 endFunction
 
 function RefillLantern()
-
-	float fOilUsed = 0
+	;/float fOilUsed = 0
 
 	;How much fuel is needed?
-	float fOilNeeded = 16 - pOilLevel
+	float fOilNeeded = 16 - oil_level
 	
 	if fOilNeeded == 0
 		WLDebug(3, "I am returning fOilNeeded == 0")
@@ -735,25 +728,25 @@ function RefillLantern()
 	endwhile
 	
 	if fOilTotal == 0
-		if fLastOilLevel != pOilLevel
-			if pOilLevel > 0
-				;notification("Your lantern has " + pOilLevel + " ounces of lantern oil remaining.")
+		if fLastOilLevel != oil_level
+			if oil_level > 0
+				;notification("Your lantern has " + oil_level + " ounces of lantern oil remaining.")
 			else
 				;notification("Your lantern has run out of oil.")
 				_WL_LanternOilDepleted.Show()
 			endif
 		endif
 		;Record the oil level to control messages
-		fLastOilLevel = pOilLevel
+		fLastOilLevel = oil_level
 		return
 	elseif fOilTotal >= fOilNeeded
 		WLDebug(3, "fOilTotal >= fOilNeeded")
 		WLDebug(3, fOilTotal + " " + fOilNeeded)
-		pOilLevel = 16
+		oil_level = 16
 		fOilUsed = fOilNeeded
 	else
 		WLDebug(3, "fOilTotal < fOilNeeded")
-		pOilLevel += fOilTotal
+		oil_level += fOilTotal
 		fOilUsed = fOilTotal
 	endif 
 	
@@ -794,6 +787,7 @@ function RefillLantern()
 		endWhile
 		j += 1
 	endWhile
+	/;
 endFunction    
 
 function CheckFuelArrays()
