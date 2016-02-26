@@ -41,22 +41,23 @@ int Interface_UICandleMeterColor_OID
 
 bool property DLC2Loaded auto hidden conditional
 
-globalvariable property _WL_SettingBrightness auto
-globalvariable property _WL_SettingPosition auto 						;0 = Back, 1 = Front, 2 = Held
-globalvariable property _WL_SettingDropLit auto
-globalvariable property _WL_SettingOil auto
-globalvariable property _WL_SettingFeeding auto
-globalvariable property _WL_SettingCandleFuel auto
-globalvariable property _WL_HotkeyPlayerLantern auto
-globalvariable property _WL_HotkeyCheckFuel auto
-globalvariable property _WL_CheckFuelDisplay auto
-globalvariable property _WL_MeterOpacity auto
-globalvariable property _WL_MeterDisplayTime auto
-globalvariable property _WL_OilColor auto
-globalvariable property _WL_PollenColor auto
-globalvariable property _WL_CandleColor auto
-globalvariable Property _WL_SettingAutomatic auto
-globalvariable property _WL_FuelMeterDisplay_Contextual auto
+GlobalVariable property _WL_OilLevel auto
+GlobalVariable property _WL_SettingBrightness auto
+GlobalVariable property _WL_SettingPosition auto 						;0 = Back, 1 = Front, 2 = Held
+GlobalVariable property _WL_SettingDropLit auto
+GlobalVariable property _WL_SettingOil auto
+GlobalVariable property _WL_SettingFeeding auto
+GlobalVariable property _WL_SettingCandleFuel auto
+GlobalVariable property _WL_HotkeyPlayerLantern auto
+GlobalVariable property _WL_HotkeyCheckFuel auto
+GlobalVariable property _WL_CheckFuelDisplay auto
+GlobalVariable property _WL_MeterOpacity auto
+GlobalVariable property _WL_MeterDisplayTime auto
+GlobalVariable property _WL_OilColor auto
+GlobalVariable property _WL_PollenColor auto
+GlobalVariable property _WL_CandleColor auto
+GlobalVariable Property _WL_SettingAutomatic auto
+GlobalVariable property _WL_FuelMeterDisplay_Contextual auto
 GlobalVariable property _WL_gToggle auto
 
 Sound property _WL_OilLanternOff auto
@@ -635,7 +636,7 @@ function CheckFuel()
 	int i = _WL_CheckFuelDisplay.GetValueInt()
 	if i == 0  									;Meter, Message
 		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.pHasLantern
-			_WL_LanternOilRemaining.Show(LanternQuest.pOilLevel)
+			_WL_LanternOilRemaining.Show(_WL_OilLevel.GetValue())
 			ChooseMeterPosition(MeterLayoutIndex)
 		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.pHasTorchbug
 			_WL_TorchbugRemainingFlowers.Show(LanternQuest.pPollenLevel)
@@ -649,7 +650,7 @@ function CheckFuel()
 		endIf
 	elseif i == 2 								;Message Only
 		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.pHasLantern
-			_WL_LanternOilRemaining.Show(LanternQuest.pOilLevel)
+			_WL_LanternOilRemaining.Show(_WL_OilLevel.GetValue())
 		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.pHasTorchbug
 			_WL_TorchbugRemainingFlowers.Show(LanternQuest.pPollenLevel)
 		endIf

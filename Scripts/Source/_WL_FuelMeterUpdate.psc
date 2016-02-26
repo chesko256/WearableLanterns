@@ -2,6 +2,7 @@ Scriptname _WL_FuelMeterUpdate extends Quest
 
 _WL_LanternOil_v3 property LanternQuest auto
 _WL_Compatibility property Compatibility auto
+GlobalVariable property _WL_OilLevel auto
 GlobalVariable property _WL_MeterOpacity auto
 GlobalVariable property _WL_MeterDisplayTime auto
 GlobalVariable property _WL_OilColor auto
@@ -44,11 +45,11 @@ endFunction
 
 function UpdateMeter(bool bSkipDisplayHandling = false)
 	float fThisFuelValue
-	if (LanternQuest.pHasLantern || LanternQuest.pHasTorchbug) && (_WL_SettingOil.GetValueInt() == 2 || _WL_SettingFeeding.GetValueInt() == 2)
-		if LanternQuest.pHasLantern
-			fThisFuelValue = LanternQuest.pOilLevel
+	if (LanternQuest.current_lantern == LanternQuest.LANTERN_NORMAL || LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG) && (_WL_SettingOil.GetValueInt() == 2 || _WL_SettingFeeding.GetValueInt() == 2)
+		if LanternQuest.current_lantern == LanternQuest.LANTERN_NORMAL
+			fThisFuelValue = _WL_OilLevel.GetValue()
 			UpdateOil(fThisFuelValue, bSkipDisplayHandling)
-		elseif LanternQuest.pHasTorchbug
+		elseif LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
 			fThisFuelValue = LanternQuest.pPollenLevel as float
 			UpdatePollen(fThisFuelValue, bSkipDisplayHandling)
 		endif

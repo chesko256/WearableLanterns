@@ -115,12 +115,12 @@ message property _WL_LanternOilRemaining auto
 message property _WL_LanternOilUsed auto
 
 ; enum
-int current_lantern = 0
+int property current_lantern = 0 auto hidden
 
-int LANTERN_NONE = 0
-int LANTERN_NORMAL = 1
-int LANTERN_TORCHBUG = 2
-int LANTERN_TORCHBUGEMPTY = 3
+int property LANTERN_NONE = 0 auto hidden
+int property LANTERN_NORMAL = 1 auto hidden
+int property LANTERN_TORCHBUG = 2 auto hidden
+int property LANTERN_TORCHBUGEMPTY = 3 auto hidden
 
 
 bool property pHasLantern = false auto hidden
@@ -139,7 +139,6 @@ int iPollenCounter = 0
 int iLastPollenLevel = 0
 int iLastPollenLevel2 = 0
 
-float property oil_level = 0.0 auto hidden
 int property pPollenLevel = 0 auto hidden
 
 ;Timer variables (for debug purposes)
@@ -188,15 +187,15 @@ Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
 		DropLantern()
 		RegisterForSingleUpdate(0.1)
     elseif akBaseObject == _WL_WearableLanternInvDisplay
-    	SetLantern(0, LANTERN_NORMAL, "Lantern")
+    	SetLantern(akBaseObject, 0, LANTERN_NORMAL, "Lantern")
 	elseif akBaseObject == _WL_WearableTorchbugInvDisplay
-		SetLantern(1, LANTERN_TORCHBUG, "Torchbug")
+		SetLantern(akBaseObject, 1, LANTERN_TORCHBUG, "Torchbug")
 	elseif akBaseObject == _WL_WearableTorchbugInvDisplayRED
-		SetLantern(2, LANTERN_TORCHBUG, "Torchbug")
+		SetLantern(akBaseObject, 2, LANTERN_TORCHBUG, "Torchbug")
 	elseif akBaseObject == _WL_WearablePaperInvDisplay
 		;Check Compatibility for Dragonborn loaded
 		if Compatibility.bIsDLC2Loaded
-			SetLantern(3, LANTERN_NORMAL, "Paper")
+			SetLantern(akBaseObject, 3, LANTERN_NORMAL, "Paper")
 		else
 			debug.notification("Dragonborn not installed.")
 			while PlayerRef.GetItemCount(_WL_WearablePaperInvDisplay) > 0
@@ -204,7 +203,7 @@ Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
 			endwhile
 		endif
 	elseif akBaseObject == _WL_WearableTorchbugApparel_EmptyInvDisplay
-		SetLantern(5, LANTERN_TORCHBUGEMPTY, "Empty Torchbug")
+		SetLantern(akBaseObject, 5, LANTERN_TORCHBUGEMPTY, "Empty Torchbug")
 		_WL_TorchbugEmptyEquip.Show()
 	elseif akBaseObject == fCandleLanternHeld
 		WLDebug(1, "OnObjectEquipped Event, Candle Lantern")
@@ -226,7 +225,7 @@ Event OnObjectUnequipped(Form akBaseObject, ObjectReference akReference)
     endif
 endEvent
 
-function SetLantern(int aiLanternIndex, int aiLanternState, string asTorchTypeDebug)
+function SetLantern(Form akBaseObject, int aiLanternIndex, int aiLanternState, string asTorchTypeDebug)
 	WLDebug(1, "Setting lantern: " + asTorchTypeDebug)
 	LanternMutex(akBaseObject)						;Prevent using more than one light source
 	DestroyNonDisplayLantern(akBaseObject)
@@ -532,7 +531,7 @@ function ReclaimPollen(Form akBaseObject)
 endFunction
 
 function ReclaimOil()
-	if _WL_SettingOil.GetValueInt() == 2
+	;/if _WL_SettingOil.GetValueInt() == 2
 		;Save oil as necessary.
 		int i = ((oil_level * 2) - 1) as int
 		if i >= 0 && i < 32
@@ -549,6 +548,7 @@ function ReclaimOil()
 	
 	;Clear the current lantern
 	pHasLantern = false
+	/;
 endFunction
 
 function DropLantern()
@@ -930,7 +930,7 @@ bool function CheckWorldspace()
 	endif
 endFunction
 
-function WLDebug(int iSeverity, string sMessage)
+function WLDebug(int aiSeverity, string asLogMessage)
 	int LOG_LEVEL = _WL_Debug.GetValueInt()
 	if LOG_LEVEL <= aiSeverity
 		if aiSeverity == 0
