@@ -704,7 +704,7 @@ endFunction
 
 function RefillLantern()
 	int bottle_count = PlayerRef.GetItemCount(_WL_LanternOil4)
-	if bottle_count >= 0
+	if bottle_count >= 1
 		_WL_OilLevel.SetValue(16.0)
 		PlayerRef.RemoveItem(_WL_LanternOil4, 1, true)
 	endif
