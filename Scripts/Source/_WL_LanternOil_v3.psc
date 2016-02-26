@@ -193,7 +193,6 @@ Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
 	elseif akBaseObject == _WL_WearableTorchbugInvDisplayRED
 		SetLantern(akBaseObject, 2, LANTERN_TORCHBUG, "Torchbug")
 	elseif akBaseObject == _WL_WearablePaperInvDisplay
-		;Check Compatibility for Dragonborn loaded
 		if Compatibility.bIsDLC2Loaded
 			SetLantern(akBaseObject, 3, LANTERN_NORMAL, "Paper")
 		else
