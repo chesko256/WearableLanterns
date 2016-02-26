@@ -511,7 +511,7 @@ event OnOptionColorAccept(int option, int color)
 endEvent
 
 Event OnKeyDown(int KeyCode)
-	if UI.IsMenuOpen("Console")
+	if UI.IsMenuOpen("Console") || UI.IsMenuOpen("Book Menu") || UI.IsMenuOpen("BarterMenu") || UI.IsMenuOpen("ContainerMenu") || UI.IsMenuOpen("Crafting Menu") || UI.IsMenuOpen("Dialogue Menu") || UI.IsMenuOpen("FavoritesMenu") || UI.IsMenuOpen("InventoryMenu") || UI.IsMenuOpen("Journal Menu") || UI.IsMenuOpen("Lockpicking Menu") || UI.IsMenuOpen("MagicMenu") || UI.IsMenuOpen("MapMenu") || UI.IsMenuOpen("MessageBoxMenu") || UI.IsMenuOpen("Sleep/Wait Menu") || UI.IsMenuOpen("StatsMenu")
 		return
 	endif
 	if KeyCode == _WL_HotkeyPlayerLantern.GetValueInt()
@@ -608,7 +608,7 @@ function ToggleLantern()
 	if _WL_SettingAutomatic.GetValueInt() == 2
 		_WL_AutomaticModeError.show()
 	else
-		if LanternQuest.pHasLantern
+		if LanternQuest.current_lantern == LanternQuest.LANTERN_NORMAL
 			if _WL_gToggle.GetValueInt() == 1
 				_WL_gToggle.SetValueInt(0)
 				_WL_OilLanternOff.Play(Game.GetPlayer())
@@ -618,7 +618,7 @@ function ToggleLantern()
 				_WL_OilLanternOn.Play(Game.GetPlayer())
 				;LanternQuest.TryToStartLantern(LanternQuest.myLantern)
 			endIf
-		elseif LanternQuest.pHasTorchbug
+		elseif LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
 			if _WL_gToggle.GetValueInt() == 1
 				_WL_gToggle.SetValueInt(0)
 				PHYBottleSmallH.Play(Game.GetPlayer())
@@ -635,23 +635,23 @@ endFunction
 function CheckFuel()
 	int i = _WL_CheckFuelDisplay.GetValueInt()
 	if i == 0  									;Meter, Message
-		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.pHasLantern
+		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_NORMAL
 			_WL_LanternOilRemaining.Show(_WL_OilLevel.GetValue())
 			ChooseMeterPosition(MeterLayoutIndex)
-		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.pHasTorchbug
+		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
 			_WL_TorchbugRemainingFlowers.Show(LanternQuest.pPollenLevel)
 			ChooseMeterPosition(MeterLayoutIndex)
 		endIf
 	elseif i == 1 								;Meter Only
-		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.pHasLantern
+		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_NORMAL
 			ChooseMeterPosition(MeterLayoutIndex)
-		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.pHasTorchbug
+		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
 			ChooseMeterPosition(MeterLayoutIndex)
 		endIf
 	elseif i == 2 								;Message Only
-		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.pHasLantern
+		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_NORMAL
 			_WL_LanternOilRemaining.Show(_WL_OilLevel.GetValue())
-		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.pHasTorchbug
+		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
 			_WL_TorchbugRemainingFlowers.Show(LanternQuest.pPollenLevel)
 		endIf
 	endIf
