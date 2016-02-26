@@ -214,7 +214,6 @@ Event OnObjectUnequipped(Form akBaseObject, ObjectReference akReference)
 		;Stop the torchbug light and save pollen (if applicable)
 		WLDebug(1, "OnObjectUnequipped Event, Torchbug/red")
 		DestroyNonDisplayLantern(akBaseObject)
-		; ReclaimPollen(akBaseObject)
     endif
 endEvent
 
@@ -501,23 +500,6 @@ function DisplayThreadTime()
 	float fThreadTimeDeltaSec = (fThreadTimeDelta * 86400)/20						;(difference in real seconds, using 20:1 timescale)
 	WLDebug(0, "Update interval " + fThreadTimeDeltaSec + "sec")
 	pfThreadLastUpdateTime = GetCurrentGameTime()
-endFunction
-
-function ReclaimPollen(Form akBaseObject)
-	;/ if _WL_SettingFeeding.GetValueInt() == 2
-		;Recover any pollen
-		PlayerRef.AddItem(_WL_Pollen, pPollenLevel)
-		
-		pPollenLevel = 0
-		
-		;Reset counters
-		iLastPollenLevel = 0
-		iLastPollenLevel2 = 0
-	endif	
-	
-	;Clear the current lantern
-	pHasTorchbug = false
-	/;
 endFunction
 
 function DropLantern()
