@@ -89,7 +89,9 @@ GlobalVariable property _WL_OilLevel auto
 GlobalVariable property _WL_PollenLevel auto
 GlobalVariable property _WL_gToggle auto
 GlobalVariable property _WL_HasFuel auto
+{ 0 = Not using oil burning mechanic. 1 = Player has oil. 2 = Oil is depleted. }
 GlobalVariable property _WL_AutoModeLightOn auto
+{ 0 = Not using automatic lighting mechanic. 1 = Auto-on conditions exist. 2 = Auto-off conditions exist. }
 
 int oil_update_counter = 0
 float last_oil_level = 0.0
@@ -102,7 +104,6 @@ int property pPollenLevel = 0 auto hidden
 ;Timer variables (for debug purposes)
 float pfThreadLastUpdateTime = 0.0
 
-Location myLoc
 Keyword property LocTypeDwelling auto
 Keyword property LocTypeInn auto
 Keyword property LocTypeHouse auto
@@ -133,7 +134,16 @@ Event OnInit()
 endEvent
 
 Event OnLocationChange(Location akOldLoc, Location akNewLoc)
-	myLoc = akNewLoc
+	if _WL_SettingAutomatic.GetValueInt() == 2
+		bool should_light_lantern = GetShouldLightLanternAutomatically(akNewLoc)
+		if should_light_lantern
+			_WL_AutoModeLightOn.SetValueInt(1)
+		else
+			_WL_AutoModeLightOn.SetValueInt(2)
+		endif
+	else
+		_WL_AutoModeLightOn.SetValueInt(0)
+	endif
 endEvent
 
 Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
@@ -191,6 +201,14 @@ function SetLantern(Form akBaseObject, int aiLanternIndex, int aiLanternState, s
 	RegisterForSingleUpdate(0.1)
 endFunction
 
+function TurnOnLantern()
+
+endFunction
+
+function TurnOffLantern()
+
+endFunction
+
 Event OnItemRemoved(Form akBaseItem, int aiItemCount, ObjectReference akItemReference, ObjectReference akDestContainer)
 	if _WL_InvBugLanterns.HasForm(akBaseItem) && akDestContainer == none && PlayerRef.IsSneaking()
 		ReleaseTorchbugMenu(akBaseItem)
@@ -201,36 +219,20 @@ Event OnUpdate()
 	DisplayThreadTime()
 	
 	if current_lantern == LANTERN_NORMAL
-		bool should_light_lantern
-		if _WL_SettingAutomatic.GetValueInt() == 2
-			should_light_lantern = GetShouldLightLantern()
-			if should_light_lantern
-				_WL_AutoModeLightOn.SetValueInt(1)
-			else
-				_WL_AutoModeLightOn.SetValueInt(2)
-				RegisterForSingleUpdate(2)
-				return
-			endif
-		else
-			_WL_AutoModeLightOn.SetValueInt(0)
-			;Has the player toggled the lantern off?
-			if Compatibility.bIsSKYUILoaded && _WL_gToggle.GetValueInt() == 0
-				RegisterForSingleUpdate(2)
-				return
-			else
-				_WL_gToggle.SetValueInt(1)
-			endif
-		endif
+		
+		; PULLED OUT AUTO-ON CODE HERE		
 
 		if _WL_SettingOil.GetValueInt() == 2
 			float oil_level = _WL_OilLevel.GetValue()
 			WLDebug(0, "last_oil_level = " + last_oil_level + ", oil_level = " + oil_level)
 
 			if last_oil_level < oil_level
-				_WL_LanternOilUsed.Show(oil_level) 
+				; Oil added
+				_WL_LanternOilUsed.Show() 
 				_WL_HasFuel.SetValueInt(1)
 				last_oil_level = oil_level
 			elseif last_oil_level > oil_level
+				; Oil burned
 				if oil_level == 12.0 || oil_level == 8.0 || oil_level == 4.0
 					_WL_LanternOilRemaining.Show(oil_level)
 					_WL_HasFuel.SetValueInt(1)
@@ -238,9 +240,11 @@ Event OnUpdate()
 					_WL_HasFuel.SetValueInt(1)
 				endif
 				last_oil_level = oil_level
-			elseif oil_level == 0					;Useful when last_oil_level and oil_level both equal 0
+			elseif oil_level == 0
+				; Oil depleted
 				_WL_HasFuel.SetValueInt(2)
-			else									;Oil did not increase, decrease below a threshold, but is not zero; make sure it's running
+			else
+				; Lantern has oil
 				_WL_HasFuel.SetValueInt(1)
 			endif
 			
@@ -268,27 +272,8 @@ Event OnUpdate()
 		pollen_update_counter = 0
 
 	elseif current_lantern == LANTERN_TORCHBUG
-
-		bool should_light_lantern
-		if _WL_SettingAutomatic.GetValueInt() == 2
-			should_light_lantern = GetShouldLightLantern()
-			if should_light_lantern
-				_WL_AutoModeLightOn.SetValueInt(1)
-			else
-				_WL_AutoModeLightOn.SetValueInt(2)
-				RegisterForSingleUpdate(2)
-				return
-			endif
-		else
-			_WL_AutoModeLightOn.SetValueInt(0)
-			;Has the player toggled the lantern off?
-			if Compatibility.bIsSKYUILoaded && _WL_gToggle.GetValueInt() == 0
-				RegisterForSingleUpdate(2)
-				return
-			else
-				_WL_gToggle.SetValueInt(1)
-			endif
-		endif
+		
+		; PULLED OUT AUTO-ON CODE HERE
 		
 		;Is the player using the feeding mechanic?
 		if _WL_SettingFeeding.GetValueInt() == 2
@@ -671,12 +656,12 @@ function DestroyNonDisplayLantern(Form akBaseObject)
 	endWhile
 endFunction
 
-bool function GetShouldLightLantern()
+bool function GetShouldLightLanternAutomatically(Location akLocation)
 	if PlayerRef.IsSneaking()
 		return false
 	else
 		if IsRefInInterior(PlayerRef)
-			if myLoc.HasKeyword(LocTypeCastle) || myLoc.HasKeyword(LocTypeGuild) || myLoc.HasKeyword(LocTypeInn) || myLoc.HasKeyword(LocTypeHouse) || myLoc.HasKeyword(LocTypePlayerHouse) || myLoc.HasKeyword(LocTypeStore)
+			if akLocation.HasKeyword(LocTypeCastle) || akLocation.HasKeyword(LocTypeGuild) || akLocation.HasKeyword(LocTypeInn) || akLocation.HasKeyword(LocTypeHouse) || akLocation.HasKeyword(LocTypePlayerHouse) || akLocation.HasKeyword(LocTypeStore)
 				return false
 			else
 				return true ; Inside in non-restricted location type
