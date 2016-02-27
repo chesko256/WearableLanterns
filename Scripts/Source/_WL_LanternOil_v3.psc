@@ -25,40 +25,7 @@ GlobalVariable property GameHour auto
 Formlist property _WL_AllLanterns auto
 Formlist property _WL_GlowingBugList auto
 
-MiscObject property _WL_NewLanternOil_0_5 auto
-MiscObject property _WL_NewLanternOil_1 auto
-MiscObject property _WL_NewLanternOil_1_5 auto
-MiscObject property _WL_NewLanternOil_2 auto
-MiscObject property _WL_NewLanternOil_2_5 auto
-MiscObject property _WL_NewLanternOil_3 auto
-MiscObject property _WL_NewLanternOil_3_5 auto
-MiscObject property _WL_NewLanternOil_4 auto
-MiscObject property _WL_NewLanternOil_4_5 auto
-MiscObject property _WL_NewLanternOil_5 auto
-MiscObject property _WL_NewLanternOil_5_5 auto
-MiscObject property _WL_NewLanternOil_6 auto
-MiscObject property _WL_NewLanternOil_6_5 auto
-MiscObject property _WL_NewLanternOil_7 auto
-MiscObject property _WL_NewLanternOil_7_5 auto
-MiscObject property _WL_NewLanternOil_8 auto
-MiscObject property _WL_NewLanternOil_8_5 auto
-MiscObject property _WL_NewLanternOil_9 auto
-MiscObject property _WL_NewLanternOil_9_5 auto
-MiscObject property _WL_NewLanternOil_10 auto
-MiscObject property _WL_NewLanternOil_10_5 auto
-MiscObject property _WL_NewLanternOil_11 auto
-MiscObject property _WL_NewLanternOil_11_5 auto
-MiscObject property _WL_NewLanternOil_12 auto
-MiscObject property _WL_NewLanternOil_12_5 auto
-MiscObject property _WL_NewLanternOil_13 auto
-MiscObject property _WL_NewLanternOil_13_5 auto
-MiscObject property _WL_NewLanternOil_14 auto
-MiscObject property _WL_NewLanternOil_14_5 auto
-MiscObject property _WL_NewLanternOil_15 auto
-MiscObject property _WL_NewLanternOil_15_5 auto
 MiscObject property _WL_LanternOil4 auto
-{Lantern Oil 16oz.}
-
 MiscObject property _WL_Pollen auto
 
 Light property Torch01 auto
@@ -660,50 +627,7 @@ function RefillLantern()
 		_WL_OilLevel.SetValue(16.0)
 		PlayerRef.RemoveItem(_WL_LanternOil4, 1, true)
 	endif
-endFunction    
-
-function CheckFuelArrays()
-	if !(LanternFuelFormArray)
-		InitializeLanternFuelFormArray()
-		;notification("array none")
-		LanternFuelFormArray[0] = _WL_NewLanternOil_0_5
-		LanternFuelFormArray[1] = _WL_NewLanternOil_1
-		LanternFuelFormArray[2] = _WL_NewLanternOil_1_5
-		LanternFuelFormArray[3] = _WL_NewLanternOil_2
-		LanternFuelFormArray[4] = _WL_NewLanternOil_2_5
-		LanternFuelFormArray[5] = _WL_NewLanternOil_3
-		LanternFuelFormArray[6] = _WL_NewLanternOil_3_5
-		LanternFuelFormArray[7] = _WL_NewLanternOil_4
-		LanternFuelFormArray[8] = _WL_NewLanternOil_4_5
-		LanternFuelFormArray[9] = _WL_NewLanternOil_5
-		LanternFuelFormArray[10] = _WL_NewLanternOil_5_5
-		LanternFuelFormArray[11] = _WL_NewLanternOil_6
-		LanternFuelFormArray[12] = _WL_NewLanternOil_6_5
-		LanternFuelFormArray[13] = _WL_NewLanternOil_7
-		LanternFuelFormArray[14] = _WL_NewLanternOil_7_5
-		LanternFuelFormArray[15] = _WL_NewLanternOil_8
-		LanternFuelFormArray[16] = _WL_NewLanternOil_8_5
-		LanternFuelFormArray[17] = _WL_NewLanternOil_9
-		LanternFuelFormArray[18] = _WL_NewLanternOil_9_5
-		LanternFuelFormArray[19] = _WL_NewLanternOil_10
-		LanternFuelFormArray[20] = _WL_NewLanternOil_10_5
-		LanternFuelFormArray[21] = _WL_NewLanternOil_11
-		LanternFuelFormArray[22] = _WL_NewLanternOil_11_5
-		LanternFuelFormArray[23] = _WL_NewLanternOil_12
-		LanternFuelFormArray[24] = _WL_NewLanternOil_12_5
-		LanternFuelFormArray[25] = _WL_NewLanternOil_13
-		LanternFuelFormArray[26] = _WL_NewLanternOil_13_5
-		LanternFuelFormArray[27] = _WL_NewLanternOil_14
-		LanternFuelFormArray[28] = _WL_NewLanternOil_14_5
-		LanternFuelFormArray[29] = _WL_NewLanternOil_15
-		LanternFuelFormArray[30] = _WL_NewLanternOil_15_5
-		LanternFuelFormArray[31] = _WL_LanternOil4
-	endif
-endFunction		
-
-function InitializeLanternFuelFormArray()
-	LanternFuelFormArray = new form[32]
-endFunction	
+endFunction
 
 function LanternMutex(Form akBaseObject)
 	;Ensure that the player can only equip one lantern at a time.
@@ -743,15 +667,6 @@ function LanternMutex(Form akBaseObject)
 	if akBaseObject != _WL_WearableTorchbugApparel_EmptyInvDisplay
 		PlayerRef.UnequipItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, false, true)
 	endif
-
-	;Candle Lanterns of the North compatibility
-	;/if bIsCLNLoaded
-		if !(akBaseObject == fCandleLanternHeld)
-			if PlayerRef.IsEquipped(fCandleLanternHeld)
-				PlayerRef.UnequipItem(fCandleLanternHeld)
-			endif
-		endif
-	endif/;
 endFunction
 
 function DestroyNonDisplayLantern(Form akBaseObject)

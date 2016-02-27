@@ -33,13 +33,12 @@ endEvent
 
 function CompatibilityCheck()
 	trace("========================================[Wearable Lanterns: Warning Start]========================================")
-	trace("            Wearable Lanterns is now performing compatibility checks. Papyrus warnings about missing or           ")
-	trace("                        unloaded files may follow. This is normal and they can be ignored.                        ")
+	trace("                           Wearable Lanterns is now performing compatibility checks.                              ")
 	trace("========================================[ Wearable Lanterns: Warning End ]========================================")
 	
-	bIsDLC1Loaded = Game.GetFormFromFile(0x02009403, "Dawnguard.esm")									;Dawnguard
-	bIsDLC2Loaded = Game.GetFormFromFile(0x0201FB99, "Dragonborn.esm")
-	bIsSKYUILoaded = Game.GetFormFromFile(0x01000814, "SkyUI.esp")
+	bIsDLC1Loaded = IsPluginLoaded(0x02009403, "Dawnguard.esm")
+	bIsDLC2Loaded = IsPluginLoaded(0x0201FB99, "Dragonborn.esm")
+	bIsSKYUILoaded = IsPluginLoaded(0x01000814, "SkyUI.esp")
 	Activator GetFirefly = GetBUGSLoaded()
 	
 	if bIsDLC1Loaded
@@ -73,19 +72,19 @@ function CompatibilityCheck()
 
 
 	;Legacy mod warnings
-	bIsCLNLoaded = Game.GetFormFromFile(0x01001DB7, "Chesko_WearableLantern_Candle.esp")		;Candle Lanterns of the North
+	bIsCLNLoaded = IsPluginLoaded(0x01001DB7, "Chesko_WearableLantern_Candle.esp")		;Candle Lanterns of the North
 	if bIsCLNLoaded
 		_WL_CLNWarning.Show()
 	endif
-	bIsCLNDGLoaded = Game.GetFormFromFile(0x01001DB7, "Chesko_WearableLantern_Candle_DG.esp")	;Candle Lanterns of the North (DG)
+	bIsCLNDGLoaded = IsPluginLoaded(0x01001DB7, "Chesko_WearableLantern_Candle_DG.esp")	;Candle Lanterns of the North (DG)
 	if bIsCLNDGLoaded
 		_WL_CLNDGWarning.Show()
 	endif
-	bIsGuardLanternLoaded = Game.GetFormFromFile(0x01000D62, "Chesko_WearableLantern_Guards.esp")			;Lanterns for Guards
+	bIsGuardLanternLoaded = IsPluginLoaded(0x01000D62, "Chesko_WearableLantern_Guards.esp")			;Lanterns for Guards
 	if bIsGuardLanternLoaded
 		_WL_GuardLanternWarning.Show()
 	endif
-	bIsKhajiitLanternLoaded = Game.GetFormFromFile(0x01000D62, "Chesko_WearableLantern_Caravaner.esp")	;Lanterns for Caravans
+	bIsKhajiitLanternLoaded = IsPluginLoaded(0x01000D62, "Chesko_WearableLantern_Caravaner.esp")	;Lanterns for Caravans
 	if bIsKhajiitLanternLoaded
 		_WL_KhajiitLanternWarning.Show()
 	endif
@@ -100,27 +99,35 @@ function DLC2LoadUp()
 endFunction
 
 Activator function GetBUGSLoaded()
-	Activator myBug = Game.GetFormFromFile(0x01001894, "83Willows_101BUGS_V4_HighRes.esp") as Activator
-	if !myBug
-		myBug = Game.GetFormFromFile(0x01001894, "83Willows_101BUGS_V4_LowRes.esp") as Activator
-		if !myBug
-			myBug = Game.GetFormFromFile(0x01001894, "83Willows_101BUGS_V4_HighRes_HighSpawn.esp") as Activator
-			if !myBug
-				myBug = Game.GetFormFromFile(0x01001894, "83Willows_101BUGS_V4_LowerRes_HighSpawn.esp") as Activator
-				if !myBug
-					return myBug
-				else
-					return myBug
-				endif
-			else
-				return myBug
-			endif
-		else
-			return myBug
-		endif
-	else
-		return myBug
+	Activator myBug
+
+	bool bugs_loaded = IsPluginLoaded(0x01001894, "83Willows_101BUGS_V4_HighRes.esp")
+	if bugs_loaded
+		myBug = Game.GetFormFromFile(0x01001894, "83Willows_101BUGS_V4_HighRes.esp") as Activator
 	endif
+
+	if !bugs_loaded
+		bugs_loaded = IsPluginLoaded(0x01001894, "83Willows_101BUGS_V4_LowRes.esp")
+		if bugs_loaded
+			myBug = Game.GetFormFromFile(0x01001894, "83Willows_101BUGS_V4_LowRes.esp") as Activator
+		endif
+	endif
+
+	if !bugs_loaded
+		bugs_loaded = IsPluginLoaded(0x01001894, "83Willows_101BUGS_V4_HighRes_HighSpawn.esp")
+		if bugs_loaded
+			myBug = Game.GetFormFromFile(0x01001894, "83Willows_101BUGS_V4_HighRes_HighSpawn.esp") as Activator
+		endif
+	endif
+
+	if !bugs_loaded
+		bugs_loaded = IsPluginLoaded(0x01001894, "83Willows_101BUGS_V4_LowerRes_HighSpawn.esp")
+		if bugs_loaded
+			myBug = Game.GetFormFromFile(0x01001894, "83Willows_101BUGS_V4_LowerRes_HighSpawn.esp") as Activator
+		endif
+	endif
+
+	return myBug
 endFunction
 
 function RemovePaperLanterns()
@@ -129,4 +136,14 @@ endFunction
 
 Function RegisterForKeysOnLoad()
 	WLConfig.RegisterForKeysOnLoad()
+endFunction
+
+bool function IsPluginLoaded(int iFormID, string sPluginName)
+	int i = Game.GetModByName(sPluginName)
+	if i != 255
+		debug.trace("[Frostfall] Loaded: " + sPluginName)
+		return true
+	else
+		return false
+	endif
 endFunction
