@@ -228,7 +228,7 @@ Event OnUpdate()
 		
 		; PULLED OUT AUTO-ON CODE HERE		
 
-		if _WL_SettingOil.GetValueInt() == 2
+		if SettingIsEnabled(_WL_SettingOil)
 			float oil_level = _WL_OilLevel.GetValue()
 			WLDebug(0, "last_oil_level = " + last_oil_level + ", oil_level = " + oil_level)
 
@@ -281,8 +281,7 @@ Event OnUpdate()
 		
 		; PULLED OUT AUTO-ON CODE HERE
 		
-		;Is the player using the feeding mechanic?
-		if _WL_SettingFeeding.GetValueInt() == 2
+		if SettingIsEnabled(_WL_SettingFeeding)
 			if iLastPollenLevel2 < pPollenLevel
 				_WL_TorchbugFlowersUsed.Show(pPollenLevel)
 				_WL_HasFuel.SetValueInt(1)
@@ -457,10 +456,10 @@ function DisplayThreadTime()
 endFunction
 
 function DropLantern()
-	if _WL_SettingDropLit.GetValueInt() == 2 && !IsInMenuMode()
+	if SettingIsEnabled(_WL_SettingDropLit) && !IsInMenuMode()
 		int iPosition = _WL_SettingPosition.GetValueInt()
 		if PlayerRef.IsEquipped(_WL_WearableLanternInvDisplay) && iPosition == 2
-			if _WL_SettingOil.GetValueInt() == 2
+			if SettingIsEnabled(_WL_SettingOil)
 				if _WL_Oillevel.GetValue() > 0.0 	;Player must have oil to drop lit lantern. Not strictly enforced but helps verisimilitude.
 					PlayerRef.UnequipItem(_WL_WearableLanternInvDisplay, abSilent = true)
 					PlayerRef.RemoveItem(_WL_WearableLanternInvDisplay, abSilent = true)
@@ -474,7 +473,7 @@ function DropLantern()
 				PlayerRef.PlaceAtMe(_WL_LanternDroppedLit)
 			endif
 		elseif PlayerRef.IsEquipped(_WL_WearableTorchbugInvDisplay) && iPosition == 2
-			if _WL_SettingFeeding.GetValueInt() == 2
+			if SettingIsEnabled(_WL_SettingFeeding)
 				if pPollenLevel > 0.0 	;Player must have oil to drop lit lantern. Not strictly enforced but helps verisimilitude.
 					PlayerRef.UnequipItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
 					if PlayerRef.IsSneaking()
@@ -496,7 +495,7 @@ function DropLantern()
 				GoToState("")
 			endif
 		elseif PlayerRef.IsEquipped(_WL_WearableTorchbugInvDisplayRED) && iPosition == 2
-			if _WL_SettingFeeding.GetValueInt() == 2
+			if SettingIsEnabled(_WL_SettingFeeding)
 				if pPollenLevel > 0.0 	;Player must have oil to drop lit lantern. Not strictly enforced but helps verisimilitude.
 					PlayerRef.UnequipItem(_WL_WearableTorchbugInvDisplayRED, abSilent = true)
 					if PlayerRef.IsSneaking()
@@ -519,7 +518,7 @@ function DropLantern()
 
 			endif
 		elseif PlayerRef.IsEquipped(_WL_WearablePaperInvDisplay) && iPosition == 2
-			if _WL_SettingOil.GetValueInt() == 2
+			if SettingIsEnabled(_WL_SettingOil)
 				if _WL_Oillevel.GetValue() > 0.0 	;Player must have oil to drop lit lantern. Not strictly enforced but helps verisimilitude.
 					PlayerRef.UnequipItem(_WL_WearablePaperInvDisplay, abSilent = true)
 					PlayerRef.RemoveItem(_WL_WearablePaperInvDisplay, abSilent = true)
@@ -663,7 +662,7 @@ function DestroyNonDisplayLantern(Form akBaseObject)
 endFunction
 
 function SetShouldLightLanternAutomatically(Location akLocation)
-	if _WL_SettingAutomatic.GetValueInt() != 2
+	if !SettingIsEnabled(_WL_SettingAutomatic)
 		; The auto-on setting is off.
 		_WL_AutoModeLightOn.SetValueInt(0)
 	else
@@ -715,5 +714,13 @@ function WLDebug(int aiSeverity, string asLogMessage)
 		elseif aiSeverity == 3
 			debug.trace("[Wearable Lanterns][ERROR] " + asLogMessage)
 		endif
+	endif
+endFunction
+
+bool function SettingIsEnabled(GlobalVariable akSettingGlobal)
+	if akSettingGlobal.GetValueInt() == 2
+		return true
+	else
+		return false
 	endif
 endFunction
