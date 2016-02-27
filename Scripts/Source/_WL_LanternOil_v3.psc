@@ -6,11 +6,7 @@ import debug
 import utility
 
 Actor property PlayerRef auto
-
-form[] LanternFuelFormArray
-
 _WL_Compatibility property Compatibility auto
-
 FormList property _WL_InteriorWorldspaces auto
 
 ;Settings
@@ -69,17 +65,17 @@ Ingredient property MountainFlower01Purple auto
 Ingredient property MountainFlower01Red auto
 Ingredient property Thistle01 auto
 
-message property _WL_TorchbugDropRelease auto
+Message property _WL_TorchbugDropRelease auto
 
-message property _WL_TorchbugEmptyEquip auto
-message property _WL_TorchbugCatch auto
-message property _WL_FireflyCatch auto
-message property _WL_TorchbugNoPollen auto
-message property _WL_LanternOilDepleted auto
-message property _WL_TorchbugRemainingFlowers auto
-message property _WL_TorchbugFlowersUsed auto
-message property _WL_LanternOilRemaining auto
-message property _WL_LanternOilUsed auto
+Message property _WL_TorchbugEmptyEquip auto
+Message property _WL_TorchbugCatch auto
+Message property _WL_FireflyCatch auto
+Message property _WL_TorchbugNoPollen auto
+Message property _WL_LanternOilDepleted auto
+Message property _WL_TorchbugRemainingFlowers auto
+Message property _WL_TorchbugFlowersUsed auto
+Message property _WL_LanternOilRemaining auto
+Message property _WL_LanternOilUsed auto
 
 ; enum
 int property current_lantern = 0 auto hidden
@@ -115,8 +111,8 @@ Keyword property LocTypeGuild auto
 Keyword property LocTypePlayerHouse auto
 Keyword property LocTypeStore auto
 
-form fCandleLanternHeld
-form fCandleLanternHeldDroppedLit
+Form fCandleLanternHeld
+Form fCandleLanternHeldDroppedLit
 
 ;--------------
 ;	States		\
@@ -205,10 +201,10 @@ Event OnUpdate()
 	DisplayThreadTime()
 	
 	if current_lantern == LANTERN_NORMAL
-		bool bLightTime
+		bool should_light_lantern
 		if _WL_SettingAutomatic.GetValueInt() == 2
-			bLightTime = CheckPlayerSituation()
-			if bLightTime
+			should_light_lantern = GetShouldLightLantern()
+			if should_light_lantern
 				_WL_AutoModeLightOn.SetValueInt(1)
 			else
 				_WL_AutoModeLightOn.SetValueInt(2)
@@ -273,10 +269,10 @@ Event OnUpdate()
 
 	elseif current_lantern == LANTERN_TORCHBUG
 
-		bool bLightTime
+		bool should_light_lantern
 		if _WL_SettingAutomatic.GetValueInt() == 2
-			bLightTime = CheckPlayerSituation()
-			if bLightTime
+			should_light_lantern = GetShouldLightLantern()
+			if should_light_lantern
 				_WL_AutoModeLightOn.SetValueInt(1)
 			else
 				_WL_AutoModeLightOn.SetValueInt(2)
@@ -675,39 +671,35 @@ function DestroyNonDisplayLantern(Form akBaseObject)
 	endWhile
 endFunction
 
-bool function CheckPlayerSituation()
-	if PlayerRef.IsSneaking()															;Player is sneaking; Turn off
+bool function GetShouldLightLantern()
+	if PlayerRef.IsSneaking()
 		return false
 	else
-		;bool bInExteriorActingLikeInterior = CheckWorldspace()
-		if PlayerRef.IsInInterior(); || bInExteriorActingLikeInterior == true											;Inside?
-			if myLoc.HasKeyword(LocTypeCastle) || myLoc.HasKeyword(LocTypeGuild) || myLoc.HasKeyword(LocTypeInn) || myLoc.HasKeyword(LocTypeHouse) || myLoc.HasKeyword(LocTypePlayerHouse) || myLoc.HasKeyword(LocTypeStore)		;Is it a restricted location?
-				WLDebug(0, "Inside, in house, try to stop...")								;Yes, stop
+		if IsRefInInterior(PlayerRef)
+			if myLoc.HasKeyword(LocTypeCastle) || myLoc.HasKeyword(LocTypeGuild) || myLoc.HasKeyword(LocTypeInn) || myLoc.HasKeyword(LocTypeHouse) || myLoc.HasKeyword(LocTypePlayerHouse) || myLoc.HasKeyword(LocTypeStore)
 				return false
-			else																						;No, start
-				WLDebug(0, "Inside, not in house, try to start")
-				return true
-			endif
-		else																							;Outside
-			WLDebug(0, "Outside...")
-			if GameHour.GetValue() >= 19.0 || GameHour.GetValue() <= 7.0								;Is it between 7PM and 7AM?
-				WLDebug(0, "Nighttime, try to start")
-				return true
 			else
-				WLDebug(0, "Daytime, try to stop")
+				return true ; Inside in non-restricted location type
+			endif
+		else
+			if GameHour.GetValue() >= 19.0 || GameHour.GetValue() <= 7.0
+				return true ; Outside at night
+			else
 				return false
 			endif
 		endif
 	endif
 endFunction
 
-bool function CheckWorldspace()
-	;Check whether or not the player is in a worldspace that has cells that are technically exteriors, but behave like interiors
-	Worldspace myWorldSpace = PlayerRef.GetWorldSpace()
-	if _WL_InteriorWorldspaces.HasForm(myWorldspace)
+bool function IsRefInInterior(ObjectReference akReference)
+	if akReference.IsInInterior()
 		return true
 	else
-		return false
+		if _WL_InteriorWorldspaces.HasForm(akReference.GetWorldSpace())
+			return true
+		else
+			return false
+		endif
 	endif
 endFunction
 
