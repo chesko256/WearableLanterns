@@ -134,15 +134,20 @@ Event OnInit()
 endEvent
 
 Event OnLocationChange(Location akOldLoc, Location akNewLoc)
-	if _WL_SettingAutomatic.GetValueInt() == 2
-		bool should_light_lantern = GetShouldLightLanternAutomatically(akNewLoc)
-		if should_light_lantern
-			_WL_AutoModeLightOn.SetValueInt(1)
-		else
-			_WL_AutoModeLightOn.SetValueInt(2)
-		endif
-	else
-		_WL_AutoModeLightOn.SetValueInt(0)
+	SetShouldLightLanternAutomatically(akNewLoc)
+endEvent
+
+Event OnUpdateGameTime()
+	SetShouldLightLanternAutomatically(PlayerRef.GetCurrentLocation())
+
+	; Register for dawn / dusk
+	float current_hour = GameHour.GetValue()
+	if current_hour < 7.0
+		RegisterForSingleUpdateGameTime(7.0 - current_hour)
+	elseif current_hour >= 7.0 && current_hour < 19.0
+		RegisterForSingleUpdateGameTime(19.0 - current_hour)
+	elseif current_hour >= 19.0
+		RegisterForSingleUpdateGameTime(7.0 + (24.0 - current_hour))
 	endif
 endEvent
 
@@ -656,21 +661,30 @@ function DestroyNonDisplayLantern(Form akBaseObject)
 	endWhile
 endFunction
 
-bool function GetShouldLightLanternAutomatically(Location akLocation)
-	if PlayerRef.IsSneaking()
-		return false
+function SetShouldLightLanternAutomatically(Location akLocation)
+	if _WL_SettingAutomatic.GetValueInt() != 2
+		; The auto-on setting is off.
+		_WL_AutoModeLightOn.SetValueInt(0)
 	else
-		if IsRefInInterior(PlayerRef)
-			if akLocation.HasKeyword(LocTypeCastle) || akLocation.HasKeyword(LocTypeGuild) || akLocation.HasKeyword(LocTypeInn) || akLocation.HasKeyword(LocTypeHouse) || akLocation.HasKeyword(LocTypePlayerHouse) || akLocation.HasKeyword(LocTypeStore)
-				return false
-			else
-				return true ; Inside in non-restricted location type
-			endif
+		if PlayerRef.IsSneaking()
+			_WL_AutoModeLightOn.SetValueInt(2)
 		else
-			if GameHour.GetValue() >= 19.0 || GameHour.GetValue() <= 7.0
-				return true ; Outside at night
+			if IsRefInInterior(PlayerRef)
+				if akLocation.HasKeyword(LocTypeCastle) || akLocation.HasKeyword(LocTypeGuild) || 	\
+					akLocation.HasKeyword(LocTypeInn) || akLocation.HasKeyword(LocTypeHouse) || 	\
+					akLocation.HasKeyword(LocTypePlayerHouse) || akLocation.HasKeyword(LocTypeStore)
+					_WL_AutoModeLightOn.SetValueInt(2)
+				else
+					; Inside in non-restricted location type
+					_WL_AutoModeLightOn.SetValueInt(1)
+				endif
 			else
-				return false
+				if GameHour.GetValue() >= 19.0 || GameHour.GetValue() <= 7.0
+					; Outside at night
+					_WL_AutoModeLightOn.SetValueInt(1)
+				else
+					_WL_AutoModeLightOn.SetValueInt(2)
+				endif
 			endif
 		endif
 	endif
