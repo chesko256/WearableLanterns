@@ -90,6 +90,7 @@ int property LANTERN_TORCHBUGEMPTY = 3 auto hidden
 GlobalVariable property _WL_OilLevel auto
 GlobalVariable property _WL_PollenLevel auto
 GlobalVariable property _WL_gToggle auto
+{ 0 = Off. 1 = On. }
 GlobalVariable property _WL_HasFuel auto
 { 0 = Not using oil burning mechanic. 1 = Player has oil. 2 = Oil is depleted. }
 GlobalVariable property _WL_AutoModeLightOn auto
@@ -188,11 +189,9 @@ endEvent
 
 Event OnObjectUnequipped(Form akBaseObject, ObjectReference akReference)
 	if akBaseObject == _WL_WearableLanternInvDisplay || akBaseObject == _WL_WearablePaperInvDisplay
-		;Stop the lantern and save oil (if applicable)
 		WLDebug(1, "OnObjectUnequipped Event, Lantern/paper")
 		DestroyNonDisplayLantern(akBaseObject)
 	elseif akBaseObject == _WL_WearableTorchbugInvDisplay || akBaseObject == _WL_WearableTorchbugInvDisplayRED
-		;Stop the torchbug light and save pollen (if applicable)
 		WLDebug(1, "OnObjectUnequipped Event, Torchbug/red")
 		DestroyNonDisplayLantern(akBaseObject)
     endif
@@ -209,14 +208,6 @@ function SetLantern(Form akBaseObject, int aiLanternIndex, int aiLanternState, s
 	RegisterForSingleUpdate(0.1)
 endFunction
 
-function TurnOnLantern()
-
-endFunction
-
-function TurnOffLantern()
-
-endFunction
-
 Event OnItemRemoved(Form akBaseItem, int aiItemCount, ObjectReference akItemReference, ObjectReference akDestContainer)
 	if _WL_InvBugLanterns.HasForm(akBaseItem) && akDestContainer == none && PlayerRef.IsSneaking()
 		ReleaseTorchbugMenu(akBaseItem)
@@ -228,7 +219,6 @@ Event OnUpdate()
 	
 	if current_lantern == LANTERN_NORMAL
 		SetOilLevel()
-		
 		; @TODO: Delete?
 		;Ensure that torchbug lights aren't on
 		; pollen_update_counter = 0
@@ -656,7 +646,7 @@ function SetOilLevel()
 				_WL_OilLevel.SetValue(oil_level)
 				oil_update_counter = 0
 			endif
-			WLDebug(1, "[Wearable Lantern] Oil Level: " + oil_level)
+			WLDebug(1, "Oil Level: " + oil_level)
 		else
 			oil_update_counter += 1
 		endif

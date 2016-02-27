@@ -64,9 +64,14 @@ Sound property _WL_OilLanternOff auto
 Sound property _WL_OilLanternOn auto
 Sound property PHYBottleSmallH auto
 
-message property _WL_AutomaticModeError auto
-message property _WL_LanternOilRemaining auto
-message property _WL_TorchbugRemainingFlowers auto
+Message property _WL_AutomaticModeError auto
+Message property _WL_LanternOilRemainingEmpty auto
+Message property _WL_LanternOilRemainingMostlyEmpty auto
+Message property _WL_LanternOilRemainingLessThanHalf auto
+Message property _WL_LanternOilRemainingHalfFull auto
+Message property _WL_LanternOilRemainingMostlyFull auto
+Message property _WL_LanternOilRemainingFull auto
+Message property _WL_TorchbugRemainingFlowers auto
 
 Event OnConfigInit()
 	Pages = new string[2]
@@ -636,7 +641,7 @@ function CheckFuel()
 	int i = _WL_CheckFuelDisplay.GetValueInt()
 	if i == 0  									;Meter, Message
 		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_NORMAL
-			_WL_LanternOilRemaining.Show(_WL_OilLevel.GetValue())
+			ShowOilRemainingMessage(_WL_OilLevel.GetValue())
 			ChooseMeterPosition(MeterLayoutIndex)
 		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
 			_WL_TorchbugRemainingFlowers.Show(LanternQuest.pPollenLevel)
@@ -650,11 +655,27 @@ function CheckFuel()
 		endIf
 	elseif i == 2 								;Message Only
 		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_NORMAL
-			_WL_LanternOilRemaining.Show(_WL_OilLevel.GetValue())
+			ShowOilRemainingMessage(_WL_OilLevel.GetValue())
 		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
 			_WL_TorchbugRemainingFlowers.Show(LanternQuest.pPollenLevel)
 		endIf
 	endIf
+endFunction
+
+function ShowOilRemainingMessage(float oil_level)
+	if oil_level == 0
+		_WL_LanternOilRemainingEmpty.Show()
+	elseif oil_level > 0 && oil_level <= 6
+		_WL_LanternOilRemainingMostlyEmpty.Show()
+	elseif oil_level > 6 && oil_level < 8
+		_WL_LanternOilRemainingLessThanHalf.Show()
+	elseif oil_level >= 8 && oil_level < 10
+		_WL_LanternOilRemainingHalfFull.Show()
+	elseif oil_level >= 10 && oil_level < 16
+		_WL_LanternOilRemainingMostlyFull.Show()
+	elseif oil_level == 16
+		_WL_LanternOilRemainingFull.Show()
+	endif
 endFunction
 
 function RegisterForKeysOnLoad()
