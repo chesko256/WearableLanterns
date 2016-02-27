@@ -10,6 +10,7 @@ bool property bIsDLC2Loaded auto hidden
 bool property bIsBUGSLoaded auto hidden
 
 Formlist property _WL_GlowingBugList auto
+FormList property _WL_InteriorWorldspaces auto
 
 Ingredient property MountainFlowerYellow auto hidden
 Activator property FireflyBUG auto hidden
@@ -33,7 +34,7 @@ endEvent
 
 function CompatibilityCheck()
 	trace("========================================[Wearable Lanterns: Warning Start]========================================")
-	trace("                           Wearable Lanterns is now performing compatibility checks.                              ")
+	trace("                             Wearable Lanterns is now performing compatibility checks.                            ")
 	trace("========================================[ Wearable Lanterns: Warning End ]========================================")
 	
 	bIsDLC1Loaded = IsPluginLoaded(0x02009403, "Dawnguard.esm")
@@ -42,7 +43,7 @@ function CompatibilityCheck()
 	Activator GetFirefly = GetBUGSLoaded()
 	
 	if bIsDLC1Loaded
-		MountainFlowerYellow = Game.GetFormFromFile(0x01002A78, "Dawnguard.esm") as Ingredient
+		DLC1LoadUp()
 	else
 		MountainFlowerYellow = none
 	endif
@@ -92,6 +93,19 @@ function CompatibilityCheck()
 	trace("========================================[Wearable Lanterns: Warning Start]========================================")
 	trace("                                          Compatibility check complete.                                           ")
 	trace("========================================[ Wearable Lanterns: Warning End ]========================================")
+endFunction
+
+function DLC1LoadUp()
+	MountainFlowerYellow = Game.GetFormFromFile(0x01002A78, "Dawnguard.esm") as Ingredient
+	Form DLC01WS05 = Game.GetFormFromFile(0x020048C7, "Dawnguard.esm")			;DLC1AncestorsGladeWorld
+	Form DLC01WS06 = Game.GetFormFromFile(0x02004BEA, "Dawnguard.esm")			;DLC1DarkfallPassageWorld
+	Form DLC01WS07 = Game.GetFormFromFile(0x02002F64, "Dawnguard.esm")			;DLC1ForebearsHoldout
+	
+	if !(_WL_InteriorWorldspaces.HasForm(DLC01WS05))
+		_WL_InteriorWorldspaces.AddForm(DLC01WS05)
+		_WL_InteriorWorldspaces.AddForm(DLC01WS06)
+		_WL_InteriorWorldspaces.AddForm(DLC01WS07)
+	endif
 endFunction
 
 function DLC2LoadUp()
