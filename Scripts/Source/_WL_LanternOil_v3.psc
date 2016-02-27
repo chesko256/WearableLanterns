@@ -131,6 +131,7 @@ endState
 ;------------------------------------------------------------------------------------
 Event OnInit()
 	RegisterForSingleUpdate(0.1)
+	RegisterForSingleUpdateGameTime(0.1)
 endEvent
 
 Event OnLocationChange(Location akOldLoc, Location akNewLoc)
