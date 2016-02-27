@@ -74,7 +74,9 @@ Message property _WL_TorchbugNoPollen auto
 Message property _WL_LanternOilDepleted auto
 Message property _WL_TorchbugRemainingFlowers auto
 Message property _WL_TorchbugFlowersUsed auto
-Message property _WL_LanternOilRemaining auto
+Message property _WL_LanternOilRemainingMostlyFull auto
+Message property _WL_LanternOilRemainingHalfFull auto
+Message property _WL_LanternOilRemainingMostlyEmpty auto
 Message property _WL_LanternOilUsed auto
 
 ; enum
@@ -225,58 +227,11 @@ Event OnUpdate()
 	DisplayThreadTime()
 	
 	if current_lantern == LANTERN_NORMAL
+		SetOilLevel()
 		
-		; PULLED OUT AUTO-ON CODE HERE		
-
-		if SettingIsEnabled(_WL_SettingOil)
-			float oil_level = _WL_OilLevel.GetValue()
-			WLDebug(0, "last_oil_level = " + last_oil_level + ", oil_level = " + oil_level)
-
-			if last_oil_level < oil_level
-				; Oil added
-				_WL_LanternOilUsed.Show() 
-				_WL_HasFuel.SetValueInt(1)
-				last_oil_level = oil_level
-			elseif last_oil_level > oil_level
-				; Oil burned
-				if oil_level == 12.0 || oil_level == 8.0 || oil_level == 4.0
-					_WL_LanternOilRemaining.Show(oil_level)
-					_WL_HasFuel.SetValueInt(1)
-				else
-					_WL_HasFuel.SetValueInt(1)
-				endif
-				last_oil_level = oil_level
-			elseif oil_level == 0
-				; Oil depleted
-				_WL_HasFuel.SetValueInt(2)
-			else
-				; Lantern has oil
-				_WL_HasFuel.SetValueInt(1)
-			endif
-			
-			if oil_update_counter >= 6             	  ;30 seconds have passed, reduce oil in player's lantern
-				if oil_level >= 0.5
-					oil_level -= 0.5
-					_WL_OilLevel.SetValue(oil_level)
-					oil_update_counter = 0
-				endif
-				WLDebug(1, "[Wearable Lantern] Oil Level: " + oil_level)
-			else
-				oil_update_counter += 1
-			endif
-			
-			;Attempt to refill the player's lantern
-			if oil_level == 0
-				RefillLantern()
-			endif
-		else
-			;Player is not using the oil-burning mechanic
-			_WL_HasFuel.SetValueInt(0)
-		endif
-		
+		; @TODO: Delete?
 		;Ensure that torchbug lights aren't on
-		pollen_update_counter = 0
-
+		; pollen_update_counter = 0
 	elseif current_lantern == LANTERN_TORCHBUG
 		
 		; PULLED OUT AUTO-ON CODE HERE
@@ -687,6 +642,61 @@ function SetShouldLightLanternAutomatically(Location akLocation)
 				endif
 			endif
 		endif
+	endif
+endFunction
+
+function SetOilLevel()
+	if SettingIsEnabled(_WL_SettingOil)
+		float oil_level = _WL_OilLevel.GetValue()
+		WLDebug(0, "last_oil_level = " + last_oil_level + ", oil_level = " + oil_level)
+
+		if oil_update_counter >= 6             	  ;30 seconds have passed, reduce oil in player's lantern
+			if oil_level >= 0.5
+				oil_level -= 0.5
+				_WL_OilLevel.SetValue(oil_level)
+				oil_update_counter = 0
+			endif
+			WLDebug(1, "[Wearable Lantern] Oil Level: " + oil_level)
+		else
+			oil_update_counter += 1
+		endif
+
+		;Attempt to refill the player's lantern
+		if oil_level == 0
+			RefillLantern()
+			oil_level = _WL_OilLevel.GetValue()
+		endif
+
+		; Set oil state global and show messages as necessary
+		if last_oil_level < oil_level
+			; Oil added
+			_WL_LanternOilUsed.Show() 
+			_WL_HasFuel.SetValueInt(1)
+		elseif last_oil_level > oil_level && oil_level > 0
+			; Oil burned
+			ShowRemainingOilMessage(oil_level)
+			_WL_HasFuel.SetValueInt(1)
+		elseif last_oil_level == oil_level && oil_level > 0
+			; The player has oil
+			_WL_HasFuel.SetValueInt(1)
+		elseif last_oil_level > 0 && oil_level == 0
+			; Oil depleted
+			_WL_HasFuel.SetValueInt(2)
+		endif
+		last_oil_level = oil_level
+	else
+		;Player is not using the oil-burning mechanic
+		_WL_HasFuel.SetValueInt(0)
+	endif
+endFunction
+
+function ShowRemainingOilMessage(float oil_level)
+	if oil_level == 12.0
+		_WL_LanternOilRemainingMostlyFull.Show()
+	elseif oil_level == 8.0
+		_WL_LanternOilRemainingHalfFull.Show()
+	elseif oil_level == 4.0
+		_WL_LanternOilRemainingMostlyEmpty.Show()
 	endif
 endFunction
 
