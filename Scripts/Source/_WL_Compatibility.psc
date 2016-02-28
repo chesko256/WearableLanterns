@@ -3,6 +3,10 @@ Scriptname _WL_Compatibility extends ReferenceAlias
 import debug
 
 _WL_SkyUIConfigPanelScript property WLConfig Auto 			;SkyUI Configuration script
+_WL_LanternOil_v3 property LanternQuest auto
+
+Actor property PlayerRef auto
+Perk property _WL_CatchTorchbug auto
 
 bool property bIsSKYUILoaded auto hidden
 bool property bIsDLC1Loaded auto hidden
@@ -21,14 +25,16 @@ bool bIsKhajiitLanternLoaded
 bool bIsCLNLoaded
 bool bIsCLNDGLoaded
 bool bIsBUGSLoaded
-message property _WL_CLNWarning auto
-message property _WL_CLNDGWarning auto
-message property _WL_GuardLanternWarning auto
-message property _WL_KhajiitLanternWarning auto
-message property _WL_SkyUIErrorMessage auto
+Message property _WL_CLNWarning auto
+Message property _WL_CLNDGWarning auto
+Message property _WL_GuardLanternWarning auto
+Message property _WL_KhajiitLanternWarning auto
+Message property _WL_SkyUIErrorMessage auto
 
 Event OnPlayerLoadGame()
 	CompatibilityCheck()
+	RegisterForEventsOnLoad()
+	AddPerks()
 	RegisterForKeysOnLoad()
 endEvent
 
@@ -146,6 +152,22 @@ endFunction
 
 function RemovePaperLanterns()
 	WLConfig.DLC2Loaded = false
+endFunction
+
+function AddPerks()
+	if !PlayerRef.HasPerk(_WL_CatchTorchbug)
+		PlayerRef.AddPerk(_WL_CatchTorchbug)
+	endif
+endFunction
+
+function RegisterForEventsOnLoad()
+	LanternQuest.RegisterForSingleUpdateGameTime(0.1)
+	LanternQuest.RegisterForAnimationEvent(PlayerRef, "tailSneakIdle")
+	LanternQuest.RegisterForAnimationEvent(PlayerRef, "tailSneakLocomotion")
+	LanternQuest.RegisterForAnimationEvent(PlayerRef, "tailMTIdle")
+	LanternQuest.RegisterForAnimationEvent(PlayerRef, "tailMTLocomotion")
+	LanternQuest.RegisterForAnimationEvent(PlayerRef, "tailCombatIdle")
+	LanternQuest.RegisterForAnimationEvent(PlayerRef, "tailCombatLocomotion")
 endFunction
 
 Function RegisterForKeysOnLoad()

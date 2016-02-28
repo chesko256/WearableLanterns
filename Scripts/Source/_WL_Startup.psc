@@ -19,5 +19,5 @@ Event OnInit()
 
 	_WL_PlayerCompatibility.ForceRefIfEmpty(Game.GetPlayer())
 
-	Compatibility.CompatibilityCheck()
+	Compatibility.OnPlayerLoadGame()
 endEvent

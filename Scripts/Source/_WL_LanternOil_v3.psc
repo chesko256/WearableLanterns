@@ -133,14 +133,7 @@ endState
 ;	Events		\
 ;------------------------------------------------------------------------------------
 Event OnInit()
-	RegisterForSingleUpdate(0.1)
-	RegisterForSingleUpdateGameTime(0.1)
-	RegisterForAnimationEvent(PlayerRef, "tailSneakIdle")
-	RegisterForAnimationEvent(PlayerRef, "tailSneakLocomotion")
-	RegisterForAnimationEvent(PlayerRef, "tailMTIdle")
-	RegisterForAnimationEvent(PlayerRef, "tailMTLocomotion")
-	RegisterForAnimationEvent(PlayerRef, "tailCombatIdle")
-	RegisterForAnimationEvent(PlayerRef, "tailCombatLocomotion")
+	
 endEvent
 
 Event OnLocationChange(Location akOldLoc, Location akNewLoc)
@@ -341,6 +334,10 @@ function TryToCatchTorchbug()
 			oFoundTorchbug.Delete()
 		endif
 	endif
+endFunction
+
+function CatchTorchbug(ObjectReference akTorchbug)
+
 endFunction
 
 ;-----------------------
