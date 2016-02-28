@@ -42,6 +42,7 @@ int Interface_UICandleMeterColor_OID
 bool property DLC2Loaded auto hidden conditional
 
 GlobalVariable property _WL_OilLevel auto
+GlobalVariable property _WL_PollenLevel auto
 GlobalVariable property _WL_SettingBrightness auto
 GlobalVariable property _WL_SettingPosition auto 						;0 = Back, 1 = Front, 2 = Held
 GlobalVariable property _WL_SettingDropLit auto
@@ -626,7 +627,7 @@ function CheckFuel()
 			ShowOilRemainingMessage(_WL_OilLevel.GetValue())
 			ChooseMeterPosition(MeterLayoutIndex)
 		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
-			_WL_TorchbugRemainingFlowers.Show(LanternQuest.pPollenLevel)
+			_WL_TorchbugRemainingFlowers.Show(_WL_PollenLevel.GetValue())
 			ChooseMeterPosition(MeterLayoutIndex)
 		endIf
 	elseif i == 1 								;Meter Only
@@ -639,7 +640,7 @@ function CheckFuel()
 		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_OIL
 			ShowOilRemainingMessage(_WL_OilLevel.GetValue())
 		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
-			_WL_TorchbugRemainingFlowers.Show(LanternQuest.pPollenLevel)
+			_WL_TorchbugRemainingFlowers.Show(_WL_PollenLevel.GetValue())
 		endIf
 	endIf
 endFunction

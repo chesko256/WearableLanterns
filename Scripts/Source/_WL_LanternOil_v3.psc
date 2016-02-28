@@ -22,7 +22,6 @@ Formlist property _WL_AllLanterns auto
 Formlist property _WL_GlowingBugList auto
 
 MiscObject property _WL_LanternOil4 auto
-MiscObject property _WL_Pollen auto
 
 Light property Torch01 auto
 
@@ -71,11 +70,12 @@ Message property _WL_TorchbugEmptyEquip auto
 Message property _WL_TorchbugCatch auto
 Message property _WL_FireflyCatch auto
 Message property _WL_TorchbugNoPollen auto
-Message property _WL_LanternOilDepleted auto
 Message property _WL_TorchbugRemainingFlowers auto
 Message property _WL_TorchbugFlowersUsed auto
 Message property _WL_LanternOilRemainingHalfFull auto
 Message property _WL_LanternOilRemainingMostlyEmpty auto
+Message property _WL_LanternOilRemainingEmptyRanOut auto
+Message property _WL_LanternPollenRemainingEmptyRanOut auto
 Message property _WL_LanternOilUsed auto
 
 ; enum
@@ -99,10 +99,8 @@ int oil_update_counter = 0
 float last_oil_level = 0.0
 int pollen_update_counter = 0
 int iLastPollenLevel = 0
-int iLastPollenLevel2 = 0
+int last_pollen_level = 0
 bool is_sneaking = false
-
-int property pPollenLevel = 0 auto hidden
 
 ;Timer variables (for debug purposes)
 float pfThreadLastUpdateTime = 0.0
@@ -227,51 +225,14 @@ Event OnItemRemoved(Form akBaseItem, int aiItemCount, ObjectReference akItemRefe
 	endif
 endEvent
 
-Event OnUpdate()
-	DisplayThreadTime()
-	
+Event OnUpdate()	
 	if current_lantern == LANTERN_OIL
 		UpdateOil()
 		SetOilLevel()
 	elseif current_lantern == LANTERN_TORCHBUG
-		
-		; PULLED OUT AUTO-ON CODE HERE
-		
-		if SettingIsEnabled(_WL_SettingFeeding)
-			if iLastPollenLevel2 < pPollenLevel
-				_WL_TorchbugFlowersUsed.Show(pPollenLevel)
-				_WL_HasFuel.SetValueInt(1)
-				iLastPollenLevel2 = pPollenLevel			; Record the pollen level
-			elseif (iLastPollenLevel2 > pPollenLevel && pPollenLevel == 24) || (iLastPollenLevel2 > pPollenLevel && pPollenLevel == 16) || (iLastPollenLevel2 > pPollenLevel && pPollenLevel == 8)
-				_WL_TorchbugRemainingFlowers.Show(pPollenLevel)
-				_WL_HasFuel.SetValueInt(1)
-				iLastPollenLevel2 = pPollenLevel			; Record the pollen level
-			elseif pPollenLevel == 0
-				_WL_HasFuel.SetValueInt(2)					; Useful with both iLastPollenLevel2 and pPollenLevel both equal 0
-			else											; Oil did not increase, decrease below a threshold, but is not zero; make sure it's running
-				_WL_HasFuel.SetValueInt(1)
-			endif
-		
-			if pollen_update_counter >= 14
-				if pPollenLevel >= 1
-					pPollenLevel -= 1
-					
-					;Reset the counter
-					pollen_update_counter = 0
-				endif
-			else
-				pollen_update_counter += 2
-			endif
-			
-			RefillTorchbug()
-		
-		else
-			; The player is not using the feeding mechanic
-			_WL_HasFuel.SetValueInt(0)	
-		endif
+		UpdatePollen()
+		SetPollenLevel()
 	endif
-	
-	WLDebug(0, "Current light level: " + PlayerRef.GetLightLevel())
 	
 	if SettingIsEnabled(_WL_SettingOil) && _WL_gToggle.GetValueInt() == 1 && current_lantern == LANTERN_OIL
 		RegisterForSingleUpdate(5)
@@ -413,19 +374,12 @@ endFunction
 ;-----------------------
 ;	Misc Functions		\
 ;------------------------------------------------------------------------------------
-function DisplayThreadTime()
-	float fThreadTimeDelta = GetCurrentGameTime() - pfThreadLastUpdateTime			;(difference in game-time days)
-	float fThreadTimeDeltaSec = (fThreadTimeDelta * 86400)/20						;(difference in real seconds, using 20:1 timescale)
-	WLDebug(0, "Update interval " + fThreadTimeDeltaSec + "sec")
-	pfThreadLastUpdateTime = GetCurrentGameTime()
-endFunction
-
 function DropLantern()
 	if SettingIsEnabled(_WL_SettingDropLit) && !IsInMenuMode()
 		int iPosition = _WL_SettingPosition.GetValueInt()
 		if PlayerRef.IsEquipped(_WL_WearableLanternInvDisplay) && iPosition == 2
 			if SettingIsEnabled(_WL_SettingOil)
-				if _WL_Oillevel.GetValue() > 0.0 	;Player must have oil to drop lit lantern. Not strictly enforced but helps verisimilitude.
+				if _WL_Oillevel.GetValue() > 0.0
 					PlayerRef.UnequipItem(_WL_WearableLanternInvDisplay, abSilent = true)
 					PlayerRef.RemoveItem(_WL_WearableLanternInvDisplay, abSilent = true)
 					PlayerRef.PlaceAtMe(_WL_LanternDroppedLit)
@@ -439,7 +393,7 @@ function DropLantern()
 			endif
 		elseif PlayerRef.IsEquipped(_WL_WearableTorchbugInvDisplay) && iPosition == 2
 			if SettingIsEnabled(_WL_SettingFeeding)
-				if pPollenLevel > 0.0 	;Player must have oil to drop lit lantern. Not strictly enforced but helps verisimilitude.
+				if _WL_PollenLevel.GetValueInt() > 0
 					PlayerRef.UnequipItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
 					if PlayerRef.IsSneaking()
 						GoToState("BlockEvents")
@@ -461,7 +415,7 @@ function DropLantern()
 			endif
 		elseif PlayerRef.IsEquipped(_WL_WearableTorchbugInvDisplayRED) && iPosition == 2
 			if SettingIsEnabled(_WL_SettingFeeding)
-				if pPollenLevel > 0.0 	;Player must have oil to drop lit lantern. Not strictly enforced but helps verisimilitude.
+				if _WL_PollenLevel.GetValueInt() > 0
 					PlayerRef.UnequipItem(_WL_WearableTorchbugInvDisplayRED, abSilent = true)
 					if PlayerRef.IsSneaking()
 						GoToState("BlockEvents")
@@ -484,7 +438,7 @@ function DropLantern()
 			endif
 		elseif PlayerRef.IsEquipped(_WL_WearablePaperInvDisplay) && iPosition == 2
 			if SettingIsEnabled(_WL_SettingOil)
-				if _WL_Oillevel.GetValue() > 0.0 	;Player must have oil to drop lit lantern. Not strictly enforced but helps verisimilitude.
+				if _WL_Oillevel.GetValue() > 0.0
 					PlayerRef.UnequipItem(_WL_WearablePaperInvDisplay, abSilent = true)
 					PlayerRef.RemoveItem(_WL_WearablePaperInvDisplay, abSilent = true)
 					PlayerRef.PlaceAtMe(_WL_PaperHeldDroppedLit)
@@ -501,75 +455,34 @@ function DropLantern()
 endFunction
 
 function RefillTorchbug()
-	int iPollenUsed = 0
+	int pollen_level = _WL_PollenLevel.GetValueInt()
 	
-	;How much pollen is needed?
-	int iPollenNeeded = 32 - pPollenLevel
-	
-	if iPollenNeeded == 0
-		return
-	endif
-	
-	;How much pollen do I have?
-	int iPollenTotal = PlayerRef.GetItemCount(_WL_Pollen)
-	
-	if iPollenTotal == 0
-		;No more inventory pollen - check for flowers and convert
-		bool bHasFlowers = true
-		while iPollenNeeded > PlayerRef.GetItemCount(_WL_Pollen) && bHasFlowers
-			;Convert flowers to pollen and loop - How many flowers do I have?
-			if PlayerRef.GetItemCount(Thistle01) > 0
-				PlayerRef.RemoveItem(Thistle01, 1, true)
-				PlayerRef.AddItem(_WL_Pollen, 8, true)
-			elseif PlayerRef.GetItemCount(Lavender) > 0
-				PlayerRef.RemoveItem(Lavender, 1, true)
-				PlayerRef.AddItem(_WL_Pollen, 8, true)
-			elseif PlayerRef.GetItemCount(MountainFlower01Blue) > 0
-				PlayerRef.RemoveItem(MountainFlower01Blue, 1, true)
-				PlayerRef.AddItem(_WL_Pollen, 8, true)
-			elseif PlayerRef.GetItemCount(MountainFlower01Purple) > 0
-				PlayerRef.RemoveItem(MountainFlower01Purple, 1, true)
-				PlayerRef.AddItem(_WL_Pollen, 8, true)
-			elseif PlayerRef.GetItemCount(MountainFlower01Red) > 0
-				PlayerRef.RemoveItem(MountainFlower01Red, 1, true)
-				PlayerRef.AddItem(_WL_Pollen, 8, true)
-			elseif Compatibility.bIsDLC1Loaded
-				if PlayerRef.GetItemCount(Compatibility.MountainFlowerYellow) > 0
-					PlayerRef.RemoveItem(Compatibility.MountainFlowerYellow, 1, true)
-					PlayerRef.AddItem(_WL_Pollen, 8, true)
-				else
-					bHasFlowers = false
-				endif
-			else
-				bHasFlowers = false
-			endif
-	
-		endWhile
-	
-	endif
-	
-	iPollenTotal = PlayerRef.GetItemCount(_WL_Pollen)
-	
-	if iPollenTotal == 0
-		if pPollenLevel != iLastPollenLevel
-			if pPollenLevel > 0
-				;show message
-			else
-				_WL_TorchbugNoPollen.Show()
-			endif
+	bool has_flowers = true
+	while pollen_level < 32 && has_flowers
+		;Convert flowers to pollen
+		if PlayerRef.GetItemCount(Thistle01) > 0
+			PlayerRef.RemoveItem(Thistle01, 1, true)
+			pollen_level += 8
+		elseif PlayerRef.GetItemCount(Lavender) > 0
+			PlayerRef.RemoveItem(Lavender, 1, true)
+			pollen_level += 8
+		elseif PlayerRef.GetItemCount(MountainFlower01Blue) > 0
+			PlayerRef.RemoveItem(MountainFlower01Blue, 1, true)
+			pollen_level += 8
+		elseif PlayerRef.GetItemCount(MountainFlower01Purple) > 0
+			PlayerRef.RemoveItem(MountainFlower01Purple, 1, true)
+			pollen_level += 8
+		elseif PlayerRef.GetItemCount(MountainFlower01Red) > 0
+			PlayerRef.RemoveItem(MountainFlower01Red, 1, true)
+			pollen_level += 8
+		elseif Compatibility.bIsDLC1Loaded && PlayerRef.GetItemCount(Compatibility.MountainFlowerYellow) > 0
+			PlayerRef.RemoveItem(Compatibility.MountainFlowerYellow, 1, true)
+			pollen_level += 8
+		else
+			has_flowers = false
 		endif
-		;Record the pollen level to control messages
-		iLastPollenLevel = pPollenLevel
-		return
-	elseif iPollenTotal >= iPollenNeeded
-		pPollenLevel = 32
-		iPollenUsed = iPollenNeeded
-	elseif iPollenTotal < iPollenNeeded
-		pPollenLevel += iPollenTotal
-		iPollenUsed = iPollenTotal
-	endif
-	
-	PlayerRef.RemoveItem(_WL_Pollen, iPollenUsed, true)
+	endWhile
+	_WL_PollenLevel.SetValueInt(pollen_level)
 endFunction
 
 function RefillLantern()
@@ -665,26 +578,25 @@ function SetOilLevel()
 		float oil_level = _WL_OilLevel.GetValue()
 		WLDebug(0, "last_oil_level = " + last_oil_level + ", oil_level = " + oil_level)
 
-		;Attempt to refill the player's lantern
+		; Attempt to refill the player's lantern
 		if oil_level == 0
 			RefillLantern()
 			oil_level = _WL_OilLevel.GetValue()
 		endif
 
-		; Set oil state global and show messages as necessary
-		if last_oil_level < oil_level
-			; Oil added
+		; Set fuel state global and show messages as necessary
+		if last_oil_level < oil_level 							; Oil added
 			_WL_LanternOilUsed.Show() 
 			_WL_HasFuel.SetValueInt(1)
-		elseif last_oil_level > oil_level && oil_level > 0
-			; Oil burned
+		elseif last_oil_level > oil_level && oil_level > 0 		; Oil burned
 			ShowRemainingOilMessage(oil_level)
 			_WL_HasFuel.SetValueInt(1)
-		elseif last_oil_level == oil_level && oil_level > 0
-			; The player has oil
+		elseif last_oil_level == oil_level && oil_level > 0 	; The player has oil
 			_WL_HasFuel.SetValueInt(1)
+		elseif last_oil_level > 0 && oil_level == 0 			; Oil depleted
+			_WL_LanternOilRemainingEmptyRanOut.Show()
+			_WL_HasFuel.SetValueInt(2)
 		elseif oil_level == 0
-			; Oil depleted
 			_WL_HasFuel.SetValueInt(2)
 		endif
 		last_oil_level = oil_level
@@ -711,13 +623,66 @@ function UpdateOil()
 endFunction
 
 function SetPollenLevel()
+	if SettingIsEnabled(_WL_SettingFeeding)
+		int pollen_level = _WL_PollenLevel.GetValueInt()
+		WLDebug(0, "last_pollen_level = " + last_pollen_level + ", pollen_level = " + pollen_level)
 
+		; Attempt to refill the player's lantern
+		if pollen_level == 0
+			RefillTorchbug()
+			pollen_level = _WL_PollenLevel.GetValueInt()
+		endif
+
+		; Set fuel state global and show messages as necessary
+		if last_pollen_level < pollen_level 							; Pollen added
+			_WL_TorchbugFlowersUsed.Show()
+			_WL_HasFuel.SetValueInt(1)
+		elseif last_pollen_level > pollen_level && pollen_level > 0 	; Pollen used
+			ShowRemainingPollenMessage(pollen_level)
+			_WL_HasFuel.SetValueInt(1)
+		elseif last_pollen_level == pollen_level && pollen_level > 0 	; The player has pollen
+			_WL_HasFuel.SetValueInt(1)
+		elseif last_pollen_level > 0 && pollen_level == 0 				; Pollen depleted
+			_WL_LanternPollenRemainingEmptyRanOut.Show()
+			_WL_HasFuel.SetValueInt(2)
+		elseif pollen_level == 0
+			_WL_HasFuel.SetValueInt(2)
+		endif
+		last_pollen_level = pollen_level
+	else
+		; The player is not using the feeding mechanic
+		_WL_HasFuel.SetValueInt(0)	
+	endif
+endFunction
+
+function UpdatePollen()
+	if SettingIsEnabled(_WL_SettingFeeding)
+		int pollen_level = _WL_PollenLevel.GetValueInt()
+		if pollen_update_counter >= 6
+			if pollen_level >= 1
+				pollen_level -= 1
+				_WL_PollenLevel.SetValueInt(pollen_level)
+				pollen_update_counter = 0
+			endif
+			WLDebug(1, "Pollen Level: " + pollen_level)
+		else
+			pollen_update_counter += 1
+		endif
+	endif
 endFunction
 
 function ShowRemainingOilMessage(float oil_level)
 	if oil_level == 8.0
 		_WL_LanternOilRemainingHalfFull.Show()
 	elseif oil_level == 4.0
+		_WL_LanternOilRemainingMostlyEmpty.Show()
+	endif
+endFunction
+
+function ShowRemainingPollenMessage(int pollen_level)
+	if pollen_level == 16
+		_WL_LanternOilRemainingHalfFull.Show()
+	elseif pollen_level == 8
 		_WL_LanternOilRemainingMostlyEmpty.Show()
 	endif
 endFunction
