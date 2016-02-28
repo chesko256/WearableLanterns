@@ -134,11 +134,21 @@ endState
 Event OnInit()
 	RegisterForSingleUpdate(0.1)
 	RegisterForSingleUpdateGameTime(0.1)
+	RegisterForAnimationEvent(PlayerRef, "tailSneakIdle")
+	RegisterForAnimationEvent(PlayerRef, "tailSneakLocomotion")
+	RegisterForAnimationEvent(PlayerRef, "tailMTIdle")
+	RegisterForAnimationEvent(PlayerRef, "tailMTLocomotion")
+	RegisterForAnimationEvent(PlayerRef, "tailCombatIdle")
+	RegisterForAnimationEvent(PlayerRef, "tailCombatLocomotion")
 endEvent
 
 Event OnLocationChange(Location akOldLoc, Location akNewLoc)
 	SetShouldLightLanternAutomatically(akNewLoc)
 endEvent
+
+Event OnAnimationEvent(ObjectReference akSource, string asEventName)
+	SetShouldLightLanternAutomatically(PlayerRef.GetCurrentLocation())
+EndEvent
 
 Event OnUpdateGameTime()
 	SetShouldLightLanternAutomatically(PlayerRef.GetCurrentLocation())
