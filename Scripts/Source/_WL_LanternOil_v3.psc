@@ -82,7 +82,7 @@ Message property _WL_LanternOilUsed auto
 int property current_lantern = 0 auto hidden
 
 int property LANTERN_NONE = 0 auto hidden
-int property LANTERN_NORMAL = 1 auto hidden
+int property LANTERN_OIL = 1 auto hidden
 int property LANTERN_TORCHBUG = 2 auto hidden
 int property LANTERN_TORCHBUGEMPTY = 3 auto hidden
 
@@ -171,16 +171,16 @@ Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
 	elseif (akBaseObject as Armor).IsShield() || (akBaseObject as Weapon && PlayerRef.GetEquippedItemType(0) <= 4)	;I equipped a shield or off-hand weapon
 		WLDebug(1, "OnObjectEquipped Event, Weapon or Shield")
 		DropLantern()
-		RegisterForSingleUpdate(0.1)
+		; RegisterForSingleUpdate(0.1)
     elseif akBaseObject == _WL_WearableLanternInvDisplay
-    	SetLantern(akBaseObject, 0, LANTERN_NORMAL, "Lantern")
+    	SetLantern(akBaseObject, 0, LANTERN_OIL, "Lantern")
 	elseif akBaseObject == _WL_WearableTorchbugInvDisplay
 		SetLantern(akBaseObject, 1, LANTERN_TORCHBUG, "Torchbug")
 	elseif akBaseObject == _WL_WearableTorchbugInvDisplayRED
 		SetLantern(akBaseObject, 2, LANTERN_TORCHBUG, "Torchbug")
 	elseif akBaseObject == _WL_WearablePaperInvDisplay
 		if Compatibility.bIsDLC2Loaded
-			SetLantern(akBaseObject, 3, LANTERN_NORMAL, "Paper")
+			SetLantern(akBaseObject, 3, LANTERN_OIL, "Paper")
 		else
 			debug.notification("Dragonborn not installed.")
 			while PlayerRef.GetItemCount(_WL_WearablePaperInvDisplay) > 0
@@ -210,9 +210,8 @@ function SetLantern(Form akBaseObject, int aiLanternIndex, int aiLanternState, s
 	DestroyNonDisplayLantern(akBaseObject)
 	EquipNonPlayableLantern(aiLanternIndex)			;Equip the "real" lantern
 	;The player has a lantern
-	_WL_gToggle.SetValueInt(1)
 	current_lantern = aiLanternState
-	RegisterForSingleUpdate(0.1)
+	ToggleLanternOn()
 endFunction
 
 Event OnItemRemoved(Form akBaseItem, int aiItemCount, ObjectReference akItemReference, ObjectReference akDestContainer)
@@ -224,11 +223,9 @@ endEvent
 Event OnUpdate()
 	DisplayThreadTime()
 	
-	if current_lantern == LANTERN_NORMAL
+	if current_lantern == LANTERN_OIL
+		UpdateOil()
 		SetOilLevel()
-		; @TODO: Delete?
-		;Ensure that torchbug lights aren't on
-		; pollen_update_counter = 0
 	elseif current_lantern == LANTERN_TORCHBUG
 		
 		; PULLED OUT AUTO-ON CODE HERE
@@ -269,17 +266,36 @@ Event OnUpdate()
 		; Ensure that lantern lights aren't on
 		oil_update_counter = 0
 	
-	elseif current_lantern == LANTERN_TORCHBUGEMPTY
-		TryToCatchTorchbug()
-	else						; Reset counters
-		oil_update_counter = 0
-		pollen_update_counter = 0	
+	;elseif current_lantern == LANTERN_TORCHBUGEMPTY
+	;	TryToCatchTorchbug()
+	;else						; Reset counters
+	;	oil_update_counter = 0
+	;	pollen_update_counter = 0	
 	endif
 	
 	WLDebug(0, "Current light level: " + PlayerRef.GetLightLevel())
 	
-	RegisterForSingleUpdate(5)
+	if SettingIsEnabled(_WL_SettingOil) && _WL_gToggle.GetValueInt() == 1 && current_lantern == LANTERN_OIL
+		RegisterForSingleUpdate(5)
+	elseif SettingIsEnabled(_WL_SettingFeeding) && _WL_gToggle.GetValueInt() == 1 && current_lantern == LANTERN_TORCHBUG
+		RegisterForSingleUpdate(5)
+	endif
 endEvent
+
+function ToggleLanternOn()
+	if current_lantern == LANTERN_OIL
+		SetOilLevel()
+	elseif current_lantern == LANTERN_TORCHBUG
+		SetPollenLevel()
+	endif
+	_WL_gToggle.SetValueInt(1)
+	RegisterForSingleUpdate(5)
+endFunction
+
+function ToggleLanternOff()
+	_WL_gToggle.SetValueInt(0)
+	UnregisterForUpdate()
+endFunction
 
 function TryToCatchTorchbug()
 	; Drives torchbug catching mechanics. Support for additional glowing bugs from 101BUGS.	
@@ -620,22 +636,27 @@ function SetShouldLightLanternAutomatically(Location akLocation)
 	else
 		if PlayerRef.IsSneaking()
 			_WL_AutoModeLightOn.SetValueInt(2)
+			ToggleLanternOff()
 		else
 			if IsRefInInterior(PlayerRef)
 				if akLocation.HasKeyword(LocTypeCastle) || akLocation.HasKeyword(LocTypeGuild) || 	\
 					akLocation.HasKeyword(LocTypeInn) || akLocation.HasKeyword(LocTypeHouse) || 	\
 					akLocation.HasKeyword(LocTypePlayerHouse) || akLocation.HasKeyword(LocTypeStore)
 					_WL_AutoModeLightOn.SetValueInt(2)
+					ToggleLanternOff()
 				else
 					; Inside in non-restricted location type
 					_WL_AutoModeLightOn.SetValueInt(1)
+					ToggleLanternOn()
 				endif
 			else
 				if GameHour.GetValue() >= 19.0 || GameHour.GetValue() <= 7.0
 					; Outside at night
 					_WL_AutoModeLightOn.SetValueInt(1)
+					ToggleLanternOn()
 				else
 					_WL_AutoModeLightOn.SetValueInt(2)
+					ToggleLanternOff()
 				endif
 			endif
 		endif
@@ -646,17 +667,6 @@ function SetOilLevel()
 	if SettingIsEnabled(_WL_SettingOil)
 		float oil_level = _WL_OilLevel.GetValue()
 		WLDebug(0, "last_oil_level = " + last_oil_level + ", oil_level = " + oil_level)
-
-		if oil_update_counter >= 6             	  ;30 seconds have passed, reduce oil in player's lantern
-			if oil_level >= 0.5
-				oil_level -= 0.5
-				_WL_OilLevel.SetValue(oil_level)
-				oil_update_counter = 0
-			endif
-			WLDebug(1, "Oil Level: " + oil_level)
-		else
-			oil_update_counter += 1
-		endif
 
 		;Attempt to refill the player's lantern
 		if oil_level == 0
@@ -676,7 +686,7 @@ function SetOilLevel()
 		elseif last_oil_level == oil_level && oil_level > 0
 			; The player has oil
 			_WL_HasFuel.SetValueInt(1)
-		elseif last_oil_level > 0 && oil_level == 0
+		elseif oil_level == 0
 			; Oil depleted
 			_WL_HasFuel.SetValueInt(2)
 		endif
@@ -685,6 +695,26 @@ function SetOilLevel()
 		;Player is not using the oil-burning mechanic
 		_WL_HasFuel.SetValueInt(0)
 	endif
+endFunction
+
+function UpdateOil()
+	if SettingIsEnabled(_WL_SettingOil)
+		float oil_level = _WL_OilLevel.GetValue()
+		if oil_update_counter >= 6             	  ;30 seconds have passed, reduce oil in player's lantern
+			if oil_level >= 0.5
+				oil_level -= 0.5
+				_WL_OilLevel.SetValue(oil_level)
+				oil_update_counter = 0
+			endif
+			WLDebug(1, "Oil Level: " + oil_level)
+		else
+			oil_update_counter += 1
+		endif
+	endif
+endFunction
+
+function SetPollenLevel()
+
 endFunction
 
 function ShowRemainingOilMessage(float oil_level)

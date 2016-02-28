@@ -1,6 +1,7 @@
 Scriptname _WL_SkyUIConfigPanelScript extends SKI_ConfigBase conditional
 
 _WL_LanternOil_v3 property LanternQuest auto
+Actor property PlayerRef auto
 
 string[] MeterDisplayList
 int MeterDisplayIndex = 2
@@ -613,25 +614,21 @@ function ToggleLantern()
 	if _WL_SettingAutomatic.GetValueInt() == 2
 		_WL_AutomaticModeError.show()
 	else
-		if LanternQuest.current_lantern == LanternQuest.LANTERN_NORMAL
+		if LanternQuest.current_lantern == LanternQuest.LANTERN_OIL
 			if _WL_gToggle.GetValueInt() == 1
-				_WL_gToggle.SetValueInt(0)
-				_WL_OilLanternOff.Play(Game.GetPlayer())
-				;LanternQuest.TryToStopLantern()
+				LanternQuest.ToggleLanternOff()
+				_WL_OilLanternOff.Play(PlayerRef)
 			else
-				_WL_gToggle.SetValueInt(1)
-				_WL_OilLanternOn.Play(Game.GetPlayer())
-				;LanternQuest.TryToStartLantern(LanternQuest.myLantern)
+				LanternQuest.ToggleLanternOn()
+				_WL_OilLanternOn.Play(PlayerRef)
 			endIf
 		elseif LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
 			if _WL_gToggle.GetValueInt() == 1
-				_WL_gToggle.SetValueInt(0)
-				PHYBottleSmallH.Play(Game.GetPlayer())
-				;LanternQuest.TryToStopTorchbug()
+				LanternQuest.ToggleLanternOff()
+				PHYBottleSmallH.Play(PlayerRef)
 			else
-				_WL_gToggle.SetValueInt(1)
-				PHYBottleSmallH.Play(Game.GetPlayer())
-				;LanternQuest.TryToStartTorchbug(LanternQuest.myLantern)
+				LanternQuest.ToggleLanternOn()
+				PHYBottleSmallH.Play(PlayerRef)
 			endIf
 		endIf
 	endIf
@@ -640,7 +637,7 @@ endFunction
 function CheckFuel()
 	int i = _WL_CheckFuelDisplay.GetValueInt()
 	if i == 0  									;Meter, Message
-		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_NORMAL
+		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_OIL
 			ShowOilRemainingMessage(_WL_OilLevel.GetValue())
 			ChooseMeterPosition(MeterLayoutIndex)
 		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
@@ -648,13 +645,13 @@ function CheckFuel()
 			ChooseMeterPosition(MeterLayoutIndex)
 		endIf
 	elseif i == 1 								;Meter Only
-		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_NORMAL
+		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_OIL
 			ChooseMeterPosition(MeterLayoutIndex)
 		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
 			ChooseMeterPosition(MeterLayoutIndex)
 		endIf
 	elseif i == 2 								;Message Only
-		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_NORMAL
+		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_OIL
 			ShowOilRemainingMessage(_WL_OilLevel.GetValue())
 		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
 			_WL_TorchbugRemainingFlowers.Show(LanternQuest.pPollenLevel)

@@ -45,8 +45,8 @@ endFunction
 
 function UpdateMeter(bool bSkipDisplayHandling = false)
 	float fThisFuelValue
-	if (LanternQuest.current_lantern == LanternQuest.LANTERN_NORMAL || LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG) && (_WL_SettingOil.GetValueInt() == 2 || _WL_SettingFeeding.GetValueInt() == 2)
-		if LanternQuest.current_lantern == LanternQuest.LANTERN_NORMAL
+	if (LanternQuest.current_lantern == LanternQuest.LANTERN_OIL || LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG) && (_WL_SettingOil.GetValueInt() == 2 || _WL_SettingFeeding.GetValueInt() == 2)
+		if LanternQuest.current_lantern == LanternQuest.LANTERN_OIL
 			fThisFuelValue = _WL_OilLevel.GetValue()
 			UpdateOil(fThisFuelValue, bSkipDisplayHandling)
 		elseif LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
