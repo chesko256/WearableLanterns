@@ -28,7 +28,6 @@ int General_SettingOilToggle_OID
 int General_HotkeyLantern_OID
 int General_HotkeyCheckFuel_OID
 int General_SettingPollenToggle_OID
-int General_SettingCandlesToggle_OID
 int General_SettingCheckFuelDisplayMenu_OID
 int Interface_UIMeterDisplay_OID
 int Interface_UIMeterLayout_OID
@@ -167,12 +166,7 @@ function PageReset_General()
 	else
 		General_SettingPollenToggle_OID = AddToggleOption("$WearableLanternsGeneralSettingFuelPollen", false)
 	endif
-	;/if _WL_SettingCandleFuel.GetValueInt() == 2
-		General_SettingCandlesToggle_OID = AddToggleOption("$WearableLanternsGeneralSettingFuelCandles", true)
-	else
-		General_SettingCandlesToggle_OID = AddToggleOption("$WearableLanternsGeneralSettingFuelCandles", false)
-	endif/;
-
+	
 	SetCursorPosition(1)
 	AddHeaderOption("$WearableLanternsGeneralHeaderHotkeys") ;Hotkeys
 	General_HotkeyLantern_OID = AddKeyMapOption("$WearableLanternsGeneralSettingHotkeyLantern", _WL_HotkeyPlayerLantern.GetValueInt())
@@ -221,8 +215,6 @@ event OnOptionHighlight(int option)
 		SetInfoText("$WearableLanternsFuelHighlight")
 	elseif option == General_SettingPollenToggle_OID
 		SetInfoText("$WearableLanternsFuelHighlightPollen")
-	elseif option == General_SettingCandlesToggle_OID
-		SetInfoText("$WearableLanternsFuelHighlightCandles")
 	elseif option == General_HotkeyLantern_OID
 		SetInfoText("$WearableLanternsHotkeyLanternHighlight")
 	elseif option == General_HotkeyCheckFuel_OID
@@ -263,25 +255,21 @@ event OnOptionSelect(int option)
 		if _WL_SettingOil.GetValueInt() == 2
 			SetToggleOptionValue(General_SettingOilToggle_OID, false)
 			_WL_SettingOil.SetValue(1)
+			LanternQuest.ToggleLanternOn()
 		else
 			SetToggleOptionValue(General_SettingOilToggle_OID, true)
 			_WL_SettingOil.SetValue(2)
+			LanternQuest.ToggleLanternOn()
 		endif
 	elseif option == General_SettingPollenToggle_OID
 		if _WL_SettingFeeding.GetValueInt() == 2
 			SetToggleOptionValue(General_SettingPollenToggle_OID, false)
 			_WL_SettingFeeding.SetValue(1)
+			LanternQuest.ToggleLanternOn()
 		else
 			SetToggleOptionValue(General_SettingPollenToggle_OID, true)
 			_WL_SettingFeeding.SetValue(2)
-		endif
-	elseif option == General_SettingCandlesToggle_OID
-		if _WL_SettingCandleFuel.GetValueInt() == 2
-			SetToggleOptionValue(General_SettingCandlesToggle_OID, false)
-			_WL_SettingCandleFuel.SetValue(1)
-		else
-			SetToggleOptionValue(General_SettingCandlesToggle_OID, true)
-			_WL_SettingCandleFuel.SetValue(2)
+			LanternQuest.ToggleLanternOn()
 		endif
 	endif
 endEvent
@@ -309,9 +297,6 @@ event OnOptionDefault(int option)
 	elseif option == General_SettingPollenToggle_OID
 		SetToggleOptionValue(General_SettingPollenToggle_OID, false)
 		_WL_SettingFeeding.SetValueInt(1)
-	elseif option == General_SettingCandlesToggle_OID
-		SetToggleOptionValue(General_SettingCandlesToggle_OID, false)
-		_WL_SettingCandleFuel.SetValueInt(1)
 	elseif option == General_HotkeyLantern_OID
 		UnregisterForKey(_WL_HotkeyPlayerLantern.GetValueInt())
 		_WL_HotkeyPlayerLantern.SetValueInt(0)
@@ -437,7 +422,7 @@ event OnOptionMenuAccept(int option, int index)
 		SetMenuOptionValue(General_SettingModeMenu_OID, ModeList[ModeIndex])
 		_WL_SettingAutomatic.SetValueInt(index + 1)
 		if _WL_SettingAutomatic.GetValueInt() == 2
-			_WL_gToggle.SetValueInt(1)
+			LanternQuest.ToggleLanternOn()
 		endIf
 	elseif option == General_SettingCheckFuelDisplayMenu_OID
 		CheckFuelDisplayIndex = index

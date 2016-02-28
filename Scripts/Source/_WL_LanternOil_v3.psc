@@ -100,6 +100,7 @@ float last_oil_level = 0.0
 int pollen_update_counter = 0
 int iLastPollenLevel = 0
 int iLastPollenLevel2 = 0
+bool is_sneaking = false
 
 int property pPollenLevel = 0 auto hidden
 
@@ -147,7 +148,17 @@ Event OnLocationChange(Location akOldLoc, Location akNewLoc)
 endEvent
 
 Event OnAnimationEvent(ObjectReference akSource, string asEventName)
-	SetShouldLightLanternAutomatically(PlayerRef.GetCurrentLocation())
+	if (asEventName == "tailSneakIdle" || asEventName == "tailSneakLocomotion")
+		if is_sneaking == false
+			is_sneaking = true
+			SetShouldLightLanternAutomatically(PlayerRef.GetCurrentLocation())
+		endif
+	else
+		if is_sneaking == true
+			is_sneaking = false
+			SetShouldLightLanternAutomatically(PlayerRef.GetCurrentLocation())
+		endif
+	endif
 EndEvent
 
 Event OnUpdateGameTime()
@@ -171,7 +182,6 @@ Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
 	elseif (akBaseObject as Armor).IsShield() || (akBaseObject as Weapon && PlayerRef.GetEquippedItemType(0) <= 4)	;I equipped a shield or off-hand weapon
 		WLDebug(1, "OnObjectEquipped Event, Weapon or Shield")
 		DropLantern()
-		; RegisterForSingleUpdate(0.1)
     elseif akBaseObject == _WL_WearableLanternInvDisplay
     	SetLantern(akBaseObject, 0, LANTERN_OIL, "Lantern")
 	elseif akBaseObject == _WL_WearableTorchbugInvDisplay
@@ -200,11 +210,15 @@ Event OnObjectUnequipped(Form akBaseObject, ObjectReference akReference)
 	WLDebug(1, "OnObjectUnequipped " + akBaseObject)
 	if akBaseObject == _WL_WearableLanternInvDisplay || akBaseObject == _WL_WearablePaperInvDisplay || \
 	   akBaseObject == _WL_WearableTorchbugInvDisplay || akBaseObject == _WL_WearableTorchbugInvDisplayRED
+	    ToggleLanternOff()
 		DestroyNonDisplayLantern(akBaseObject)
     endif
 endEvent
 
 function SetLantern(Form akBaseObject, int aiLanternIndex, int aiLanternState, string asTorchTypeDebug)
+	; Allow unequip events to process first
+	Utility.Wait(1)
+
 	WLDebug(1, "Setting lantern: " + asTorchTypeDebug)
 	LanternMutex(akBaseObject)						;Prevent using more than one light source
 	DestroyNonDisplayLantern(akBaseObject)
