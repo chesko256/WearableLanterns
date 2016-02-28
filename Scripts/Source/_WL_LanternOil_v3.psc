@@ -105,6 +105,7 @@ bool is_sneaking = false
 float pfThreadLastUpdateTime = 0.0
 
 Keyword property _WL_Lantern auto
+Keyword property _WL_InventoryLantern auto
 Keyword property ArmorShield auto
 Keyword property LocTypeDwelling auto
 Keyword property LocTypeInn auto
@@ -205,7 +206,9 @@ Event OnObjectUnequipped(Form akBaseObject, ObjectReference akReference)
 		unequip_lock = true
 	    ToggleLanternOff()
 		DestroyNonDisplayLantern(akBaseObject)
-		UnequipDisplayLantern(akBaseObject)
+		if !akBaseObject.HasKeyword(_WL_InventoryLantern)
+			UnequipDisplayLantern(akBaseObject)
+		endif
 		unequip_lock = false
     endif
 endEvent
@@ -543,31 +546,31 @@ function UnequipDisplayLantern(Form akNonDisplayLantern)
 			akNonDisplayLantern == _WL_WearableLanternApparelFront || 			\
 			akNonDisplayLantern == _WL_LanternHeld
 
-		PlayerRef.UnequipItem(_WL_WearableLanternInvDisplay)
+		PlayerRef.UnequipItem(_WL_WearableLanternInvDisplay, abSilent = true)
 
 	elseif akNonDisplayLantern == _WL_WearableTorchbugApparel_Empty ||			\
 			akNonDisplayLantern == _WL_WearableTorchbugApparelFront_Empty ||	\
 			akNonDisplayLantern == _WL_TorchbugHeld_Empty
 
-		PlayerRef.UnequipItem(_WL_WearableTorchbugApparel_EmptyInvDisplay)
+		PlayerRef.UnequipItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, abSilent = true)
 
 	elseif akNonDisplayLantern == _WL_WearableTorchbugApparel ||				\
 			akNonDisplayLantern == _WL_WearableTorchbugApparelFront ||			\
 			akNonDisplayLantern == _WL_TorchbugHeld
 
-		PlayerRef.UnequipItem(_WL_WearableTorchbugInvDisplay)
+		PlayerRef.UnequipItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
 
 	elseif akNonDisplayLantern == _WL_WearableTorchbugApparelRED ||				\
 			akNonDisplayLantern == _WL_WearableTorchbugApparelFrontRED ||		\
 			akNonDisplayLantern == _WL_TorchbugHeldRED
 
-		PlayerRef.UnequipItem(_WL_WearableTorchbugInvDisplayRED)
+		PlayerRef.UnequipItem(_WL_WearableTorchbugInvDisplayRED, abSilent = true)
 
 	elseif akNonDisplayLantern == _WL_WearablePaperApparel ||					\
 			akNonDisplayLantern == _WL_WearablePaperApparelFront ||				\
 			akNonDisplayLantern == _WL_PaperHeld
 
-		PlayerRef.UnequipItem(_WL_WearablePaperInvDisplay)
+		PlayerRef.UnequipItem(_WL_WearablePaperInvDisplay, abSilent = true)
 	endif
 endFunction
 

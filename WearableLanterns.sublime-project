@@ -3,6 +3,9 @@
 	[
 		{
 			"path": "Scripts/Source"
+		},
+		{
+			"path": "interface/translations"
 		}
 	]
 }

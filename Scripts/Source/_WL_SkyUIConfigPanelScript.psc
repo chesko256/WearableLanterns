@@ -22,6 +22,7 @@ int CheckFuelDisplayIndex = 0
 
 int General_SettingBrightnessMenu_OID
 int General_SettingPositionMenu_OID
+int General_SettingSlot_OID
 int General_SettingModeMenu_OID
 int General_SettingDropLitToggle_OID
 int General_SettingOilToggle_OID
@@ -37,7 +38,6 @@ int Interface_UIMeterDisplayTime_OID
 int Interface_UIMeterHeight_OID
 int Interface_UIOilMeterColor_OID
 int Interface_UIPollenMeterColor_OID
-int Interface_UICandleMeterColor_OID
 
 bool property DLC2Loaded auto hidden conditional
 
@@ -48,7 +48,9 @@ GlobalVariable property _WL_SettingPosition auto 						;0 = Back, 1 = Front, 2 =
 GlobalVariable property _WL_SettingDropLit auto
 GlobalVariable property _WL_SettingOil auto
 GlobalVariable property _WL_SettingFeeding auto
-GlobalVariable property _WL_SettingCandleFuel auto
+GlobalVariable property _WL_SettingOffWhenSneaking auto
+GlobalVariable property _WL_SettingHoldActivateToggle auto
+GlobalVariable property _WL_SettingHoldActivateToggleDuration auto
 GlobalVariable property _WL_HotkeyPlayerLantern auto
 GlobalVariable property _WL_HotkeyCheckFuel auto
 GlobalVariable property _WL_CheckFuelDisplay auto
@@ -56,7 +58,6 @@ GlobalVariable property _WL_MeterOpacity auto
 GlobalVariable property _WL_MeterDisplayTime auto
 GlobalVariable property _WL_OilColor auto
 GlobalVariable property _WL_PollenColor auto
-GlobalVariable property _WL_CandleColor auto
 GlobalVariable Property _WL_SettingAutomatic auto
 GlobalVariable property _WL_FuelMeterDisplay_Contextual auto
 GlobalVariable property _WL_gToggle auto
@@ -65,7 +66,6 @@ Sound property _WL_OilLanternOff auto
 Sound property _WL_OilLanternOn auto
 Sound property PHYBottleSmallH auto
 
-Message property _WL_AutomaticModeError auto
 Message property _WL_LanternOilRemainingEmpty auto
 Message property _WL_LanternOilRemainingMostlyEmpty auto
 Message property _WL_LanternOilRemainingLessThanHalf auto
@@ -235,8 +235,6 @@ event OnOptionHighlight(int option)
 		SetInfoText("$WearableLanternsOilMeterColorHighlight")
 	elseif option == Interface_UIPollenMeterColor_OID
 		SetInfoText("$WearableLanternsPollenMeterColorHighlight")
-	elseif option == Interface_UICandleMeterColor_OID
-		SetInfoText("$WearableLanternsCandlesMeterColorHighlight")
 	endif
 endEvent
 
@@ -339,9 +337,6 @@ event OnOptionDefault(int option)
 		_WL_PollenColor.SetValueInt(0xE600E6)
 		SetColorOptionValue(option, _WL_PollenColor.GetValueInt())
 		ChooseMeterPosition(MeterLayoutIndex)
-	elseif option == Interface_UICandleMeterColor_OID
-		_WL_CandleColor.SetValueInt(0xFFFF99)
-		SetColorOptionValue(option, _WL_CandleColor.GetValueInt())
 	endif
 endEvent
 
@@ -456,32 +451,41 @@ event OnOptionMenuAccept(int option, int index)
 endEvent
 
 event OnOptionKeyMapChange(int option, int keyCode, string conflictControl, string conflictName)
+	bool success
 	if option == General_HotkeyLantern_OID
-		if conflictControl != ""
-			if conflictName != ""
-				ShowMessage("This key is already bound to " + conflictControl + " in " + conflictName + ". Please select a different key.")
-			else
-				ShowMessage("This key is already bound to " + conflictControl + " in Skyrim. Please select a different key.")
-			endif
-		else
-			_WL_HotkeyPlayerLantern.SetValueInt(keyCode)
-			RegisterForKey(_WL_HotkeyPlayerLantern.GetValueInt())
-			ForcePageReset()
+		success = RemapHotkey(option, keyCode, conflictControl, conflictName, _WL_HotkeyPlayerLantern)
+		if success
+			; SaveSettingToCurrentProfile("hotkey_togglelantern", keyCode)
 		endif
 	elseif option == General_HotkeyCheckFuel_OID
-		if conflictControl != ""
-			if conflictName != ""
-				ShowMessage("This key is already bound to " + conflictControl + " in " + conflictName + ". Please select a different key.")
-			else
-				ShowMessage("This key is already bound to " + conflictControl + " in Skyrim. Please select a different key.")
-			endif
-		else
-			_WL_HotkeyCheckFuel.SetValueInt(keyCode)
-			RegisterForKey(_WL_HotkeyCheckFuel.GetValueInt())
-			ForcePageReset()
+		success = RemapHotkey(option, keyCode, conflictControl, conflictName, _WL_HotkeyCheckFuel)
+		if success
+			; SaveSettingToCurrentProfile("hotkey_checkfuel", keyCode)
 		endif
 	endif
 endEvent
+
+bool function RemapHotkey(int option, int keyCode, string conflictControl, string conflictName, GlobalVariable akHotkeyGlobal)
+	if conflictControl != ""
+		if conflictName != ""
+			bool b = ShowMessage("This key is already bound to " + conflictControl + " in " + conflictName + ". Undesirable behavior may occur; use with caution, or assign to a different control.")
+			if b
+				akHotkeyGlobal.SetValueInt(keyCode)
+				RegisterForKey(akHotkeyGlobal.GetValueInt())
+				ForcePageReset()
+				return true
+			endif
+		else
+			ShowMessage("This key is already bound to " + conflictControl + " in Skyrim. Please select a different key.", a_withCancel = false)
+			return false
+		endif
+	else
+		akHotkeyGlobal.SetValueInt(keyCode)
+		RegisterForKey(akHotkeyGlobal.GetValueInt())
+		ForcePageReset()
+		return true
+	endif
+endFunction
 
 event OnOptionColorAccept(int option, int color)
 	if option == Interface_UIOilMeterColor_OID
@@ -490,10 +494,6 @@ event OnOptionColorAccept(int option, int color)
 		ChooseMeterPosition(MeterLayoutIndex)
 	elseif option == Interface_UIPollenMeterColor_OID
 		_WL_PollenColor.SetValueInt(color)
-		SetColorOptionValue(option, color)
-		ChooseMeterPosition(MeterLayoutIndex)
-	elseif option == Interface_UICandleMeterColor_OID
-		_WL_CandleColor.SetValueInt(color)
 		SetColorOptionValue(option, color)
 		ChooseMeterPosition(MeterLayoutIndex)
 	endif
@@ -509,6 +509,24 @@ Event OnKeyDown(int KeyCode)
 		CheckFuel()
 	endif
 endEvent
+
+Event OnControlDown(string control)
+	if _WL_SettingHoldActivateToggle.GetValueInt() == 2 && control == "Activate" && !Utility.IsInMenuMode()
+		RegisterForSingleUpdate(_WL_SettingHoldActivateToggleDuration.GetValue())
+	endif
+endEvent
+
+Event OnControlUp(string control, float HoldTime)
+	if control == "Activate" && !Utility.IsInMenuMode()
+		UnregisterForUpdate()
+	endif
+endEvent
+
+Event OnUpdate()
+	if Input.IsKeyPressed(Input.GetMappedKey("Activate"))
+		ToggleLantern()
+	endif
+EndEvent
 
 string function GetCustomControl(int keyCode)
 	if (keyCode == _WL_HotkeyPlayerLantern.GetValueInt())
@@ -594,25 +612,21 @@ function SetMeterPosition(string HAnchor, string VAnchor, float Fuel_X, float Fu
 endFunction
 
 function ToggleLantern()
-	if _WL_SettingAutomatic.GetValueInt() == 2
-		_WL_AutomaticModeError.show()
-	else
-		if LanternQuest.current_lantern == LanternQuest.LANTERN_OIL
-			if _WL_gToggle.GetValueInt() == 1
-				LanternQuest.ToggleLanternOff()
-				_WL_OilLanternOff.Play(PlayerRef)
-			else
-				LanternQuest.ToggleLanternOn()
-				_WL_OilLanternOn.Play(PlayerRef)
-			endIf
-		elseif LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
-			if _WL_gToggle.GetValueInt() == 1
-				LanternQuest.ToggleLanternOff()
-				PHYBottleSmallH.Play(PlayerRef)
-			else
-				LanternQuest.ToggleLanternOn()
-				PHYBottleSmallH.Play(PlayerRef)
-			endIf
+	if LanternQuest.current_lantern == LanternQuest.LANTERN_OIL
+		if _WL_gToggle.GetValueInt() == 1
+			LanternQuest.ToggleLanternOff()
+			_WL_OilLanternOff.Play(PlayerRef)
+		else
+			LanternQuest.ToggleLanternOn()
+			_WL_OilLanternOn.Play(PlayerRef)
+		endIf
+	elseif LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
+		if _WL_gToggle.GetValueInt() == 1
+			LanternQuest.ToggleLanternOff()
+			PHYBottleSmallH.Play(PlayerRef)
+		else
+			LanternQuest.ToggleLanternOn()
+			PHYBottleSmallH.Play(PlayerRef)
 		endIf
 	endIf
 endFunction
@@ -675,6 +689,9 @@ function ShowPollenRemainingMessage(int pollen_level)
 endFunction
 
 function RegisterForKeysOnLoad()
+	if _WL_SettingHoldActivateToggle.GetValueInt() == 2
+		RegisterForControl("Activate")
+	endif
 	if _WL_HotkeyPlayerLantern.GetValueInt() != 0
 		RegisterForKey(_WL_HotkeyPlayerLantern.GetValueInt())
 	endIf
