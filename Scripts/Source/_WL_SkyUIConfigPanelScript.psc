@@ -197,9 +197,6 @@ function PageReset_Interface()
 	Interface_UIPollenMeterColor_OID = AddColorOption("$WearableLanternsInterfaceSettingUIPollenMeterColor", _WL_PollenColor.GetValueInt())
 
 	AddEmptyOption()
-
-	;/AddHeaderOption("$WearableLanternsInterfaceHeaderMetersCandle")
-	Interface_UICandleMeterColor_OID = AddColorOption("$WearableLanternsInterfaceSettingUICandlesMeterColor", _WL_CandleColor.GetValueInt())/;
 endFunction
 
 event OnOptionHighlight(int option)
@@ -627,7 +624,7 @@ function CheckFuel()
 			ShowOilRemainingMessage(_WL_OilLevel.GetValue())
 			ChooseMeterPosition(MeterLayoutIndex)
 		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
-			_WL_TorchbugRemainingFlowers.Show(_WL_PollenLevel.GetValue())
+			ShowPollenRemainingMessage(_WL_PollenLevel.GetValueInt())
 			ChooseMeterPosition(MeterLayoutIndex)
 		endIf
 	elseif i == 1 								;Meter Only
@@ -640,7 +637,7 @@ function CheckFuel()
 		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_OIL
 			ShowOilRemainingMessage(_WL_OilLevel.GetValue())
 		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
-			_WL_TorchbugRemainingFlowers.Show(_WL_PollenLevel.GetValue())
+			ShowPollenRemainingMessage(_WL_PollenLevel.GetValueInt())
 		endIf
 	endIf
 endFunction
@@ -657,6 +654,22 @@ function ShowOilRemainingMessage(float oil_level)
 	elseif oil_level >= 10 && oil_level < 16
 		_WL_LanternOilRemainingMostlyFull.Show()
 	elseif oil_level == 16
+		_WL_LanternOilRemainingFull.Show()
+	endif
+endFunction
+
+function ShowPollenRemainingMessage(int pollen_level)
+	if pollen_level == 0
+		_WL_LanternOilRemainingEmpty.Show()
+	elseif pollen_level > 0 && pollen_level <= 12
+		_WL_LanternOilRemainingMostlyEmpty.Show()
+	elseif pollen_level > 12 && pollen_level < 16
+		_WL_LanternOilRemainingLessThanHalf.Show()
+	elseif pollen_level >= 16 && pollen_level < 20
+		_WL_LanternOilRemainingHalfFull.Show()
+	elseif pollen_level >= 20 && pollen_level < 32
+		_WL_LanternOilRemainingMostlyFull.Show()
+	elseif pollen_level == 32
 		_WL_LanternOilRemainingFull.Show()
 	endif
 endFunction

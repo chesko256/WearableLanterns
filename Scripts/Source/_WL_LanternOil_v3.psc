@@ -68,7 +68,6 @@ Message property _WL_TorchbugDropRelease auto
 
 Message property _WL_TorchbugEmptyEquip auto
 Message property _WL_TorchbugCatch auto
-Message property _WL_FireflyCatch auto
 Message property _WL_TorchbugNoPollen auto
 Message property _WL_TorchbugRemainingFlowers auto
 Message property _WL_TorchbugFlowersUsed auto
@@ -105,6 +104,8 @@ bool is_sneaking = false
 ;Timer variables (for debug purposes)
 float pfThreadLastUpdateTime = 0.0
 
+Keyword property _WL_Lantern auto
+Keyword property ArmorShield auto
 Keyword property LocTypeDwelling auto
 Keyword property LocTypeInn auto
 Keyword property LocTypeHouse auto
@@ -170,7 +171,7 @@ Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
 	if akBaseObject == Torch01
 		WLDebug(1, "OnObjectEquipped Event, Torch")
 		LanternMutex(akBaseObject)
-	elseif (akBaseObject as Armor).IsShield() || (akBaseObject as Weapon && PlayerRef.GetEquippedItemType(0) <= 4)	;I equipped a shield or off-hand weapon
+	elseif (akBaseObject as Armor && akBaseObject.HasKeyword(ArmorShield)) || (akBaseObject as Weapon && PlayerRef.GetEquippedItemType(0) <= 4)	;I equipped a shield or off-hand weapon
 		WLDebug(1, "OnObjectEquipped Event, Weapon or Shield")
 		DropLantern()
     elseif akBaseObject == _WL_WearableLanternInvDisplay
@@ -197,18 +198,25 @@ Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
 	endif
 endEvent
 
+bool unequip_lock = false
 Event OnObjectUnequipped(Form akBaseObject, ObjectReference akReference)
 	WLDebug(1, "OnObjectUnequipped " + akBaseObject)
-	if akBaseObject == _WL_WearableLanternInvDisplay || akBaseObject == _WL_WearablePaperInvDisplay || \
-	   akBaseObject == _WL_WearableTorchbugInvDisplay || akBaseObject == _WL_WearableTorchbugInvDisplayRED
+	if akBaseObject as Armor && akBaseObject.HasKeyword(_WL_Lantern)
+		unequip_lock = true
 	    ToggleLanternOff()
 		DestroyNonDisplayLantern(akBaseObject)
+		UnequipDisplayLantern(akBaseObject)
+		unequip_lock = false
     endif
 endEvent
 
 function SetLantern(Form akBaseObject, int aiLanternIndex, int aiLanternState, string asTorchTypeDebug)
 	; Allow unequip events to process first
-	Utility.Wait(1)
+	int i = 20
+    while unequip_lock == true && i > 0
+        Utility.WaitMenuMode(0.2)
+        i -= 1
+    endWhile
 
 	WLDebug(1, "Setting lantern: " + asTorchTypeDebug)
 	LanternMutex(akBaseObject)						;Prevent using more than one light source
@@ -257,16 +265,7 @@ function ToggleLanternOff()
 endFunction
 
 function CatchTorchbug(ObjectReference akTorchbug)
-	if akTorchbug.GetBaseObject() == CritterFirefly
-		;Torchbug
-		PlayerRef.UnequipItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, abSilent = true)
-		PlayerRef.RemoveItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, abSilent = true)
-		PlayerRef.AddItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
-		PlayerRef.EquipItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
-		_WL_TorchbugCatch.Show()
-		akTorchbug.Disable()
-		akTorchbug.Delete()
-	elseif Compatibility.bIsBUGSLoaded && akTorchbug.GetBaseObject() == Compatibility.FireflyBUG
+	if Compatibility.bIsBUGSLoaded && akTorchbug.GetBaseObject() == Compatibility.FireflyBUG
 		;Firefly (101BUGS)
 		PlayerRef.UnequipItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, abSilent = true)
 		PlayerRef.RemoveItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, abSilent = true)
@@ -537,6 +536,39 @@ function DestroyNonDisplayLantern(Form akBaseObject)
 	while PlayerRef.GetItemCount(_WL_AllLanterns) > 0
 		PlayerRef.RemoveItem(_WL_AllLanterns, 1, abSilent = true)
 	endWhile
+endFunction
+
+function UnequipDisplayLantern(Form akNonDisplayLantern)
+	if akNonDisplayLantern == _WL_WearableLanternApparel || 					\
+			akNonDisplayLantern == _WL_WearableLanternApparelFront || 			\
+			akNonDisplayLantern == _WL_LanternHeld
+
+		PlayerRef.UnequipItem(_WL_WearableLanternInvDisplay)
+
+	elseif akNonDisplayLantern == _WL_WearableTorchbugApparel_Empty ||			\
+			akNonDisplayLantern == _WL_WearableTorchbugApparelFront_Empty ||	\
+			akNonDisplayLantern == _WL_TorchbugHeld_Empty
+
+		PlayerRef.UnequipItem(_WL_WearableTorchbugApparel_EmptyInvDisplay)
+
+	elseif akNonDisplayLantern == _WL_WearableTorchbugApparel ||				\
+			akNonDisplayLantern == _WL_WearableTorchbugApparelFront ||			\
+			akNonDisplayLantern == _WL_TorchbugHeld
+
+		PlayerRef.UnequipItem(_WL_WearableTorchbugInvDisplay)
+
+	elseif akNonDisplayLantern == _WL_WearableTorchbugApparelRED ||				\
+			akNonDisplayLantern == _WL_WearableTorchbugApparelFrontRED ||		\
+			akNonDisplayLantern == _WL_TorchbugHeldRED
+
+		PlayerRef.UnequipItem(_WL_WearableTorchbugInvDisplayRED)
+
+	elseif akNonDisplayLantern == _WL_WearablePaperApparel ||					\
+			akNonDisplayLantern == _WL_WearablePaperApparelFront ||				\
+			akNonDisplayLantern == _WL_PaperHeld
+
+		PlayerRef.UnequipItem(_WL_WearablePaperInvDisplay)
+	endif
 endFunction
 
 function SetShouldLightLanternAutomatically(Location akLocation)
