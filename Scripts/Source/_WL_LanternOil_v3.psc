@@ -266,18 +266,9 @@ Event OnUpdate()
 			RefillTorchbug()
 		
 		else
-								; The player is not using the feeding mechanic
+			; The player is not using the feeding mechanic
 			_WL_HasFuel.SetValueInt(0)	
 		endif
-
-		; Ensure that lantern lights aren't on
-		oil_update_counter = 0
-	
-	;elseif current_lantern == LANTERN_TORCHBUGEMPTY
-	;	TryToCatchTorchbug()
-	;else						; Reset counters
-	;	oil_update_counter = 0
-	;	pollen_update_counter = 0	
 	endif
 	
 	WLDebug(0, "Current light level: " + PlayerRef.GetLightLevel())
@@ -304,40 +295,35 @@ function ToggleLanternOff()
 	UnregisterForUpdate()
 endFunction
 
-function TryToCatchTorchbug()
-	; Drives torchbug catching mechanics. Support for additional glowing bugs from 101BUGS.	
-	ObjectReference oFoundTorchbug = Game.FindClosestReferenceOfAnyTypeInListFromRef(_WL_GlowingBugList, PlayerRef, 200.0)
-	if oFoundTorchbug != none
-		if oFoundTorchbug.GetBaseObject() == CritterFirefly
-			;Torchbug
-			PlayerRef.UnequipItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, abSilent = true)
-			PlayerRef.RemoveItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, abSilent = true)
-			PlayerRef.AddItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
-			PlayerRef.EquipItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
-			_WL_TorchbugCatch.Show()
-			oFoundTorchbug.Delete()
-		elseif Compatibility.bIsBUGSLoaded && oFoundTorchbug.GetBaseObject() == Compatibility.FireflyBUG
-			;Firefly (101BUGS)
-			PlayerRef.UnequipItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, abSilent = true)
-			PlayerRef.RemoveItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, abSilent = true)
-			PlayerRef.AddItem(_WL_WearableTorchbugInvDisplayRED, abSilent = true)
-			PlayerRef.EquipItem(_WL_WearableTorchbugInvDisplayRED, abSilent = true)
-			_WL_TorchbugCatch.Show()
-			oFoundTorchbug.Delete()
-		else
-			;Default to torchbug
-			PlayerRef.UnequipItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, abSilent = true)
-			PlayerRef.RemoveItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, abSilent = true)
-			PlayerRef.AddItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
-			PlayerRef.EquipItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
-			_WL_TorchbugCatch.Show()
-			oFoundTorchbug.Delete()
-		endif
-	endif
-endFunction
-
 function CatchTorchbug(ObjectReference akTorchbug)
-
+	if akTorchbug.GetBaseObject() == CritterFirefly
+		;Torchbug
+		PlayerRef.UnequipItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, abSilent = true)
+		PlayerRef.RemoveItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, abSilent = true)
+		PlayerRef.AddItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
+		PlayerRef.EquipItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
+		_WL_TorchbugCatch.Show()
+		akTorchbug.Disable()
+		akTorchbug.Delete()
+	elseif Compatibility.bIsBUGSLoaded && akTorchbug.GetBaseObject() == Compatibility.FireflyBUG
+		;Firefly (101BUGS)
+		PlayerRef.UnequipItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, abSilent = true)
+		PlayerRef.RemoveItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, abSilent = true)
+		PlayerRef.AddItem(_WL_WearableTorchbugInvDisplayRED, abSilent = true)
+		PlayerRef.EquipItem(_WL_WearableTorchbugInvDisplayRED, abSilent = true)
+		_WL_TorchbugCatch.Show()
+		akTorchbug.Disable()
+		akTorchbug.Delete()
+	else
+		;Default to torchbug
+		PlayerRef.UnequipItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, abSilent = true)
+		PlayerRef.RemoveItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, abSilent = true)
+		PlayerRef.AddItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
+		PlayerRef.EquipItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
+		_WL_TorchbugCatch.Show()
+		akTorchbug.Disable()
+		akTorchbug.Delete()
+	endif
 endFunction
 
 ;-----------------------
