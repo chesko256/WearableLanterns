@@ -74,7 +74,6 @@ Message property _WL_TorchbugNoPollen auto
 Message property _WL_LanternOilDepleted auto
 Message property _WL_TorchbugRemainingFlowers auto
 Message property _WL_TorchbugFlowersUsed auto
-Message property _WL_LanternOilRemainingMostlyFull auto
 Message property _WL_LanternOilRemainingHalfFull auto
 Message property _WL_LanternOilRemainingMostlyEmpty auto
 Message property _WL_LanternOilUsed auto
@@ -188,11 +187,9 @@ Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
 endEvent
 
 Event OnObjectUnequipped(Form akBaseObject, ObjectReference akReference)
-	if akBaseObject == _WL_WearableLanternInvDisplay || akBaseObject == _WL_WearablePaperInvDisplay
-		WLDebug(1, "OnObjectUnequipped Event, Lantern/paper")
-		DestroyNonDisplayLantern(akBaseObject)
-	elseif akBaseObject == _WL_WearableTorchbugInvDisplay || akBaseObject == _WL_WearableTorchbugInvDisplayRED
-		WLDebug(1, "OnObjectUnequipped Event, Torchbug/red")
+	WLDebug(1, "OnObjectUnequipped " + akBaseObject)
+	if akBaseObject == _WL_WearableLanternInvDisplay || akBaseObject == _WL_WearablePaperInvDisplay || \
+	   akBaseObject == _WL_WearableTorchbugInvDisplay || akBaseObject == _WL_WearableTorchbugInvDisplayRED
 		DestroyNonDisplayLantern(akBaseObject)
     endif
 endEvent
@@ -681,9 +678,7 @@ function SetOilLevel()
 endFunction
 
 function ShowRemainingOilMessage(float oil_level)
-	if oil_level == 12.0
-		_WL_LanternOilRemainingMostlyFull.Show()
-	elseif oil_level == 8.0
+	if oil_level == 8.0
 		_WL_LanternOilRemainingHalfFull.Show()
 	elseif oil_level == 4.0
 		_WL_LanternOilRemainingMostlyEmpty.Show()
