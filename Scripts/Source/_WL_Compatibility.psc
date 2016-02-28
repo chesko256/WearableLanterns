@@ -16,6 +16,8 @@ bool property bIsBUGSLoaded auto hidden
 Formlist property _WL_GlowingBugList auto
 FormList property _WL_InteriorWorldspaces auto
 
+GlobalVariable property _WL_SettingOffWhenSneaking auto
+
 Ingredient property MountainFlowerYellow auto hidden
 Activator property FireflyBUG auto hidden
 
@@ -162,12 +164,11 @@ endFunction
 
 function RegisterForEventsOnLoad()
 	LanternQuest.RegisterForSingleUpdateGameTime(0.1)
-	LanternQuest.RegisterForAnimationEvent(PlayerRef, "tailSneakIdle")
-	LanternQuest.RegisterForAnimationEvent(PlayerRef, "tailSneakLocomotion")
-	LanternQuest.RegisterForAnimationEvent(PlayerRef, "tailMTIdle")
-	LanternQuest.RegisterForAnimationEvent(PlayerRef, "tailMTLocomotion")
-	LanternQuest.RegisterForAnimationEvent(PlayerRef, "tailCombatIdle")
-	LanternQuest.RegisterForAnimationEvent(PlayerRef, "tailCombatLocomotion")
+	if _WL_SettingOffWhenSneaking.GetValueInt() == 2
+		LanternQuest.RegisterForSneakEvents()
+	else
+		LanternQuest.UnregisterForSneakEvents()
+	endif
 endFunction
 
 Function RegisterForKeysOnLoad()

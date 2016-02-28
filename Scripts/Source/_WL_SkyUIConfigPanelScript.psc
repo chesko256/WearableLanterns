@@ -25,7 +25,10 @@ int General_SettingPositionMenu_OID
 int General_SettingSlot_OID
 int General_SettingModeMenu_OID
 int General_SettingDropLitToggle_OID
+int General_SettingOffWhenSneaking_OID
 int General_SettingOilToggle_OID
+int General_HotkeyHoldUse_OID
+int General_HotkeyHoldUseDuration_OID
 int General_HotkeyLantern_OID
 int General_HotkeyCheckFuel_OID
 int General_SettingPollenToggle_OID
@@ -48,6 +51,7 @@ GlobalVariable property _WL_SettingPosition auto 						;0 = Back, 1 = Front, 2 =
 GlobalVariable property _WL_SettingDropLit auto
 GlobalVariable property _WL_SettingOil auto
 GlobalVariable property _WL_SettingFeeding auto
+GlobalVariable property _WL_SettingSlot auto
 GlobalVariable property _WL_SettingOffWhenSneaking auto
 GlobalVariable property _WL_SettingHoldActivateToggle auto
 GlobalVariable property _WL_SettingHoldActivateToggleDuration auto
@@ -73,6 +77,28 @@ Message property _WL_LanternOilRemainingHalfFull auto
 Message property _WL_LanternOilRemainingMostlyFull auto
 Message property _WL_LanternOilRemainingFull auto
 Message property _WL_TorchbugRemainingFlowers auto
+
+Armor property _WL_WearableLanternApparel auto
+Armor property _WL_WearableLanternApparelFront auto
+Armor property _WL_WearableTorchbugApparel_Empty auto
+Armor property _WL_WearableTorchbugApparelFront_Empty auto
+Armor property _WL_WearableTorchbugApparel auto
+Armor property _WL_WearableTorchbugApparelFront auto
+Armor property _WL_WearableTorchbugApparelRED auto
+Armor property _WL_WearableTorchbugApparelFrontRED auto
+Armor property _WL_WearablePaperApparel auto
+Armor property _WL_WearablePaperApparelFront auto
+
+ArmorAddon property _WL_WearableLanternAA auto hidden
+ArmorAddon property _WL_WearableLanternFrontAA auto hidden
+ArmorAddon property _WL_WearablePaperAA auto hidden
+ArmorAddon property _WL_WearablePaperFrontAA auto hidden
+ArmorAddon property _WL_WearableTorchbugAA auto hidden
+ArmorAddon property _WL_WearableTorchbugAA_empty auto hidden
+ArmorAddon property _WL_WearableTorchbugFrontAA auto hidden
+ArmorAddon property _WL_WearableTorchbugFrontAA_empty auto hidden
+ArmorAddon property _WL_WearableTorchbugFrontREDAA auto hidden
+ArmorAddon property _WL_WearableTorchbugREDAA auto hidden
 
 Event OnConfigInit()
 	Pages = new string[2]
@@ -149,11 +175,17 @@ function PageReset_General()
 	AddHeaderOption("$WearableLanternsGeneralHeaderGeneral") ;General
 	General_SettingBrightnessMenu_OID = AddMenuOption("$WearableLanternsGeneralSettingBrightness", BrightnessList[BrightnessIndex])
 	General_SettingPositionMenu_OID = AddMenuOption("$WearableLanternsGeneralSettingPosition", LanternPositionList[PositionIndex])
+	General_SettingSlot_OID = AddSliderOption("$WearableLanternsGeneralSettingSlot", _WL_SettingSlot.GetValueInt(), "{0}")
 	General_SettingModeMenu_OID = AddMenuOption("$WearableLanternsGeneralSettingMode", ModeList[ModeIndex])
 	if _WL_SettingDropLit.GetValueInt() == 2
 		General_SettingDropLitToggle_OID = AddToggleOption("$WearableLanternsGeneralSettingDropLit", true)
 	else
 		General_SettingDropLitToggle_OID = AddToggleOption("$WearableLanternsGeneralSettingDropLit", false)
+	endif
+	if _WL_SettingOffWhenSneaking.GetValueInt() == 2
+		General_SettingOffWhenSneaking_OID = AddToggleOption("$WearableLanternsGeneralSettingTurnOffWhenSneaking", true)
+	else
+		General_SettingOffWhenSneaking_OID = AddToggleOption("$WearableLanternsGeneralSettingTurnOffWhenSneaking", false)
 	endif
 	AddEmptyOption()
 	AddHeaderOption("$WearableLanternsGeneralHeaderFuel") ;Fuel
@@ -170,6 +202,13 @@ function PageReset_General()
 	
 	SetCursorPosition(1)
 	AddHeaderOption("$WearableLanternsGeneralHeaderHotkeys") ;Hotkeys
+	if _WL_SettingHoldActivateToggle.GetValueInt() == 2
+		General_HotkeyHoldUse_OID = AddToggleOption("$WearableLanternsGeneralSettingHotkeyLanternUseKey", true)
+		General_HotkeyHoldUseDuration_OID = AddSliderOption("$WearableLanternsGeneralSettingHotkeyLanternUseKeyDuration", _WL_SettingHoldActivateToggleDuration.GetValue(), "{1} sec")
+	else
+		General_HotkeyHoldUse_OID = AddToggleOption("$WearableLanternsGeneralSettingHotkeyLanternUseKey", false)
+		General_HotkeyHoldUseDuration_OID = AddSliderOption("$WearableLanternsGeneralSettingHotkeyLanternUseKeyDuration", _WL_SettingHoldActivateToggleDuration.GetValue(), "{1} sec", OPTION_FLAG_DISABLED)
+	endif
 	General_HotkeyLantern_OID = AddKeyMapOption("$WearableLanternsGeneralSettingHotkeyLantern", _WL_HotkeyPlayerLantern.GetValueInt())
 	General_HotkeyCheckFuel_OID = AddKeyMapOption("$WearableLanternsGeneralSettingHotkeyCheckFuel", _WL_HotkeyCheckFuel.GetValueInt())
 	General_SettingCheckFuelDisplayMenu_OID = AddMenuOption("$WearableLanternsGeneralSettingHotkeyCheckFuelDisplayMode", CheckFuelDisplayList[CheckFuelDisplayIndex])
@@ -205,10 +244,18 @@ event OnOptionHighlight(int option)
 		SetInfoText("$WearableLanternsBrightnessHighlight")
 	elseif option == General_SettingPositionMenu_OID
 		SetInfoText("$WearableLanternsPositionHighlight")
+	elseif option == General_SettingSlot_OID
+		SetInfoText("$WearableLanternsSlotHighlight")
 	elseif option == General_SettingModeMenu_OID
 		SetInfoText("$WearableLanternsModeHighlight")
 	elseif option == General_SettingDropLitToggle_OID
 		SetInfoText("$WearableLanternsDropLitHighlight")
+	elseif option == General_SettingOffWhenSneaking_OID
+		SetInfoText("$WearableLanternsTurnOffWhenSneakingHighlight")
+	elseif option == General_HotkeyHoldUse_OID
+		SetInfoText("$WearableLanternsHotkeyLanternUseKeyHighlight")
+	elseif option == General_HotkeyHoldUseDuration_OID
+		SetInfoText("$WearableLanternsHotkeyLanternUseKeyDurationHighlight")
 	elseif option == General_SettingOilToggle_OID
 		SetInfoText("$WearableLanternsFuelHighlight")
 	elseif option == General_SettingPollenToggle_OID
@@ -247,6 +294,16 @@ event OnOptionSelect(int option)
 			SetToggleOptionValue(General_SettingDropLitToggle_OID, true)
 			_WL_SettingDropLit.SetValue(2)
 		endif
+	elseif option == General_SettingOffWhenSneaking_OID
+		if _WL_SettingOffWhenSneaking.GetValueInt() == 2
+			SetToggleOptionValue(General_SettingOffWhenSneaking_OID, false)
+			_WL_SettingOffWhenSneaking.SetValue(1)
+			LanternQuest.UnregisterForSneakEvents()
+		else
+			SetToggleOptionValue(General_SettingOffWhenSneaking_OID, true)
+			_WL_SettingOffWhenSneaking.SetValue(2)
+			LanternQuest.RegisterForSneakEvents()
+		endif
 	elseif option == General_SettingOilToggle_OID
 		if _WL_SettingOil.GetValueInt() == 2
 			SetToggleOptionValue(General_SettingOilToggle_OID, false)
@@ -267,6 +324,18 @@ event OnOptionSelect(int option)
 			_WL_SettingFeeding.SetValue(2)
 			LanternQuest.ToggleLanternOn()
 		endif
+	elseif option == General_HotkeyHoldUse_OID
+		if _WL_SettingHoldActivateToggle.GetValueInt() == 2
+			SetToggleOptionValue(General_HotkeyHoldUse_OID, false)
+			_WL_SettingHoldActivateToggle.SetValue(1)
+			UnregisterForControl("Activate")
+			ForcePageReset()
+		else
+			SetToggleOptionValue(General_HotkeyHoldUse_OID, true)
+			_WL_SettingHoldActivateToggle.SetValue(2)
+			RegisterForControl("Activate")
+			ForcePageReset()
+		endif
 	endif
 endEvent
 
@@ -280,6 +349,10 @@ event OnOptionDefault(int option)
 		SetMenuOptionValue(General_SettingPositionMenu_OID, LanternPositionList[PositionIndex])
 		_WL_SettingPosition.SetValueInt(0)
 		ShowMessage("$WearableLanternsChangedLanternSetting")
+	elseif option == General_SettingSlot_OID
+		_WL_SettingSlot.SetValue(55.0)
+		SetSliderOptionValue(General_SettingSlot_OID, 55.0, "{0}")
+		SetLanternSlot()
 	elseif option == General_SettingModeMenu_OID
 		ModeIndex = 0
 		SetMenuOptionValue(General_SettingModeMenu_OID, ModeList[ModeIndex])
@@ -287,12 +360,24 @@ event OnOptionDefault(int option)
 	elseif option == General_SettingDropLitToggle_OID
 		SetToggleOptionValue(General_SettingModeMenu_OID, true)
 		_WL_SettingDropLit.SetValueInt(2)
+	elseif option == General_SettingOffWhenSneaking_OID
+		SetToggleOptionValue(General_SettingOffWhenSneaking_OID, false)
+		_WL_SettingOffWhenSneaking.SetValueInt(1)
+		LanternQuest.UnregisterForSneakEvents()
 	elseif option == General_SettingOilToggle_OID
 		SetToggleOptionValue(General_SettingOilToggle_OID, false)
 		_WL_SettingOil.SetValueInt(1)
 	elseif option == General_SettingPollenToggle_OID
 		SetToggleOptionValue(General_SettingPollenToggle_OID, false)
 		_WL_SettingFeeding.SetValueInt(1)
+	elseif option == General_HotkeyHoldUse_OID
+		SetToggleOptionValue(General_HotkeyHoldUse_OID, false)
+		_WL_SettingHoldActivateToggle.SetValueInt(1)
+		UnregisterForControl("Activate")
+		ForcePageReset()
+	elseif option == General_HotkeyHoldUseDuration_OID
+		SetSliderOptionValue(General_HotkeyHoldUseDuration_OID, 1.0, "{1} sec")
+		_WL_SettingHoldActivateToggleDuration.SetValue(1.0)
 	elseif option == General_HotkeyLantern_OID
 		UnregisterForKey(_WL_HotkeyPlayerLantern.GetValueInt())
 		_WL_HotkeyPlayerLantern.SetValueInt(0)
@@ -341,7 +426,17 @@ event OnOptionDefault(int option)
 endEvent
 
 event OnOptionSliderOpen(int option)
-	if option == Interface_UIMeterDisplayTime_OID
+	if option == General_SettingSlot_OID
+		SetSliderDialogStartValue(_WL_SettingSlot.GetValueInt())
+		SetSliderDialogDefaultValue(55.0)
+		SetSliderDialogRange(30.0, 61.0)
+		SetSliderDialogInterval(1.0)
+	elseif option == General_HotkeyHoldUseDuration_OID
+		SetSliderDialogStartValue(_WL_SettingHoldActivateToggleDuration.GetValue())
+		SetSliderDialogDefaultValue(2.0)
+		SetSliderDialogRange(1, 5.0)
+		SetSliderDialogInterval(0.5)
+	elseif option == Interface_UIMeterDisplayTime_OID
 		SetSliderDialogStartValue(_WL_MeterDisplayTime.GetValueInt() * 2)
 		SetSliderDialogDefaultValue(8.0)
 		SetSliderDialogRange(4.0, 20.0)
@@ -355,7 +450,14 @@ event OnOptionSliderOpen(int option)
 endEvent
 
 event OnOptionSliderAccept(int option, float value)
-	if option == Interface_UIMeterDisplayTime_OID
+	if option == General_SettingSlot_OID
+		_WL_SettingSlot.SetValue(value)
+		SetSliderOptionValue(General_SettingSlot_OID, value, "{0}")
+		SetLanternSlot()
+	elseif option == General_HotkeyHoldUseDuration_OID
+		_WL_SettingHoldActivateToggleDuration.SetValue(value)
+		SetSliderOptionValue(General_HotkeyHoldUseDuration_OID, value, "{1} sec")
+	elseif option == Interface_UIMeterDisplayTime_OID
 		_WL_MeterDisplayTime.SetValue(value/2)
 		SetSliderOptionValue(Interface_UIMeterDisplayTime_OID, value, "{0}")
 	elseif option == Interface_UIMeterOpacity_OID
@@ -618,6 +720,7 @@ function ToggleLantern()
 			_WL_OilLanternOff.Play(PlayerRef)
 		else
 			LanternQuest.ToggleLanternOn()
+			LanternQuest.previous_lantern_state = true
 			_WL_OilLanternOn.Play(PlayerRef)
 		endIf
 	elseif LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
@@ -698,4 +801,61 @@ function RegisterForKeysOnLoad()
 	if _WL_HotkeyCheckFuel.GetValueInt() != 0
 		RegisterForKey(_WL_HotkeyCheckFuel.GetValueInt())
 	endIf
+endFunction
+
+function SetLanternSlot()
+	int slotmask = Armor.GetMaskForSlot(_WL_SettingSlot.GetValueInt())
+
+	_WL_WearableLanternApparel.SetSlotMask(slotmask)
+	_WL_WearableLanternApparelFront.SetSlotMask(slotmask)
+	_WL_WearableTorchbugApparel_Empty.SetSlotMask(slotmask)
+	_WL_WearableTorchbugApparelFront_Empty.SetSlotMask(slotmask)
+	_WL_WearableTorchbugApparel.SetSlotMask(slotmask)
+	_WL_WearableTorchbugApparelFront.SetSlotMask(slotmask)
+	_WL_WearableTorchbugApparelRED.SetSlotMask(slotmask)
+	_WL_WearableTorchbugApparelFrontRED.SetSlotMask(slotmask)
+	_WL_WearablePaperApparel.SetSlotMask(slotmask)
+	_WL_WearablePaperApparelFront.SetSlotMask(slotmask)
+
+	if !_WL_WearableLanternAA
+		_WL_WearableLanternAA = Game.GetFormFromFile(0x0012C8, "Chesko_WearableLantern.esp") as ArmorAddon
+	endif
+	if !_WL_WearableLanternFrontAA
+		_WL_WearableLanternFrontAA = Game.GetFormFromFile(0x001D9C, "Chesko_WearableLantern.esp") as ArmorAddon
+	endif
+	if !_WL_WearablePaperAA
+		_WL_WearablePaperAA = Game.GetFormFromFile(0x011728, "Chesko_WearableLantern.esp") as ArmorAddon
+	endif
+	if !_WL_WearablePaperFrontAA
+		_WL_WearablePaperFrontAA = Game.GetFormFromFile(0x011729, "Chesko_WearableLantern.esp") as ArmorAddon
+	endif
+	if !_WL_WearableTorchbugAA
+		_WL_WearableTorchbugAA = Game.GetFormFromFile(0x0038D6, "Chesko_WearableLantern.esp") as ArmorAddon
+	endif
+	if !_WL_WearableTorchbugAA_empty
+		_WL_WearableTorchbugAA_empty = Game.GetFormFromFile(0x004E97, "Chesko_WearableLantern.esp") as ArmorAddon
+	endif
+	if !_WL_WearableTorchbugFrontAA
+		_WL_WearableTorchbugFrontAA = Game.GetFormFromFile(0x005F47, "Chesko_WearableLantern.esp") as ArmorAddon
+	endif
+	if !_WL_WearableTorchbugFrontAA_empty
+		_WL_WearableTorchbugFrontAA_empty = Game.GetFormFromFile(0x005F48, "Chesko_WearableLantern.esp") as ArmorAddon
+	endif
+	if !_WL_WearableTorchbugFrontREDAA
+		_WL_WearableTorchbugFrontREDAA = Game.GetFormFromFile(0x005F4A, "Chesko_WearableLantern.esp") as ArmorAddon
+	endif
+	if !_WL_WearableTorchbugREDAA
+		_WL_WearableTorchbugREDAA = Game.GetFormFromFile(0x005F49, "Chesko_WearableLantern.esp") as ArmorAddon
+	endif
+
+	_WL_WearableLanternAA.SetSlotMask(slotmask)
+	_WL_WearableLanternFrontAA.SetSlotMask(slotmask)
+	_WL_WearablePaperAA.SetSlotMask(slotmask)
+	_WL_WearablePaperFrontAA.SetSlotMask(slotmask)
+	_WL_WearableTorchbugAA.SetSlotMask(slotmask)
+	_WL_WearableTorchbugAA_empty.SetSlotMask(slotmask)
+	_WL_WearableTorchbugFrontAA.SetSlotMask(slotmask)
+	_WL_WearableTorchbugFrontAA_empty.SetSlotMask(slotmask)
+	_WL_WearableTorchbugFrontREDAA.SetSlotMask(slotmask)
+	_WL_WearableTorchbugREDAA.SetSlotMask(slotmask)
 endFunction

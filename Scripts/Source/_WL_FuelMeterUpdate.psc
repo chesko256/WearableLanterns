@@ -115,11 +115,7 @@ function ContextualDisplayOil(float fThisFuelValue, bool bSkipDisplayHandling = 
 	endif
 
 	bool GoingDown = fLastFuelValue > fThisFuelValue
-	if GoingDown && fLastFuelValue >= 12.5 && fThisFuelValue < 12.5
-		;75%, show
-		FuelMeter.FadeTo(_WL_MeterOpacity.GetValue(), 2.0)
-		iDisplayIterationsRemaining = _WL_MeterDisplayTime.GetValueInt()
-	elseif GoingDown && fLastFuelValue >= 8.5 && fThisFuelValue < 8.5
+	if GoingDown && fLastFuelValue >= 8.5 && fThisFuelValue < 8.5
 		;50%, show
 		FuelMeter.FadeTo(_WL_MeterOpacity.GetValue(), 2.0)
 		iDisplayIterationsRemaining = _WL_MeterDisplayTime.GetValueInt()
@@ -128,9 +124,9 @@ function ContextualDisplayOil(float fThisFuelValue, bool bSkipDisplayHandling = 
 		FuelMeter.FadeTo(_WL_MeterOpacity.GetValue(), 2.0)
 		iDisplayIterationsRemaining = _WL_MeterDisplayTime.GetValueInt()
 	elseif GoingDown && fLastFuelValue >= 2.5 && fThisFuelValue < 2.5
-		;10%, show and stay on
+		;10%, show
 		FuelMeter.FadeTo(_WL_MeterOpacity.GetValue(), 2.0)
-		iDisplayIterationsRemaining = -1
+		iDisplayIterationsRemaining = _WL_MeterDisplayTime.GetValueInt()
 	elseif !GoingDown && fLastFuelValue != fThisFuelValue && fLastFuelValue < 15.5
 		;going up, show
 		FuelMeter.FadeTo(_WL_MeterOpacity.GetValue(), 2.0)
@@ -146,15 +142,7 @@ function ContextualDisplayPollen(float fThisFuelValue, bool bSkipDisplayHandling
 	endif
 
 	bool GoingDown = fLastFuelValue > fThisFuelValue
-	if GoingDown && fLastFuelValue >= 32.0 && fThisFuelValue < 32.0
-		;full, show
-		FuelMeter.FadeTo(_WL_MeterOpacity.GetValue(), 2.0)
-		iDisplayIterationsRemaining = _WL_MeterDisplayTime.GetValueInt()
-	elseif GoingDown && fLastFuelValue >= 24.0 && fThisFuelValue < 24.0
-		;75%, show
-		FuelMeter.FadeTo(_WL_MeterOpacity.GetValue(), 2.0)
-		iDisplayIterationsRemaining = _WL_MeterDisplayTime.GetValueInt()
-	elseif GoingDown && fLastFuelValue >= 16.0 && fThisFuelValue < 16.0
+	if GoingDown && fLastFuelValue >= 16.0 && fThisFuelValue < 16.0
 		;50%, show
 		FuelMeter.FadeTo(_WL_MeterOpacity.GetValue(), 2.0)
 		iDisplayIterationsRemaining = _WL_MeterDisplayTime.GetValueInt()
@@ -163,9 +151,9 @@ function ContextualDisplayPollen(float fThisFuelValue, bool bSkipDisplayHandling
 		FuelMeter.FadeTo(_WL_MeterOpacity.GetValue(), 2.0)
 		iDisplayIterationsRemaining = _WL_MeterDisplayTime.GetValueInt()
 	elseif GoingDown && fLastFuelValue > 4.0 && fThisFuelValue <= 4.0
-		;10%, show and stay on
+		;10%, show
 		FuelMeter.FadeTo(_WL_MeterOpacity.GetValue(), 2.0)
-		iDisplayIterationsRemaining = -1
+		iDisplayIterationsRemaining = _WL_MeterDisplayTime.GetValueInt()
 	elseif !GoingDown && fLastFuelValue != fThisFuelValue && fThisFuelValue < 32.0
 		;going up, show
 		FuelMeter.FadeTo(_WL_MeterOpacity.GetValue(), 2.0)

@@ -15,6 +15,7 @@ GlobalVariable property _WL_SettingFeeding auto
 GlobalVariable property _WL_SettingPosition auto
 GlobalVariable property _WL_SettingAutomatic auto
 GlobalVariable property _WL_SettingDropLit auto
+GlobalVariable property _WL_SettingOffWhenSneaking auto
 GlobalVariable property _WL_Debug auto
 GlobalVariable property GameHour auto
 
@@ -100,6 +101,8 @@ int pollen_update_counter = 0
 int iLastPollenLevel = 0
 int last_pollen_level = 0
 bool is_sneaking = false
+bool property previous_lantern_state = false auto hidden
+{ False = off. True = on. }
 
 ;Timer variables (for debug purposes)
 float pfThreadLastUpdateTime = 0.0
@@ -129,13 +132,6 @@ State BlockEvents
 	
 endState
 
-;--------------
-;	Events		\
-;------------------------------------------------------------------------------------
-Event OnInit()
-	
-endEvent
-
 Event OnLocationChange(Location akOldLoc, Location akNewLoc)
 	SetShouldLightLanternAutomatically(akNewLoc)
 endEvent
@@ -144,12 +140,25 @@ Event OnAnimationEvent(ObjectReference akSource, string asEventName)
 	if (asEventName == "tailSneakIdle" || asEventName == "tailSneakLocomotion")
 		if is_sneaking == false
 			is_sneaking = true
-			SetShouldLightLanternAutomatically(PlayerRef.GetCurrentLocation())
+			if _WL_gToggle.GetValueInt() == 0
+				previous_lantern_state = false
+			else
+				previous_lantern_state = true
+			endif
+			ToggleLanternOff()
 		endif
 	else
 		if is_sneaking == true
 			is_sneaking = false
-			SetShouldLightLanternAutomatically(PlayerRef.GetCurrentLocation())
+			if SettingIsEnabled(_WL_SettingAutomatic)
+				SetShouldLightLanternAutomatically(PlayerRef.GetCurrentLocation())
+			else
+				if previous_lantern_state == false
+					ToggleLanternOn()
+				else
+					ToggleLanternOff()
+				endif
+			endif
 		endif
 	endif
 EndEvent
@@ -259,6 +268,7 @@ function ToggleLanternOn()
 		SetPollenLevel()
 	endif
 	_WL_gToggle.SetValueInt(1)
+	previous_lantern_state = true
 	RegisterForSingleUpdate(5)
 endFunction
 
@@ -579,9 +589,8 @@ function SetShouldLightLanternAutomatically(Location akLocation)
 		; The auto-on setting is off.
 		_WL_AutoModeLightOn.SetValueInt(0)
 	else
-		if PlayerRef.IsSneaking()
-			_WL_AutoModeLightOn.SetValueInt(2)
-			ToggleLanternOff()
+		if SettingIsEnabled(_WL_SettingOffWhenSneaking) && PlayerRef.IsSneaking()
+			return
 		else
 			if IsRefInInterior(PlayerRef)
 				if akLocation.HasKeyword(LocTypeCastle) || akLocation.HasKeyword(LocTypeGuild) || 	\
@@ -720,6 +729,24 @@ function ShowRemainingPollenMessage(int pollen_level)
 	elseif pollen_level == 8
 		_WL_LanternOilRemainingMostlyEmpty.Show()
 	endif
+endFunction
+
+function RegisterForSneakEvents()
+	RegisterForAnimationEvent(PlayerRef, "tailSneakIdle")
+	RegisterForAnimationEvent(PlayerRef, "tailSneakLocomotion")
+	RegisterForAnimationEvent(PlayerRef, "tailMTIdle")
+	RegisterForAnimationEvent(PlayerRef, "tailMTLocomotion")
+	RegisterForAnimationEvent(PlayerRef, "tailCombatIdle")
+	RegisterForAnimationEvent(PlayerRef, "tailCombatLocomotion")
+endFunction
+
+function UnregisterForSneakEvents()
+	UnregisterForAnimationEvent(PlayerRef, "tailSneakIdle")
+	UnregisterForAnimationEvent(PlayerRef, "tailSneakLocomotion")
+	UnregisterForAnimationEvent(PlayerRef, "tailMTIdle")
+	UnregisterForAnimationEvent(PlayerRef, "tailMTLocomotion")
+	UnregisterForAnimationEvent(PlayerRef, "tailCombatIdle")
+	UnregisterForAnimationEvent(PlayerRef, "tailCombatLocomotion")
 endFunction
 
 bool function IsRefInInterior(ObjectReference akReference)
