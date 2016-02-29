@@ -92,8 +92,6 @@ GlobalVariable property _WL_gToggle auto
 { 0 = Off. 1 = On. }
 GlobalVariable property _WL_HasFuel auto
 { 0 = Not using oil burning mechanic. 1 = Player has oil. 2 = Oil is depleted. }
-GlobalVariable property _WL_AutoModeLightOn auto
-{ 0 = Not using automatic lighting mechanic. 1 = Auto-on conditions exist. 2 = Auto-off conditions exist. }
 
 int oil_update_counter = 0
 float last_oil_level = 0.0
@@ -153,10 +151,10 @@ Event OnAnimationEvent(ObjectReference akSource, string asEventName)
 			if SettingIsEnabled(_WL_SettingAutomatic)
 				SetShouldLightLanternAutomatically(PlayerRef.GetCurrentLocation())
 			else
-				if previous_lantern_state == false
-					ToggleLanternOn()
-				else
+				if previous_lantern_state == false && _WL_gToggle.GetValueInt() == 1
 					ToggleLanternOff()
+				elseif previous_lantern_state == true && _WL_gToggle.GetValueInt() == 0
+					ToggleLanternOn()
 				endif
 			endif
 		endif
@@ -585,10 +583,7 @@ function UnequipDisplayLantern(Form akNonDisplayLantern)
 endFunction
 
 function SetShouldLightLanternAutomatically(Location akLocation)
-	if !SettingIsEnabled(_WL_SettingAutomatic)
-		; The auto-on setting is off.
-		_WL_AutoModeLightOn.SetValueInt(0)
-	else
+	if SettingIsEnabled(_WL_SettingAutomatic)
 		if SettingIsEnabled(_WL_SettingOffWhenSneaking) && PlayerRef.IsSneaking()
 			return
 		else
@@ -596,20 +591,16 @@ function SetShouldLightLanternAutomatically(Location akLocation)
 				if akLocation.HasKeyword(LocTypeCastle) || akLocation.HasKeyword(LocTypeGuild) || 	\
 					akLocation.HasKeyword(LocTypeInn) || akLocation.HasKeyword(LocTypeHouse) || 	\
 					akLocation.HasKeyword(LocTypePlayerHouse) || akLocation.HasKeyword(LocTypeStore)
-					_WL_AutoModeLightOn.SetValueInt(2)
 					ToggleLanternOff()
 				else
 					; Inside in non-restricted location type
-					_WL_AutoModeLightOn.SetValueInt(1)
 					ToggleLanternOn()
 				endif
 			else
 				if GameHour.GetValue() >= 19.0 || GameHour.GetValue() <= 7.0
 					; Outside at night
-					_WL_AutoModeLightOn.SetValueInt(1)
 					ToggleLanternOn()
 				else
-					_WL_AutoModeLightOn.SetValueInt(2)
 					ToggleLanternOff()
 				endif
 			endif
