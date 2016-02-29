@@ -9,6 +9,11 @@ Armor property _WL_WearableTorchbugApparelFront auto
 Armor property _WL_WearableTorchbugApparelFrontRED auto
 Armor property _WL_WearablePaperApparelFront auto
 
+Armor property _WL_WearableLanternInvDisplay auto
+Armor property _WL_WearableTorchbugInvDisplay auto
+Armor property _WL_WearableTorchbugInvDisplayRED auto
+Armor property _WL_WearablePaperInvDisplay auto
+
 Event OnContainerChanged(ObjectReference akNewContainer, ObjectReference akOldContainer)
 	if akNewContainer != PlayerRef && akOldContainer == PlayerRef && akNewContainer != none
 		HandleLanternEquip(akNewContainer as Actor, LanternIndex)
@@ -22,16 +27,22 @@ Event OnUnequipped(Actor akActor)
 endEvent
 
 function HandleLanternEquip(Actor akActor, int iIndex)
+	akActor.UnequipItem(_WL_WearableLanternInvDisplay)
+	akActor.UnequipItem(_WL_WearableTorchbugInvDisplay)
+	akActor.UnequipItem(_WL_WearableTorchbugInvDisplayRED)
+	akActor.UnequipItem(_WL_WearablePaperInvDisplay)
 	if iIndex == 0 					;Travel
+		akActor.EquipItem(_WL_WearableLanternInvDisplay, true, true)
 		akActor.EquipItem(_WL_WearableLanternApparelFront, abSilent = true)
 	elseif iIndex == 1 				;Torchbug
+		akActor.EquipItem(_WL_WearableTorchbugInvDisplay, true, true)
 		akActor.EquipItem(_WL_WearableTorchbugApparelFront, abSilent = true)
 	elseif iIndex == 2 				;Torchbug (red)
+		akActor.EquipItem(_WL_WearableTorchbugInvDisplayRED, true, true)
 		akActor.EquipItem(_WL_WearableTorchbugApparelFrontRED, abSilent = true)
 	elseif iIndex == 3 				;Paper
+		akActor.EquipItem(_WL_WearablePaperInvDisplay, true, true)
 		akActor.EquipItem(_WL_WearablePaperApparelFront, abSilent = true)
-	elseif iIndex == 4 				;Candle
-
 	endif
 endFunction
 

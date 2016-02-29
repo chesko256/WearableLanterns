@@ -24,8 +24,6 @@ Formlist property _WL_GlowingBugList auto
 
 MiscObject property _WL_LanternOil4 auto
 
-Light property Torch01 auto
-
 FormList property _WL_InvBugLanterns auto
 
 Armor property _WL_WearableLanternInvDisplay auto
@@ -176,10 +174,7 @@ Event OnUpdateGameTime()
 endEvent
 
 Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
-	if akBaseObject == Torch01
-		WLDebug(1, "OnObjectEquipped Event, Torch")
-		LanternMutex(akBaseObject)
-	elseif (akBaseObject as Armor && akBaseObject.HasKeyword(ArmorShield)) || (akBaseObject as Weapon && PlayerRef.GetEquippedItemType(0) <= 4)	;I equipped a shield or off-hand weapon
+	if (akBaseObject as Armor && akBaseObject.HasKeyword(ArmorShield)) || (akBaseObject as Weapon && PlayerRef.GetEquippedItemType(0) <= 4)	;I equipped a shield or off-hand weapon
 		WLDebug(1, "OnObjectEquipped Event, Weapon or Shield")
 		DropLantern()
     elseif akBaseObject == _WL_WearableLanternInvDisplay
@@ -505,9 +500,6 @@ endFunction
 
 function LanternMutex(Form akBaseObject)
 	;Ensure that the player can only equip one lantern at a time.
-	if akBaseObject != Torch01
-		PlayerRef.UnequipItem(Torch01, false, true)
-	endif
 	
 	;Travel Lanterns
 	PlayerRef.UnequipItem(_WL_WearableLanternApparel, false, true)
