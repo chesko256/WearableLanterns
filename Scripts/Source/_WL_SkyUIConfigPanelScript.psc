@@ -841,13 +841,31 @@ string function GetCustomControl(int keyCode)
 	endIf
 endFunction
 
-_WL_FuelMeter property FuelMeter auto
+_WL_FuelMeter property OilMeter auto
+_WL_FuelMeter property PollenMeter auto
 _WL_FuelMeterUpdate property FuelMeterDisplay auto
-GlobalVariable property _WL_MeterLength auto
-GlobalVariable property _WL_FuelMeterHeight auto
 
-function ConfigureMeter()
+function ConfigureMeter(int aiMeterIdx, int aiFillDirectionIdx, int aiHAnchorIdx, int aiVAnchorIdx, float afPositionX, float afPositionY, float afHeight, float afWidth)
+	; Not configured: Color, Opacity
+	_WL_SKI_MeterWidget MyMeter = None
+	if aiMeterIdx == 0
+		MyMeter = OilMeter
+	else
+		MyMeter = PollenMeter
+	endif
 
+	if !MyMeter
+		return
+	endIf
+
+	MyMeter.FillDirection = FILL_DIRECTIONS[aiFillDirectionIdx]
+	MyMeter.HAnchor = HORIZONTAL_ANCHORS[aiHAnchorIdx]
+	MyMeter.VAnchor = VERTICAL_ANCHORS[aiVAnchorIdx]
+	MyMeter.X = afPositionX
+	MyMeter.Y = afPositionY
+	MyMeter.Height = afHeight
+	MyMeter.Width = afWidth
+	FuelMeterDisplay.ForceDisplayAndUpdate()
 endFunction
 
 function ChooseMeterPosition(int index)
@@ -876,46 +894,6 @@ function ChooseMeterPosition(int index)
 	elseif index == 11 		;Bottom Left, Corner
 		SetMeterPosition("left", "bottom", 0.0, 720.0)
 	endif
-endFunction
-
-function SetMeterPosition(string HAnchor, string VAnchor, float Fuel_X, float Fuel_Y)
-	FuelMeter.HAnchor = HAnchor
-	FuelMeter.VAnchor = VAnchor
-
-	if _WL_MeterLength.GetValue() == 1
-		FuelMeter.Width = 292.8
-	else
-		FuelMeter.Width = 225.8
-	endIf
-
-	FuelMeter.X = Fuel_X
-	FuelMeter.Y = Fuel_Y
-
-	if FuelMeter.HAnchor == "right"
-		FuelMeter.FillDirection = "left"
-	else
-		FuelMeter.FillDirection = "right"
-	endIf
-	if _WL_FuelMeterHeight.GetValueInt() == 2
-		FuelMeter.Height = 12.0
-	else
-		FuelMeter.Height = 25.2
-	endIf
-
-	;Adjust sides for smaller meters
-	if _WL_FuelMeterHeight.GetValueInt() == 2
-		if FuelMeter.HAnchor == "right"
-			FuelMeter.Width -= 24.0
-			FuelMeter.X -= 12.0
-		else
-			FuelMeter.Width -= 24.0
-			FuelMeter.X += 12.0
-		endIf
-	endIf
-
-	FuelMeterDisplay.ForceDisplayAndUpdate()
-
-	;debug.trace("[Frostfall] EMX:" + FuelMeter.X + ", EMY:" + ExposureMeter.Y + ", WMX:" + WetMeter.X + ", WMY:" + WetMeter.Y)
 endFunction
 
 function ToggleLantern()
