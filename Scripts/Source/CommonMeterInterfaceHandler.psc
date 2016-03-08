@@ -187,3 +187,7 @@ Event ForceMeterDisplay(bool flash = false)
 	MeterFadeUp(DisplayTime.GetValueInt(), flash)
 	UpdateMeter(true)
 endEvent
+
+Event RemoveMeter()
+	Meter.Alpha = 0.0
+endEvent

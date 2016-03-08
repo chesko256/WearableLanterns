@@ -398,6 +398,7 @@ event OnOptionSelect(int option)
 		if _WL_SettingOil.GetValueInt() == 2
 			SetToggleOptionValue(General_SettingOilToggle_OID, false)
 			_WL_SettingOil.SetValue(1)
+			SendEvent_WearableLanternRemoveOilMeter()
 			LanternQuest.ToggleLanternOn()
 		else
 			SetToggleOptionValue(General_SettingOilToggle_OID, true)
@@ -408,6 +409,7 @@ event OnOptionSelect(int option)
 		if _WL_SettingFeeding.GetValueInt() == 2
 			SetToggleOptionValue(General_SettingPollenToggle_OID, false)
 			_WL_SettingFeeding.SetValue(1)
+			SendEvent_WearableLanternRemovePollenMeter()
 			LanternQuest.ToggleLanternOn()
 		else
 			SetToggleOptionValue(General_SettingPollenToggle_OID, true)
@@ -496,11 +498,11 @@ event OnOptionDefault(int option)
 	elseif option == Interface_UIMeterLayout_OID
 		MeterLayoutIndex = 6
 		SetMenuOptionValue(Interface_UIMeterLayout_OID, MeterLayoutList[MeterLayoutIndex])
-		ChooseMeterPosition(MeterLayoutIndex)
+		; ChooseMeterPosition(MeterLayoutIndex)
 	elseif option == Interface_UIOilMeterColor_OID
 		_WL_SettingMeterOilColor.SetValueInt(0xE6E600)
 		SetColorOptionValue(option, _WL_SettingMeterOilColor.GetValueInt())
-		ChooseMeterPosition(MeterLayoutIndex)
+		; ChooseMeterPosition(MeterLayoutIndex)
 	elseif option == Interface_UIOilMeterOpacity_OID
 		_WL_SettingMeterOilOpacity.SetValue(100.0)
 		SetSliderOptionValue(Interface_UIOilMeterOpacity_OID, 100.0, "{0}%")
@@ -519,7 +521,7 @@ event OnOptionDefault(int option)
 	elseif option == Interface_UIPollenMeterColor_OID
 		_WL_SettingMeterPollenColor.SetValueInt(0xE600E6)
 		SetColorOptionValue(option, _WL_SettingMeterPollenColor.GetValueInt())
-		ChooseMeterPosition(MeterLayoutIndex)
+		; ChooseMeterPosition(MeterLayoutIndex)
 	elseif option == Interface_UIPollenMeterOpacity_OID
 		_WL_SettingMeterPollenOpacity.SetValue(100.0)
 		SetSliderOptionValue(Interface_UIPollenMeterOpacity_OID, 100.0, "{0}%")
@@ -731,7 +733,7 @@ event OnOptionMenuAccept(int option, int index)
 	elseif option == Interface_UIMeterLayout_OID
 		MeterLayoutIndex = index
 		SetMenuOptionValue(Interface_UIMeterLayout_OID, MeterLayoutList[MeterLayoutIndex])
-		ChooseMeterPosition(index)
+		; ChooseMeterPosition(index)
 	elseif option == Interface_UIOilMeterFillDirection_OID
 		_WL_SettingMeterOilFillDirection.SetValueInt(index)
 		SetMenuOptionValue(Interface_UIOilMeterFillDirection_OID, FILL_DIRECTIONS[index])
@@ -794,11 +796,11 @@ event OnOptionColorAccept(int option, int color)
 	if option == Interface_UIOilMeterColor_OID
 		_WL_OilColor.SetValueInt(color)
 		SetColorOptionValue(option, color)
-		ChooseMeterPosition(MeterLayoutIndex)
+		; ChooseMeterPosition(MeterLayoutIndex)
 	elseif option == Interface_UIPollenMeterColor_OID
 		_WL_PollenColor.SetValueInt(color)
 		SetColorOptionValue(option, color)
-		ChooseMeterPosition(MeterLayoutIndex)
+		; ChooseMeterPosition(MeterLayoutIndex)
 	endif
 endEvent
 
@@ -868,7 +870,7 @@ function ConfigureMeter(int aiMeterIdx, int aiFillDirectionIdx, int aiHAnchorIdx
 	FuelMeterDisplay.ForceDisplayAndUpdate()
 endFunction
 
-function ChooseMeterPosition(int index)
+;/ function ; ChooseMeterPosition(int index)
 	if index == 0 			;Top Right, Offset
 		SetMeterPosition("right", "top", 1219.0, 52.0)
 	elseif index ==	1		;Top Right, Edge
@@ -895,6 +897,7 @@ function ChooseMeterPosition(int index)
 		SetMeterPosition("left", "bottom", 0.0, 720.0)
 	endif
 endFunction
+/;
 
 function ToggleLantern()
 	if LanternQuest.current_lantern == LanternQuest.LANTERN_OIL
@@ -922,16 +925,16 @@ function CheckFuel()
 	if i == 0  									;Meter, Message
 		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_OIL
 			ShowOilRemainingMessage(_WL_OilLevel.GetValue())
-			ChooseMeterPosition(MeterLayoutIndex)
+			; ChooseMeterPosition(MeterLayoutIndex)
 		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
 			ShowPollenRemainingMessage(_WL_PollenLevel.GetValueInt())
-			ChooseMeterPosition(MeterLayoutIndex)
+			; ChooseMeterPosition(MeterLayoutIndex)
 		endIf
 	elseif i == 1 								;Meter Only
 		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_OIL
-			ChooseMeterPosition(MeterLayoutIndex)
+			; ChooseMeterPosition(MeterLayoutIndex)
 		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
-			ChooseMeterPosition(MeterLayoutIndex)
+			; ChooseMeterPosition(MeterLayoutIndex)
 		endIf
 	elseif i == 2 								;Message Only
 		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_OIL
@@ -1041,4 +1044,12 @@ function SetLanternSlot()
 	_WL_WearableTorchbugFrontAA_empty.SetSlotMask(slotmask)
 	_WL_WearableTorchbugFrontREDAA.SetSlotMask(slotmask)
 	_WL_WearableTorchbugREDAA.SetSlotMask(slotmask)
+endFunction
+
+function SendEvent_WearableLanternRemoveOilMeter()
+
+endFunction
+
+function SendEvent_WearableLanternRemovePollenMeter()
+
 endFunction
