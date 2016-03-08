@@ -1,29 +1,47 @@
-Scriptname _WL_MeterInterfaceHandler extends Quest
+Scriptname CheskoMeterInterfaceHandler extends Quest
 
 _WL_SKI_MeterWidget property Meter auto
 GlobalVariable property DisplayMode auto
 {The display mode global. 0 = Off. 1 = Always On. 2 = Contextual.}
+GlobalVariable property DisplayTime auto
+{The display time global.}
 GlobalVariable property AttributeValue auto
 {The global that contains the attribute for this meter.}
 GlobalVariable property AttributeMax auto
 {The global that contains the maximum value for this attribute.}
 GlobalVariable property OpacityMax auto
 {The global that contains the maximum opacity value for this meter.}
+GlobalVariable property PrimaryColor auto
+{Setting global for primary color.}
+GlobalVariable property AuxColor auto
+{Setting global for aux (inversion) color.}
+
+bool property lower_is_better = false auto
+{By default, contextual mode displays the meter when decreasing below thresholds and always when increasing. Setting
+ this to "true" makes the system display the meter when increasing above thresholds and always when decreasing.}
+float property meter_inversion_value = -1.0 auto
+{If set, this will cause the meter to fill back up / go back down when this value is reached, usually with an accompanying alternate color. Useful
+ for portraying a "bonus range".}
 
 bool should_update = false
 bool meter_displayed = false
 int display_iterations_remaining = 0
 float last_attribute_value = 0.0
 
+; Instantiate in child script
+float[] contextual_display_thresholds
+bool[] threshold_should_flash
+bool[] threshold_should_stay_on
+
 Event OnUpdate()
-	UpdateParentMeter()
+	UpdateMeter()
 	if should_update
 		RegisterForSingleUpdate(2)
 		should_update = false
 	endif
 EndEvent
 
-function UpdateParentMeter(bool abForceDisplayIfEnabled = false)
+function UpdateMeter(bool abForceDisplayIfEnabled = false)
 	HandleMeterUpdate(abForceDisplayIfEnabled)
 	if display_iterations_remaining > 0
 		display_iterations_remaining -= 1
@@ -41,13 +59,18 @@ function UpdateParentMeter(bool abForceDisplayIfEnabled = false)
 	endif
 endFunction
 
-function HandleExposureMeterUpdate(bool abForceDisplayIfEnabled = false)
-	bool warm = false
+function HandleMeterUpdate(bool abForceDisplayIfEnabled = false)
+	bool inverted = false
 	float attribute_value = AttributeValue.GetValue()
 	
-	;if attribute_value < 20.0
-	;	warm = true
-	;endif
+	; IF WE INVERTED
+	if meter_inversion_value != -1.0
+		if lower_is_better && attribute_value < meter_inversion_value
+			inverted = true
+		elseif !lower_is_better && attribute_value > meter_inversion_value
+			inverted = true
+		endif
+	endif
 
 	if DisplayMode.GetValueInt() == 1 														; Always On
 		Meter.Alpha = OpacityMax.GetValue()
@@ -55,24 +78,80 @@ function HandleExposureMeterUpdate(bool abForceDisplayIfEnabled = false)
 		if warm
 			ContextualDisplay(attribute_value)
 		else
-			Exposure_ContextualDisplay(exposure, abForceDisplayIfEnabled)
+			ContextualDisplay(attribute_value, abForceDisplayIfEnabled)
 		endif
-	elseif _Frost_Setting_MeterDisplayMode.GetValueInt() == 0 && exposure_display_iterations_remaining == 0
-		ExposureMeter.Alpha = 0.0
+	elseif DisplayMode.GetValueInt() == 0 && display_iterations_remaining == 0
+		Meter.Alpha = 0.0
 		return
 	endif
 
-	if (warm && last_exposure <= 20.0 && exposure > 20.0) || (!warm && last_exposure > 20.0 && exposure <= 20.0)
-		ExposureMeter.ForcePercent(0.0)
-	endif
+	; We set this again immediately afterwards anyway, so who cares
+	;if (warm && last_exposure <= 20.0 && exposure > 20.0) || (!warm && last_exposure > 20.0 && exposure <= 20.0)
+	;	ExposureMeter.ForcePercent(0.0)
+	;endif
 
-	if warm
-		ExposureMeter.SetPercent(1.0 - (exposure / 20.0))
-		ExposureMeter.SetColors(_Frost_ExposureMeterColorWarm_Light.GetValueInt(), _Frost_ExposureMeterColorWarm_Dark.GetValueInt())
+	if inverted
+		if lower_is_better
+			Meter.SetPercent(1.0 - (attribute_value / meter_inversion_value))
+			Meter.SetColors(_Frost_ExposureMeterColorWarm_Light.GetValueInt(), _Frost_ExposureMeterColorWarm_Dark.GetValueInt())
+		else
+			Meter.SetPercent(attribute_value / meter_inversion_value)
+			Meter.SetColors(_Frost_ExposureMeterColorWarm_Light.GetValueInt(), _Frost_ExposureMeterColorWarm_Dark.GetValueInt())
+		endif
 	else
-		ExposureMeter.SetPercent((exposure - 20.0) / 100.0)
-		ExposureMeter.SetColors(_Frost_ExposureMeterColorCold_Light.GetValueInt(), _Frost_ExposureMeterColorCold_Dark.GetValueInt())
+		if lower_is_better
+			Meter.SetPercent((attribute_value - meter_inversion_value) / 100.0)
+			Meter.SetColors(_Frost_ExposureMeterColorCold_Light.GetValueInt(), _Frost_ExposureMeterColorCold_Dark.GetValueInt())
+		endif
 	endif
 
 	last_attribute_value = attribute_value
+endFunction
+
+function ContextualDisplay(float attribute_value, bool abForceDisplayIfEnabled = false)
+
+	if abForceDisplayIfEnabled
+		display_iterations_remaining = _Frost_Setting_MeterDisplayTime.GetValueInt()
+		return
+	endif
+
+	bool increasing = last_exposure < exposure
+	if increasing && last_exposure <= EXPOSURE_LEVEL_5 && exposure > EXPOSURE_LEVEL_5
+		;freezing to death, show, flash
+		ExposureMeter_FadeUp(-1, true)
+
+	elseif increasing && last_exposure <= EXPOSURE_LEVEL_4 && exposure > EXPOSURE_LEVEL_4
+		;freezing, show, flash
+		ExposureMeter_FadeUp(-1, true)
+
+	elseif increasing && last_exposure <= EXPOSURE_LEVEL_3 && exposure > EXPOSURE_LEVEL_3
+		;very cold, show
+		ExposureMeter_FadeUp(_Frost_Setting_MeterDisplayTime.GetValueInt())
+
+	elseif increasing && last_exposure <= EXPOSURE_LEVEL_2 && exposure > EXPOSURE_LEVEL_2
+		;chilly, show
+		ExposureMeter_FadeUp(_Frost_Setting_MeterDisplayTime.GetValueInt())
+		
+	elseif increasing && last_exposure <= EXPOSURE_LEVEL_1 && exposure > EXPOSURE_LEVEL_1
+		;comfortable, show
+		ExposureMeter_FadeUp(_Frost_Setting_MeterDisplayTime.GetValueInt())
+
+	elseif increasing && last_exposure <= 11 && exposure > 11
+		;warm, show
+		ExposureMeter_FadeUp(_Frost_Setting_MeterDisplayTime.GetValueInt())
+		
+	elseif !increasing && last_exposure != exposure && exposure > 0.0 && (GetPlayerHeatSourceLevel() > 0 || Game.FindClosestReferenceOfAnyTypeInListFromRef(_Frost_SleepObjects, PlayerRef,  600.0) != None)
+		;going down, show
+		ExposureMeter_FadeUp(-1)
+
+	elseif (last_exposure > 0.0 && exposure <= 0.0) || (GetPlayerHeatSourceDistance() == -1 && exposure < 61)
+		; hit bottom, start fade out
+		if exposure_display_iterations_remaining == -1
+			exposure_display_iterations_remaining = _Frost_Setting_MeterDisplayTime.GetValueInt()
+		endif
+	endif
+endFunction
+
+function SetColor(int aiColor)
+	if Meter.
 endFunction
