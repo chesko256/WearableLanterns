@@ -17,11 +17,11 @@ GlobalVariable property AuxColor auto
 {Setting global for aux (inversion) color.}
 
 bool property lower_is_better = false auto
-{By default, contextual mode displays the meter when decreasing below thresholds and always when increasing. Setting
- this to "true" makes the system display the meter when increasing above thresholds and always when decreasing.}
+{By default, contextual mode displays the meter when decreasing below thresholds and always when increasing. Setting this to "true" makes the system display the meter when increasing above thresholds and always when decreasing.}
 float property meter_inversion_value = -1.0 auto
-{If set, this will cause the meter to fill back up / go back down when this value is reached, usually with an accompanying alternate color. Useful
- for portraying a "bonus range".}
+{If set, this will cause the meter to fill back up / go back down when this value is reached, usually with an accompanying alternate color. Useful for portraying a "bonus range".}
+float property improvement_display_delta_threshold = -1 auto
+{If the player's attribute improves, we should force the display of the meter, but only if it exceeds this absolute value.}
 
 bool should_update = false
 bool meter_displayed = false
@@ -111,11 +111,65 @@ endFunction
 function ContextualDisplay(float attribute_value, bool abForceDisplayIfEnabled = false)
 
 	if abForceDisplayIfEnabled
-		display_iterations_remaining = _Frost_Setting_MeterDisplayTime.GetValueInt()
+		display_iterations_remaining = DisplayTime.GetValueInt()
 		return
 	endif
 
-	bool increasing = last_exposure < exposure
+	bool increasing = last_attribute_value < attribute_value
+
+	int i = contextual_display_thresholds.Length - 1
+	int current_zone = -1
+	while i > 0
+		float threshold_value = contextual_display_thresholds[i]
+		float next_threshold_value = 0.0
+		if i - 1 >= 0
+			next_threshold_value = contextual_display_thresholds[i - 1]
+		endif
+		if attribute_value < threshold_value && attribute_value >= next_threshold_value
+			current_zone = i - 1
+			i = 0
+		else
+			i -= 1
+		endif
+	endWhile
+	
+	if current_zone == -1
+		; Abort and return an error. This shouldn't happen.
+	endif
+
+	float threshold_value = contextual_display_thresholds[current_zone]
+	bool should_flash = threshold_should_flash[current_zone]
+	bool should_stay_on = threshold_should_stay_on[current_zone]
+	if lower_is_better
+		if increasing && last_attribute_value < threshold_value && attribute_value >= threshold_value
+			if should_stay_on
+				Meter_FadeUp(-1, should_flash)
+			else
+				Meter_FadeUp(DisplayTime.GetValueInt(), should_flash)
+			endif
+		elseif !increasing && (last_attribute_value - attribute_value >= Math.Abs(improvement_display_delta_threshold))
+			Meter_FadeUp(-1)
+		elseif !increasing && !should_stay_on
+			if display_iterations_remaining == -1
+				display_iterations_remaining = DisplayTime.GetValueInt()
+			endif
+		endif
+	else
+		if !increasing && last_attribute_value > threshold_value && attribute_value <= threshold_value
+			if should_stay_on
+				Meter_FadeUp(-1, should_flash)
+			else
+				Meter_FadeUp(DisplayTime.GetValueInt(), should_flash)
+			endif
+		elseif increasing && (last_attribute_value - attribute_value >= Math.Abs(improvement_display_delta_threshold))
+			Meter_FadeUp(-1)
+		elseif increasing && !should_stay_on
+			if display_iterations_remaining == -1
+				display_iterations_remaining = DisplayTime.GetValueInt()
+			endif
+		endif
+	endif
+
 	if increasing && last_exposure <= EXPOSURE_LEVEL_5 && exposure > EXPOSURE_LEVEL_5
 		;freezing to death, show, flash
 		ExposureMeter_FadeUp(-1, true)
@@ -150,6 +204,18 @@ function ContextualDisplay(float attribute_value, bool abForceDisplayIfEnabled =
 			exposure_display_iterations_remaining = _Frost_Setting_MeterDisplayTime.GetValueInt()
 		endif
 	endif
+endFunction
+
+function FadeUp(int iterations_remaining, bool flash = false)
+	if _Frost_Setting_MeterDisplayMode.GetValueInt() == 0
+		return
+	endif
+	exposure_meter_displayed = true
+	ExposureMeter.FadeTo(_Frost_Setting_MeterOpacity.GetValue(), 2.0)
+	if flash
+		ExposureMeter.StartFlash()
+	endIf
+	exposure_display_iterations_remaining = iterations_remaining
 endFunction
 
 function SetColor(int aiColor)
