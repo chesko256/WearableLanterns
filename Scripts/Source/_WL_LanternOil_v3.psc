@@ -646,6 +646,7 @@ function UpdateOil()
 		else
 			oil_update_counter += 1
 		endif
+		SendEvent_UpdateOilMeter()
 	endif
 endFunction
 
@@ -696,6 +697,7 @@ function UpdatePollen()
 			pollen_update_counter += 1
 		endif
 	endif
+	SendEvent_UpdatePollenMeter()
 endFunction
 
 function ShowRemainingOilMessage(float oil_level)
@@ -743,6 +745,21 @@ bool function IsRefInInterior(ObjectReference akReference)
 		endif
 	endif
 endFunction
+
+function SendEvent_UpdateOilMeter()
+	int handle = ModEvent.Create("WearableLanterns_UpdateOilMeter")
+	if handle
+		ModEvent.Send(handle)
+	endif
+endFunction
+
+function SendEvent_UpdatePollenMeter()
+	int handle = ModEvent.Create("WearableLanterns_UpdatePollenMeter")
+	if handle
+		ModEvent.Send(handle)
+	endif
+endFunction
+
 
 function WLDebug(int aiSeverity, string asLogMessage)
 	int LOG_LEVEL = _WL_Debug.GetValueInt()

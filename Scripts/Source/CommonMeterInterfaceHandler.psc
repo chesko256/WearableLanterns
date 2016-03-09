@@ -44,6 +44,11 @@ Event OnUpdate()
 	endif
 EndEvent
 
+Event UpdateMeterDelegate()
+	; Called from SKSE Mod Event
+	UpdateMeter()
+endEvent
+
 function UpdateMeter(bool abForceDisplayIfEnabled = false)
 	HandleMeterUpdate(abForceDisplayIfEnabled)
 	if display_iterations_remaining > 0
@@ -96,7 +101,7 @@ function HandleMeterUpdate(bool abForceDisplayIfEnabled = false)
 			SetMeterColors(AuxPrimaryColor.GetValueInt(), AuxSecondaryColor.GetValueInt())
 		endif
 	else
-		Meter.SetPercent((attribute_value - meter_inversion_value) / 100.0)
+		Meter.SetPercent((attribute_value - meter_inversion_value) / AttributeMax.GetValue())
 		SetMeterColors(MainPrimaryColor.GetValueInt(), MainSecondaryColor.GetValueInt())
 	endif
 

@@ -1047,9 +1047,15 @@ function SetLanternSlot()
 endFunction
 
 function SendEvent_WearableLanternRemoveOilMeter()
-
+	int handle = ModEvent.Create("WearableLanterns_RemoveOilMeter")
+    if handle
+        ModEvent.Send(handle)
+    endif
 endFunction
 
 function SendEvent_WearableLanternRemovePollenMeter()
-
+	int handle = ModEvent.Create("WearableLanterns_RemovePollenMeter")
+    if handle
+        ModEvent.Send(handle)
+    endif
 endFunction

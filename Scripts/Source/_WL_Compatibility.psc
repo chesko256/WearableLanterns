@@ -4,6 +4,7 @@ import debug
 
 _WL_SkyUIConfigPanelScript property WLConfig Auto 			;SkyUI Configuration script
 _WL_LanternOil_v3 property LanternQuest auto
+_WL_OilMeterInterfaceHandler property OilMeter auto
 
 Actor property PlayerRef auto
 Perk property _WL_CatchTorchbug auto
@@ -169,6 +170,7 @@ function RegisterForEventsOnLoad()
 	else
 		LanternQuest.UnregisterForSneakEvents()
 	endif
+	OilMeter.RegisterForEvents()
 endFunction
 
 Function RegisterForKeysOnLoad()
