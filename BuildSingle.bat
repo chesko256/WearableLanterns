@@ -1,1 +1,1 @@
-"E:\SteamLibrary\steamapps\common\skyrim\Papyrus Compiler\PapyrusCompiler.exe" %1 -f="TESV_Papyrus_Flags.flg" -i=".\Scripts\Source;..\PapyrusCommon\Scripts\Source;..\CheskoPapyrusShared\Scripts\Source" -o=".\Scripts"
+"..\PapyrusCommon\Papyrus Compiler\PapyrusCompiler.exe" %1 -f="TESV_Papyrus_Flags.flg" -i=".\Scripts\Source;..\PapyrusCommon\Scripts\Source;..\CheskoPapyrusShared\Scripts\Source" -o=".\Scripts"

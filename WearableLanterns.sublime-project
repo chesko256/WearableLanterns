@@ -2,13 +2,16 @@
 	"folders":
 	[
 		{
-			"path": "Scripts\\Source"
+			"path": "Scripts/Source"
 		},
 		{
-			"path": "interface\\translations"
+			"path": "interface/translations"
 		},
 		{
-			"path": "E:\\ModOrganizerData\\mods\\CheskoPapyrusShared\\Scripts\\Source"
+			"path": "/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source"
+		},
+		{
+			"path": "/C/Personal/ModOrganizer/mods/CheskoPapyrusShared/Scripts/Source"
 		}
 	]
 }
