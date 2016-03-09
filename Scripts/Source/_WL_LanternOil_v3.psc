@@ -463,30 +463,40 @@ function RefillTorchbug()
 	int pollen_level = _WL_PollenLevel.GetValueInt()
 	
 	bool has_flowers = true
+	bool found_flowers = false
 	while pollen_level < 32 && has_flowers
 		;Convert flowers to pollen
 		if PlayerRef.GetItemCount(Thistle01) > 0
 			PlayerRef.RemoveItem(Thistle01, 1, true)
 			pollen_level += 8
+			found_flowers = true
 		elseif PlayerRef.GetItemCount(Lavender) > 0
 			PlayerRef.RemoveItem(Lavender, 1, true)
 			pollen_level += 8
+			found_flowers = true
 		elseif PlayerRef.GetItemCount(MountainFlower01Blue) > 0
 			PlayerRef.RemoveItem(MountainFlower01Blue, 1, true)
 			pollen_level += 8
+			found_flowers = true
 		elseif PlayerRef.GetItemCount(MountainFlower01Purple) > 0
 			PlayerRef.RemoveItem(MountainFlower01Purple, 1, true)
 			pollen_level += 8
+			found_flowers = true
 		elseif PlayerRef.GetItemCount(MountainFlower01Red) > 0
 			PlayerRef.RemoveItem(MountainFlower01Red, 1, true)
 			pollen_level += 8
+			found_flowers = true
 		elseif Compatibility.bIsDLC1Loaded && PlayerRef.GetItemCount(Compatibility.MountainFlowerYellow) > 0
 			PlayerRef.RemoveItem(Compatibility.MountainFlowerYellow, 1, true)
 			pollen_level += 8
+			found_flowers = true
 		else
 			has_flowers = false
 		endif
 	endWhile
+	if found_flowers
+		SendEvent_UpdatePollenMeter()
+	endif
 	_WL_PollenLevel.SetValueInt(pollen_level)
 endFunction
 
@@ -495,6 +505,7 @@ function RefillLantern()
 	if bottle_count >= 1
 		_WL_OilLevel.SetValue(16.0)
 		PlayerRef.RemoveItem(_WL_LanternOil4, 1, true)
+		SendEvent_UpdateOilMeter()
 	endif
 endFunction
 
