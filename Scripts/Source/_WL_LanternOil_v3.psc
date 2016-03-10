@@ -654,10 +654,10 @@ function UpdateOil()
 				oil_update_counter = 0
 			endif
 			WLDebug(1, "Oil Level: " + oil_level)
+			SendEvent_UpdateOilMeter()
 		else
 			oil_update_counter += 1
 		endif
-		SendEvent_UpdateOilMeter()
 	endif
 endFunction
 
