@@ -633,6 +633,7 @@ function SetOilLevel()
 			_WL_HasFuel.SetValueInt(1)
 		elseif last_oil_level > 0 && oil_level == 0 			; Oil depleted
 			_WL_LanternOilRemainingEmptyRanOut.Show()
+			SendEvent_ForceOilMeterDisplay(true)
 			_WL_HasFuel.SetValueInt(2)
 		elseif oil_level == 0
 			_WL_HasFuel.SetValueInt(2)
@@ -712,10 +713,12 @@ function UpdatePollen()
 endFunction
 
 function ShowRemainingOilMessage(float oil_level)
-	if oil_level == 8.0
-		_WL_LanternOilRemainingHalfFull.Show()
-	elseif oil_level == 4.0
-		_WL_LanternOilRemainingMostlyEmpty.Show()
+	if PlayerRef.GetItemCount(_WL_LanternOil4) > 0
+		if oil_level == 8.0
+			_WL_LanternOilRemainingHalfFull.Show()
+		elseif oil_level == 4.0
+			_WL_LanternOilRemainingMostlyEmpty.Show()
+		endif
 	endif
 endFunction
 
@@ -760,6 +763,14 @@ endFunction
 function SendEvent_UpdateOilMeter()
 	int handle = ModEvent.Create("WearableLanterns_UpdateOilMeter")
 	if handle
+		ModEvent.Send(handle)
+	endif
+endFunction
+
+function SendEvent_ForceOilMeterDisplay(bool abFlash = false)
+	int handle = ModEvent.Create("WearableLanterns_ForceOilMeterDisplay")
+	if handle
+		ModEvent.PushBool(handle, abFlash)
 		ModEvent.Send(handle)
 	endif
 endFunction

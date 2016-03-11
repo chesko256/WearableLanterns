@@ -959,6 +959,7 @@ function ShowOilRemainingMessage(float oil_level)
 	elseif oil_level == 16
 		_WL_LanternOilRemainingFull.Show()
 	endif
+	SendEvent_ForceOilMeterDisplay()
 endFunction
 
 function ShowPollenRemainingMessage(int pollen_level)
@@ -1044,6 +1045,14 @@ function SetLanternSlot()
 	_WL_WearableTorchbugFrontAA_empty.SetSlotMask(slotmask)
 	_WL_WearableTorchbugFrontREDAA.SetSlotMask(slotmask)
 	_WL_WearableTorchbugREDAA.SetSlotMask(slotmask)
+endFunction
+
+function SendEvent_ForceOilMeterDisplay(bool abFlash = false)
+	int handle = ModEvent.Create("WearableLanterns_ForceOilMeterDisplay")
+	if handle
+		ModEvent.PushBool(handle, abFlash)
+		ModEvent.Send(handle)
+	endif
 endFunction
 
 function SendEvent_WearableLanternRemoveOilMeter()
