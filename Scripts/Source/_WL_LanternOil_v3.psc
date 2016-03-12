@@ -57,6 +57,7 @@ Light property _WL_PaperHeldDroppedLit auto 							;Paper Lantern Lit World Obje
 
 activator property CritterFirefly auto
 
+FormList property _WL_PollenFlowers auto
 Ingredient property Lavender auto
 Ingredient property MountainFlower01Blue auto
 Ingredient property MountainFlower01Purple auto
@@ -723,10 +724,12 @@ function ShowRemainingOilMessage(float oil_level)
 endFunction
 
 function ShowRemainingPollenMessage(int pollen_level)
-	if pollen_level == 16
-		_WL_LanternOilRemainingHalfFull.Show()
-	elseif pollen_level == 4
-		_WL_LanternOilRemainingMostlyEmpty.Show()
+	if PlayerRef.GetItemCount(_WL_PollenFlowers) <= 0
+		if pollen_level == 16
+			_WL_LanternOilRemainingHalfFull.Show()
+		elseif pollen_level == 4
+			_WL_LanternOilRemainingMostlyEmpty.Show()
+		endif
 	endif
 endFunction
 

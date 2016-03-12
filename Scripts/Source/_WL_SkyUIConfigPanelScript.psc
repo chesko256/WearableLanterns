@@ -843,17 +843,17 @@ string function GetCustomControl(int keyCode)
 	endIf
 endFunction
 
-_WL_FuelMeter property OilMeter auto
-_WL_FuelMeter property PollenMeter auto
-_WL_FuelMeterUpdate property FuelMeterDisplay auto
+_WL_OilMeter property OilMeter auto
+; _WL_PollenMeter property PollenMeter auto
+; _WL_FuelMeterUpdate property FuelMeterDisplay auto
 
 function ConfigureMeter(int aiMeterIdx, int aiFillDirectionIdx, int aiHAnchorIdx, int aiVAnchorIdx, float afPositionX, float afPositionY, float afHeight, float afWidth)
 	; Not configured: Color, Opacity
-	_WL_SKI_MeterWidget MyMeter = None
+	Common_SKI_MeterWidget MyMeter = None
 	if aiMeterIdx == 0
 		MyMeter = OilMeter
 	else
-		MyMeter = PollenMeter
+		; MyMeter = PollenMeter
 	endif
 
 	if !MyMeter
@@ -867,7 +867,7 @@ function ConfigureMeter(int aiMeterIdx, int aiFillDirectionIdx, int aiHAnchorIdx
 	MyMeter.Y = afPositionY
 	MyMeter.Height = afHeight
 	MyMeter.Width = afWidth
-	FuelMeterDisplay.ForceDisplayAndUpdate()
+	; FuelMeterDisplay.ForceDisplayAndUpdate()
 endFunction
 
 ;/ function ; ChooseMeterPosition(int index)

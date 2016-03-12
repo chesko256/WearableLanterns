@@ -14,6 +14,7 @@ bool property bIsDLC1Loaded auto hidden
 bool property bIsDLC2Loaded auto hidden
 bool property bIsBUGSLoaded auto hidden
 
+Formlist property _WL_PollenFlowers auto
 Formlist property _WL_GlowingBugList auto
 FormList property _WL_InteriorWorldspaces auto
 
@@ -106,6 +107,9 @@ endFunction
 
 function DLC1LoadUp()
 	MountainFlowerYellow = Game.GetFormFromFile(0x01002A78, "Dawnguard.esm") as Ingredient
+	if !_WL_PollenFlowers.HasForm(MountainFlowerYellow)
+		_WL_PollenFlowers.AddForm(MountainFlowerYellow)
+	endif
 	Form DLC01WS05 = Game.GetFormFromFile(0x020048C7, "Dawnguard.esm")			;DLC1AncestorsGladeWorld
 	Form DLC01WS06 = Game.GetFormFromFile(0x02004BEA, "Dawnguard.esm")			;DLC1DarkfallPassageWorld
 	Form DLC01WS07 = Game.GetFormFromFile(0x02002F64, "Dawnguard.esm")			;DLC1ForebearsHoldout
