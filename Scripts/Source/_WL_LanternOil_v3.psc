@@ -7,6 +7,7 @@ import utility
 
 Actor property PlayerRef auto
 _WL_Compatibility property Compatibility auto
+_WL_SkyUIConfigPanelScript property Config auto
 FormList property _WL_InteriorWorldspaces auto
 
 ;Settings
@@ -19,12 +20,12 @@ GlobalVariable property _WL_SettingOffWhenSneaking auto
 GlobalVariable property _WL_Debug auto
 GlobalVariable property GameHour auto
 
+FormList property _WL_PollenFlowers auto
 Formlist property _WL_AllLanterns auto
 Formlist property _WL_GlowingBugList auto
+FormList property _WL_InvBugLanterns auto
 
 MiscObject property _WL_LanternOil4 auto
-
-FormList property _WL_InvBugLanterns auto
 
 Armor property _WL_WearableLanternInvDisplay auto
 Armor property _WL_WearableLanternApparel auto 							;Travel Lantern Worn - Back Right
@@ -57,15 +58,7 @@ Light property _WL_PaperHeldDroppedLit auto 							;Paper Lantern Lit World Obje
 
 activator property CritterFirefly auto
 
-FormList property _WL_PollenFlowers auto
-Ingredient property Lavender auto
-Ingredient property MountainFlower01Blue auto
-Ingredient property MountainFlower01Purple auto
-Ingredient property MountainFlower01Red auto
-Ingredient property Thistle01 auto
-
 Message property _WL_TorchbugDropRelease auto
-
 Message property _WL_TorchbugEmptyEquip auto
 Message property _WL_TorchbugCatch auto
 Message property _WL_TorchbugNoPollen auto
@@ -231,6 +224,7 @@ function SetLantern(Form akBaseObject, int aiLanternIndex, int aiLanternState, s
 	;The player has a lantern
 	current_lantern = aiLanternState
 	ToggleLanternOn()
+	Config.CheckFuel()
 endFunction
 
 Event OnItemRemoved(Form akBaseItem, int aiItemCount, ObjectReference akItemReference, ObjectReference akDestContainer)
@@ -465,36 +459,25 @@ function RefillTorchbug()
 	
 	bool has_flowers = true
 	bool found_flowers = false
+	int list_size = _WL_PollenFlowers.GetSize()
 	while pollen_level < 32 && has_flowers
 		;Convert flowers to pollen
-		if PlayerRef.GetItemCount(Thistle01) > 0
-			PlayerRef.RemoveItem(Thistle01, 1, true)
-			pollen_level += 8
-			found_flowers = true
-		elseif PlayerRef.GetItemCount(Lavender) > 0
-			PlayerRef.RemoveItem(Lavender, 1, true)
-			pollen_level += 8
-			found_flowers = true
-		elseif PlayerRef.GetItemCount(MountainFlower01Blue) > 0
-			PlayerRef.RemoveItem(MountainFlower01Blue, 1, true)
-			pollen_level += 8
-			found_flowers = true
-		elseif PlayerRef.GetItemCount(MountainFlower01Purple) > 0
-			PlayerRef.RemoveItem(MountainFlower01Purple, 1, true)
-			pollen_level += 8
-			found_flowers = true
-		elseif PlayerRef.GetItemCount(MountainFlower01Red) > 0
-			PlayerRef.RemoveItem(MountainFlower01Red, 1, true)
-			pollen_level += 8
-			found_flowers = true
-		elseif Compatibility.bIsDLC1Loaded && PlayerRef.GetItemCount(Compatibility.MountainFlowerYellow) > 0
-			PlayerRef.RemoveItem(Compatibility.MountainFlowerYellow, 1, true)
-			pollen_level += 8
-			found_flowers = true
-		else
+		int i = 0
+		bool continue = true
+		while i < list_size && continue
+			int flower_count = PlayerRef.GetItemCount(_WL_PollenFlowers.GetAt(i))
+			if flower_count > 0
+				PlayerRef.RemoveItem(_WL_PollenFlowers.GetAt(i), 1, true)
+				pollen_level += 8
+				found_flowers = true
+				continue = false
+			endif
+		endWhile
+		if continue
 			has_flowers = false
 		endif
 	endWhile
+
 	if found_flowers
 		SendEvent_UpdatePollenMeter()
 	endif
@@ -785,6 +768,13 @@ function SendEvent_UpdatePollenMeter()
 	endif
 endFunction
 
+function SendEvent_ForcePollenMeterDisplay(bool abFlash = false)
+	int handle = ModEvent.Create("WearableLanterns_ForcePollenMeterDisplay")
+	if handle
+		ModEvent.PushBool(handle, abFlash)
+		ModEvent.Send(handle)
+	endif
+endFunction
 
 function WLDebug(int aiSeverity, string asLogMessage)
 	int LOG_LEVEL = _WL_Debug.GetValueInt()

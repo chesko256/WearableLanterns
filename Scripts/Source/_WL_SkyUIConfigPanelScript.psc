@@ -62,6 +62,7 @@ bool property DLC2Loaded auto hidden conditional
 
 GlobalVariable property _WL_OilLevel auto
 GlobalVariable property _WL_PollenLevel auto
+
 GlobalVariable property _WL_SettingBrightness auto
 GlobalVariable property _WL_SettingPosition auto 						;0 = Back, 1 = Front, 2 = Held
 GlobalVariable property _WL_SettingDropLit auto
@@ -71,20 +72,17 @@ GlobalVariable property _WL_SettingSlot auto
 GlobalVariable property _WL_SettingOffWhenSneaking auto
 GlobalVariable property _WL_SettingHoldActivateToggle auto
 GlobalVariable property _WL_SettingHoldActivateToggleDuration auto
+GlobalVariable Property _WL_SettingAutomatic auto
+GlobalVariable property _WL_SettingCheckFuelDisplay auto
+GlobalVariable property _WL_SettingFuelMeterDisplay_Contextual auto
+GlobalVariable property _WL_SettingMeterDisplayTime auto
+
 GlobalVariable property _WL_HotkeyPlayerLantern auto
 GlobalVariable property _WL_HotkeyCheckFuel auto
-GlobalVariable Property _WL_SettingAutomatic auto
 GlobalVariable property _WL_gToggle auto
 
-; Old
-GlobalVariable property _WL_CheckFuelDisplay auto
-GlobalVariable property _WL_MeterOpacity auto
-GlobalVariable property _WL_MeterDisplayTime auto
-GlobalVariable property _WL_OilColor auto
-GlobalVariable property _WL_PollenColor auto
-GlobalVariable property _WL_FuelMeterDisplay_Contextual auto
+GlobalVariable property _WL_Debug auto
 
-; New
 GlobalVariable property _WL_SettingMeterOilColor auto
 GlobalVariable property _WL_SettingMeterOilOpacity auto
 GlobalVariable property _WL_SettingMeterOilFillDirection auto
@@ -281,7 +279,7 @@ function PageReset_Interface()
 
 	; Screen aspect ratio? Might only need it when selecting preset, so just fold it into that
 	Interface_UIMeterDisplay_OID = AddMenuOption("$WearableLanternsInterfaceSettingUIMeterDisplay", MeterDisplayList[MeterDisplayIndex])
-	Interface_UIMeterDisplayTime_OID = AddSliderOption("$WearableLanternsInterfaceSettingUIMeterDisplayTime", _WL_MeterDisplayTime.GetValue() * 2, "{0}")
+	Interface_UIMeterDisplayTime_OID = AddSliderOption("$WearableLanternsInterfaceSettingUIMeterDisplayTime", _WL_SettingMeterDisplayTime.GetValue() * 2, "{0}")
 	Interface_UIMeterLayout_OID = AddMenuOption("$WearableLanternsInterfaceSettingUIMeterLayout", MeterLayoutList[MeterLayoutIndex])
 	AddEmptyOption()
 	AddHeaderOption("$WearableLanternsInterfaceHeaderMetersOilName")
@@ -487,14 +485,14 @@ event OnOptionDefault(int option)
 	elseif option == General_SettingCheckFuelDisplayMenu_OID
 		CheckFuelDisplayIndex = 0
 		SetMenuOptionValue(General_SettingCheckFuelDisplayMenu_OID, CheckFuelDisplayList[CheckFuelDisplayIndex])
-		_WL_CheckFuelDisplay.SetValueInt(CheckFuelDisplayIndex)
+		_WL_SettingCheckFuelDisplay.SetValueInt(CheckFuelDisplayIndex)
 	elseif option == Interface_UIMeterDisplay_OID
 		MeterDisplayIndex = 2
 		SetMenuOptionValue(Interface_UIMeterDisplay_OID, MeterDisplayList[MeterDisplayIndex])
-		_WL_FuelMeterDisplay_Contextual.SetValueInt(MeterDisplayIndex)
+		_WL_SettingFuelMeterDisplay_Contextual.SetValueInt(MeterDisplayIndex)
 	elseif option == Interface_UIMeterDisplayTime_OID
-		_WL_MeterDisplayTime.SetValueInt(4)
-		SetSliderOptionValue(Interface_UIMeterDisplayTime_OID, _WL_MeterDisplayTime.GetValueInt(), "{0}")
+		_WL_SettingMeterDisplayTime.SetValueInt(4)
+		SetSliderOptionValue(Interface_UIMeterDisplayTime_OID, _WL_SettingMeterDisplayTime.GetValueInt(), "{0}")
 	elseif option == Interface_UIMeterLayout_OID
 		MeterLayoutIndex = 6
 		SetMenuOptionValue(Interface_UIMeterLayout_OID, MeterLayoutList[MeterLayoutIndex])
@@ -552,7 +550,7 @@ event OnOptionSliderOpen(int option)
 		SetSliderDialogRange(1, 5.0)
 		SetSliderDialogInterval(0.5)
 	elseif option == Interface_UIMeterDisplayTime_OID
-		SetSliderDialogStartValue(_WL_MeterDisplayTime.GetValueInt() * 2)
+		SetSliderDialogStartValue(_WL_SettingMeterDisplayTime.GetValueInt() * 2)
 		SetSliderDialogDefaultValue(8.0)
 		SetSliderDialogRange(4.0, 20.0)
 		SetSliderDialogInterval(2.0)
@@ -618,7 +616,7 @@ event OnOptionSliderAccept(int option, float value)
 		_WL_SettingHoldActivateToggleDuration.SetValue(value)
 		SetSliderOptionValue(General_HotkeyHoldUseDuration_OID, value, "{1} sec")
 	elseif option == Interface_UIMeterDisplayTime_OID
-		_WL_MeterDisplayTime.SetValue(value/2)
+		_WL_SettingMeterDisplayTime.SetValue(value/2)
 		SetSliderOptionValue(Interface_UIMeterDisplayTime_OID, value, "{0}")
 	elseif option == Interface_UIOilMeterOpacity_OID
 		_WL_SettingMeterOilOpacity.SetValue(value)
@@ -725,11 +723,11 @@ event OnOptionMenuAccept(int option, int index)
 	elseif option == General_SettingCheckFuelDisplayMenu_OID
 		CheckFuelDisplayIndex = index
 		SetMenuOptionValue(General_SettingCheckFuelDisplayMenu_OID, CheckFuelDisplayList[CheckFuelDisplayIndex])
-		_WL_CheckFuelDisplay.SetValueInt(index)
+		_WL_SettingCheckFuelDisplay.SetValueInt(index)
 	elseif option == Interface_UIMeterDisplay_OID
 		MeterDisplayIndex = index
 		SetMenuOptionValue(Interface_UIMeterDisplay_OID, MeterDisplayList[MeterDisplayIndex])
-		_WL_FuelMeterDisplay_Contextual.SetValueInt(MeterDisplayIndex)
+		_WL_SettingFuelMeterDisplay_Contextual.SetValueInt(MeterDisplayIndex)
 	elseif option == Interface_UIMeterLayout_OID
 		MeterLayoutIndex = index
 		SetMenuOptionValue(Interface_UIMeterLayout_OID, MeterLayoutList[MeterLayoutIndex])
@@ -794,11 +792,11 @@ endFunction
 
 event OnOptionColorAccept(int option, int color)
 	if option == Interface_UIOilMeterColor_OID
-		_WL_OilColor.SetValueInt(color)
+		_WL_SettingMeterOilColor.SetValueInt(color)
 		SetColorOptionValue(option, color)
 		; ChooseMeterPosition(MeterLayoutIndex)
 	elseif option == Interface_UIPollenMeterColor_OID
-		_WL_PollenColor.SetValueInt(color)
+		_WL_SettingMeterPollenColor.SetValueInt(color)
 		SetColorOptionValue(option, color)
 		; ChooseMeterPosition(MeterLayoutIndex)
 	endif
@@ -904,37 +902,43 @@ function ToggleLantern()
 		if _WL_gToggle.GetValueInt() == 1
 			LanternQuest.ToggleLanternOff()
 			_WL_OilLanternOff.Play(PlayerRef)
+			WLDebug(1, "Oil lantern turned off.")
 		else
 			LanternQuest.ToggleLanternOn()
 			LanternQuest.previous_lantern_state = true
 			_WL_OilLanternOn.Play(PlayerRef)
+			CheckFuel()
+			WLDebug(1, "Oil lantern turned on.")
 		endIf
 	elseif LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
 		if _WL_gToggle.GetValueInt() == 1
 			LanternQuest.ToggleLanternOff()
 			PHYBottleSmallH.Play(PlayerRef)
+			WLDebug(1, "Torchbug lantern turned off.")
 		else
 			LanternQuest.ToggleLanternOn()
 			PHYBottleSmallH.Play(PlayerRef)
+			CheckFuel()
+			WLDebug(1, "Torchbug lantern turned on.")
 		endIf
 	endIf
 endFunction
 
 function CheckFuel()
-	int i = _WL_CheckFuelDisplay.GetValueInt()
+	int i = _WL_SettingCheckFuelDisplay.GetValueInt()
 	if i == 0  									;Meter, Message
 		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_OIL
 			ShowOilRemainingMessage(_WL_OilLevel.GetValue())
-			; ChooseMeterPosition(MeterLayoutIndex)
+			ForceOilMeterFlashIfEmpty()
 		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
 			ShowPollenRemainingMessage(_WL_PollenLevel.GetValueInt())
-			; ChooseMeterPosition(MeterLayoutIndex)
+			ForcePollenMeterFlashIfEmpty()
 		endIf
 	elseif i == 1 								;Meter Only
 		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_OIL
-			; ChooseMeterPosition(MeterLayoutIndex)
+			ForceOilMeterFlashIfEmpty()
 		elseif _WL_SettingFeeding.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
-			; ChooseMeterPosition(MeterLayoutIndex)
+			ForcePollenMeterFlashIfEmpty()
 		endIf
 	elseif i == 2 								;Message Only
 		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_OIL
@@ -959,7 +963,6 @@ function ShowOilRemainingMessage(float oil_level)
 	elseif oil_level == 16
 		_WL_LanternOilRemainingFull.Show()
 	endif
-	SendEvent_ForceOilMeterDisplay()
 endFunction
 
 function ShowPollenRemainingMessage(int pollen_level)
@@ -1047,8 +1050,32 @@ function SetLanternSlot()
 	_WL_WearableTorchbugREDAA.SetSlotMask(slotmask)
 endFunction
 
+function ForceOilMeterFlashIfEmpty()
+	if _WL_OilLevel.GetValue() <= 0.0
+		SendEvent_ForceOilMeterDisplay(true)
+	else
+		SendEvent_ForceOilMeterDisplay()
+	endif
+endFunction
+
+function ForcePollenMeterFlashIfEmpty()
+	if _WL_PollenLevel.GetValueInt() <= 0
+		SendEvent_ForcePollenMeterDisplay(true)
+	else
+		SendEvent_ForcePollenMeterDisplay()
+	endif
+endFunction
+
 function SendEvent_ForceOilMeterDisplay(bool abFlash = false)
 	int handle = ModEvent.Create("WearableLanterns_ForceOilMeterDisplay")
+	if handle
+		ModEvent.PushBool(handle, abFlash)
+		ModEvent.Send(handle)
+	endif
+endFunction
+
+function SendEvent_ForcePollenMeterDisplay(bool abFlash = false)
+	int handle = ModEvent.Create("WearableLanterns_ForcePollenMeterDisplay")
 	if handle
 		ModEvent.PushBool(handle, abFlash)
 		ModEvent.Send(handle)
@@ -1067,4 +1094,19 @@ function SendEvent_WearableLanternRemovePollenMeter()
     if handle
         ModEvent.Send(handle)
     endif
+endFunction
+
+function WLDebug(int aiSeverity, string asLogMessage)
+	int LOG_LEVEL = _WL_Debug.GetValueInt()
+	if LOG_LEVEL <= aiSeverity
+		if aiSeverity == 0
+			debug.trace("[Wearable Lanterns][Debug] " + asLogMessage)
+		elseif aiSeverity == 1
+			debug.trace("[Wearable Lanterns][Info] " + asLogMessage)
+		elseif aiSeverity == 2
+			debug.trace("[Wearable Lanterns][Warning] " + asLogMessage)
+		elseif aiSeverity == 3
+			debug.trace("[Wearable Lanterns][ERROR] " + asLogMessage)
+		endif
+	endif
 endFunction
