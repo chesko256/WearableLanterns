@@ -83,7 +83,7 @@ GlobalVariable property _WL_PollenLevel auto
 GlobalVariable property _WL_gToggle auto
 { 0 = Off. 1 = On. }
 GlobalVariable property _WL_HasFuel auto
-{ 0 = Not using oil burning mechanic. 1 = Player has oil. 2 = Oil is depleted. }
+{ 0 = Not using fuel mechanic. 1 = Player has fuel. 2 = Fuel is depleted. }
 
 int oil_update_counter = 0
 float last_oil_level = 0.0
@@ -472,6 +472,7 @@ function RefillTorchbug()
 				found_flowers = true
 				continue = false
 			endif
+			i += 1
 		endWhile
 		if continue
 			has_flowers = false
