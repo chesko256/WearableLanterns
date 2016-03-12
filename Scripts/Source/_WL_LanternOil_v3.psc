@@ -713,10 +713,10 @@ function UpdatePollen()
 endFunction
 
 function ShowRemainingOilMessage(float oil_level)
-	if PlayerRef.GetItemCount(_WL_LanternOil4) > 0
+	if PlayerRef.GetItemCount(_WL_LanternOil4) <= 0
 		if oil_level == 8.0
 			_WL_LanternOilRemainingHalfFull.Show()
-		elseif oil_level == 4.0
+		elseif oil_level == 1.5
 			_WL_LanternOilRemainingMostlyEmpty.Show()
 		endif
 	endif
@@ -725,7 +725,7 @@ endFunction
 function ShowRemainingPollenMessage(int pollen_level)
 	if pollen_level == 16
 		_WL_LanternOilRemainingHalfFull.Show()
-	elseif pollen_level == 8
+	elseif pollen_level == 4
 		_WL_LanternOilRemainingMostlyEmpty.Show()
 	endif
 endFunction
