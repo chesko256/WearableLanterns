@@ -3,6 +3,8 @@ Scriptname _WL_SkyUIConfigPanelScript extends SKI_ConfigBase conditional
 _WL_LanternOil_v3 property LanternQuest auto
 Actor property PlayerRef auto
 
+bool config_is_open = false
+bool activate_button_held = false
 string[] MeterDisplayList
 string[] MeterLayoutList
 string[] BrightnessList
@@ -165,7 +167,7 @@ Event OnConfigInit()
 	FillDirectionList = new string[3]
 	FillDirectionList[0] = "$WearableLanternsLeft"
 	FillDirectionList[1] = "$WearableLanternsRight"
-	FillDirectionList[2] = "$WearableLanternsCenter"
+	FillDirectionList[2] = "$WearableLanternsBoth"
 
 	HorizontalAnchorList = new string[3]
 	HorizontalAnchorList[0] = "$WearableLanternsLeft"
@@ -180,7 +182,7 @@ Event OnConfigInit()
 	FILL_DIRECTIONS = new string[3]
 	FILL_DIRECTIONS[0] = "Left"
 	FILL_DIRECTIONS[1] = "Right"
-	FILL_DIRECTIONS[2] = "Center"
+	FILL_DIRECTIONS[2] = "Both"
 
 	HORIZONTAL_ANCHORS = new string[3]
 	HORIZONTAL_ANCHORS[0] = "Left"
@@ -193,9 +195,25 @@ Event OnConfigInit()
 	VERTICAL_ANCHORS[2] = "Center"
 endEvent
 
+Event OnConfigOpen()
+	config_is_open = true
+EndEvent
+
 Event OnConfigClose()
 	configuring_oil_meter = false
 	configuring_pollen_meter = false
+	config_is_open = false
+EndEvent
+
+int function GetVersion()
+	return 2
+endFunction
+
+Event OnVersionUpdate(int a_version)
+	if (a_version >= 2 && CurrentVersion < 2)
+		debug.trace("[Wearable Lanterns][Info] Upgrading MCM script to version " + a_version)
+		OnConfigInit()
+	endif
 EndEvent
 
 event OnPageReset(string page)
@@ -301,8 +319,6 @@ bool configuring_pollen_meter = false
 function PageReset_Interface()
 	SetCursorFillMode(TOP_TO_BOTTOM)
 	AddHeaderOption("$WearableLanternsInterfaceHeaderMetersGeneral")
-
-	; Screen aspect ratio? Might only need it when selecting preset, so just fold it into that
 	Interface_UIMeterDisplay_OID = AddMenuOption("$WearableLanternsInterfaceSettingUIMeterDisplay", MeterDisplayList[_WL_SettingFuelMeterDisplay_Contextual.GetValueInt()])
 	Interface_UIMeterDisplayTime_OID = AddSliderOption("$WearableLanternsInterfaceSettingUIMeterDisplayTime", _WL_SettingMeterDisplayTime.GetValue() * 2, "{0}")
 	Interface_UIMeterLayout_OID = AddMenuOption("$WearableLanternsInterfaceSettingUIMeterLayout", "$WearableLanternsSelect")
@@ -425,6 +441,7 @@ event OnOptionSelect(int option)
 			SetToggleOptionValue(General_SettingOilToggle_OID, true)
 			_WL_SettingOil.SetValue(2)
 			LanternQuest.ToggleLanternOn()
+			ForceOilMeterFlashIfEmpty()
 		endif
 	elseif option == General_SettingPollenToggle_OID
 		if _WL_SettingFeeding.GetValueInt() == 2
@@ -436,6 +453,7 @@ event OnOptionSelect(int option)
 			SetToggleOptionValue(General_SettingPollenToggle_OID, true)
 			_WL_SettingFeeding.SetValue(2)
 			LanternQuest.ToggleLanternOn()
+			ForcePollenMeterFlashIfEmpty()
 		endif
 	elseif option == General_HotkeyHoldUse_OID
 		if _WL_SettingHoldActivateToggle.GetValueInt() == 2
@@ -527,13 +545,13 @@ event OnOptionDefault(int option)
 		SetSliderOptionValue(Interface_UIMeterDisplayTime_OID, _WL_SettingMeterDisplayTime.GetValueInt(), "{0}")
 	elseif option == Interface_UIMeterColor_OID
 		if configuring_oil_meter
-			_WL_SettingMeterOilColor.SetValueInt(0xE6E600)
+			_WL_SettingMeterOilColor.SetValueInt(0xffff4d)
 			SetColorOptionValue(option, _WL_SettingMeterOilColor.GetValueInt())
-			; Set meter color?
+			OilHandler.SetMeterColors(_WL_SettingMeterOilColor.GetValueInt(), -1)
 		elseif configuring_pollen_meter
-			_WL_SettingMeterPollenColor.SetValueInt(0xE600E6)
+			_WL_SettingMeterPollenColor.SetValueInt(0xff4dff)
 			SetColorOptionValue(option, _WL_SettingMeterPollenColor.GetValueInt())
-			; Set meter color?
+			PollenHandler.SetMeterColors(_WL_SettingMeterPollenColor.GetValueInt(), -1)
 		endif
 	elseif option == Interface_UIMeterOpacity_OID
 		if configuring_oil_meter
@@ -826,6 +844,7 @@ event OnOptionMenuAccept(int option, int index)
 		if result == true
 			ApplyMeterPreset(index)
 			ShowMessage("$WearableLanternsInterfaceSettingUIMeterLayoutConfirmDone", false)
+			ForcePageReset()
 		endif
 	elseif option == Interface_UIMeterFillDirection_OID
 		if configuring_oil_meter
@@ -902,11 +921,11 @@ event OnOptionColorAccept(int option, int color)
 		if configuring_oil_meter
 			_WL_SettingMeterOilColor.SetValueInt(color)
 			SetColorOptionValue(option, color)
-			; ChooseMeterPosition(MeterLayoutIndex)
+			OilHandler.SetMeterColors(color, -1)
 		elseif configuring_pollen_meter
 			_WL_SettingMeterPollenColor.SetValueInt(color)
 			SetColorOptionValue(option, color)
-			; ChooseMeterPosition(MeterLayoutIndex)
+			PollenHandler.SetMeterColors(color, -1)
 		endif		
 	endif
 endEvent
@@ -924,18 +943,21 @@ endEvent
 
 Event OnControlDown(string control)
 	if _WL_SettingHoldActivateToggle.GetValueInt() == 2 && control == "Activate" && !Utility.IsInMenuMode()
+		activate_button_held = true
 		RegisterForSingleUpdate(_WL_SettingHoldActivateToggleDuration.GetValue())
 	endif
 endEvent
 
 Event OnControlUp(string control, float HoldTime)
 	if control == "Activate" && !Utility.IsInMenuMode()
+		Utility.Wait(0.1)
+		activate_button_held = false
 		UnregisterForUpdate()
 	endif
 endEvent
 
 Event OnUpdate()
-	if Input.IsKeyPressed(Input.GetMappedKey("Activate"))
+	if activate_button_held
 		ToggleLantern()
 	endif
 EndEvent
@@ -1022,7 +1044,14 @@ function ApplyMeterPreset(int aiPresetIdx)
 		debug.trace("[Wearable Lanterns] Loading 4:3 aspect ratio meter preset.")
 		aiPresetIdx += 8
 	else
-		debug.trace("[Wearable Lanterns] The display aspect ratio wasn't supported. Defaulting to 16:9.")
+		if config_is_open
+			bool result = ShowMessage("$WearableLanternsMeterLayoutProblem")
+			if result == false
+				return
+			endif
+		else
+			debug.trace("[Wearable Lanterns] The display aspect ratio wasn't supported. Defaulting to 16:9.")
+		endif
 	endif
 
 	if aiPresetIdx == 0
@@ -1174,35 +1203,6 @@ function ApplyMeterPreset(int aiPresetIdx)
 	UpdateMeterConfiguration(0)
 	UpdateMeterConfiguration(1)
 endFunction
-
-;/ function ; ChooseMeterPosition(int index)
-	if index == 0 			;Top Right, Offset
-		SetMeterPosition("right", "top", 1219.0, 52.0)
-	elseif index ==	1		;Top Right, Edge
-		SetMeterPosition("right", "top", 1219.0, 0.0)
-	elseif index == 2 		;Top Right, Corner
-		SetMeterPosition("right", "top", 1280.0, 0.0)
-	elseif index == 3 		;Top Left, Offset
-		SetMeterPosition("left", "top", 61.0, 52.0)
-	elseif index ==	4		;Top Left, Edge
-		SetMeterPosition("left", "top", 61.0, 0.0)
-	elseif index == 5		;Top Left, Corner
-		SetMeterPosition("left", "top", 0.0, 0.0)
-	elseif index == 6 		;Bottom Right, Offset
-		SetMeterPosition("right", "bottom", 1219.0, 613.8)
-	elseif index ==	7		;Bottom Right, Edge
-		SetMeterPosition("right", "bottom", 1219.0, 720.0)
-	elseif index == 8 		;Bottom Right, Corner
-		SetMeterPosition("right", "bottom", 1280.0, 720.0)
-	elseif index == 9 	 	;Bottom Left, Offset
-		SetMeterPosition("left", "bottom", 70.0, 613.8)
-	elseif index ==	10		;Bottom Left, Edge
-		SetMeterPosition("left", "bottom", 70.0, 720.0)
-	elseif index == 11 		;Bottom Left, Corner
-		SetMeterPosition("left", "bottom", 0.0, 720.0)
-	endif
-endFunction
-/;
 
 function ToggleLantern()
 	if LanternQuest.current_lantern == LanternQuest.LANTERN_OIL
