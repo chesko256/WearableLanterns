@@ -4,140 +4,180 @@
 		"selected_items":
 		[
 			[
-				"AddForm",
-				"AddForm	FormList.AddForm"
-			],
-			[
-				"ToggleLan",
-				"ToggleLanternOn"
-			],
-			[
-				"auto",
-				"_WL_SettingAutomatic"
-			],
-			[
-				"sneak",
-				"_WL_SettingOffWhenSneaking"
-			],
-			[
-				"hotkeyholdu",
-				"General_HotkeyHoldUseDuration_OID"
-			],
-			[
-				"activatetoggle",
-				"_WL_SettingHoldActivateToggleDuration"
-			],
-			[
-				"settingoid",
-				"General_SettingSlot_OID"
-			],
-			[
-				"settingslot",
-				"_WL_SettingSlot"
-			],
-			[
-				"settingsneak",
-				"_WL_SettingOffWhenSneaking"
-			],
-			[
-				"holduse",
-				"General_HotkeyHoldUse_OID"
-			],
-			[
-				"holdact",
-				"_WL_SettingHoldActivateToggleDuration"
-			],
-			[
-				"activate",
-				"_WL_SettingHoldActivateToggle"
-			],
-			[
-				"_WL_SettingHold",
-				"_WL_SettingHoldActivateToggleDuration"
-			],
-			[
-				"_WL_Setting",
-				"_WL_SettingOffWhenSneaking"
-			],
-			[
-				"un",
-				"unequip_event_in_progress"
-			],
-			[
-				"torchbuginv",
-				"_WL_WearableTorchbugInvDisplayRED"
-			],
-			[
-				"ShowRemain",
-				"ShowRemainingPollenMessage"
-			],
-			[
-				"_WL_Poll",
-				"_WL_PollenLevel"
-			],
-			[
-				"_WL_Polen",
-				"_WL_PollenLevel"
-			],
-			[
-				"pollen",
+				"poll",
 				"pollen_level"
 			],
 			[
-				"Lantern",
-				"LanternQuest"
+				"flower",
+				"flower_count"
 			],
 			[
-				"Lanter",
-				"LanternQuest"
+				"PollenLevel",
+				"_WL_PollenLevel"
 			],
 			[
-				"Unequip",
-				"UnequipItemSlot	Actor.UnequipItemSlot"
+				"ForceMeter",
+				"SendEvent_ForceOilMeterDisplay"
 			],
 			[
-				"_WL_auto",
-				"_WL_SettingAutomatic"
+				"OilLeve",
+				"_WL_OilLevel"
 			],
 			[
-				"LANTER",
-				"LANTERN_OIL"
+				"OilLev",
+				"_WL_OilLevel"
 			],
 			[
-				"LANTERN_TOR",
-				"LANTERN_TORCHBUG"
+				"_WL_P",
+				"_WL_PollenFlowers"
 			],
 			[
-				"LANTERN",
-				"LANTERN_NORMAL"
-			],
-			[
-				"current",
-				"current_lantern"
-			],
-			[
-				"oil",
-				"oil_level"
+				"Conte",
+				"ContextualDisplay"
 			],
 			[
 				"curr",
-				"current_hour"
+				"current_zone"
 			],
 			[
-				"_WL_",
-				"_WL_InteriorWorldspaces"
+				"bonus",
+				"bonus_range"
 			],
 			[
-				"bott",
-				"bottle_count"
+				"disp",
+				"display_iterations_remaining"
 			],
 			[
-				"_WL_Oil",
-				"_WL_LanternOil4"
+				"dis",
+				"display_iterations_remaining"
 			],
 			[
-				"TORCHBUG",
-				"LANTERN_TORCHBUG"
+				"meter",
+				"meter_inversion_value"
+			],
+			[
+				"primar",
+				"primary_color"
+			],
+			[
+				"SendEvent",
+				"SendEvent_WearableLanternRemovePollenMeter"
+			],
+			[
+				"Main",
+				"MainPrimaryColor"
+			],
+			[
+				"Display",
+				"DisplayMode"
+			],
+			[
+				"attri",
+				"attribute_value"
+			],
+			[
+				"Attr",
+				"AttributeValue"
+			],
+			[
+				"afPos",
+				"afPositionY"
+			],
+			[
+				"afPo",
+				"afPositionX"
+			],
+			[
+				"han",
+				"HORIZONTAL_ANCHORS"
+			],
+			[
+				"fill",
+				"FILL_DIRECTIONS"
+			],
+			[
+				"setmenudial",
+				"SetMenuDialogDefaultIndex"
+			],
+			[
+				"Fill",
+				"FILL_DIRECTIONS"
+			],
+			[
+				"vanchor",
+				"Interface_UIPollenMeterVAnchor_OID"
+			],
+			[
+				"hanchor",
+				"Interface_UIPollenMeterHAnchor_OID"
+			],
+			[
+				"color_oid",
+				"Interface_UIPollenMeterColor_OID"
+			],
+			[
+				"color",
+				"Interface_UIOilMeterColor_OID"
+			],
+			[
+				"height",
+				"Interface_UIPollenMeterHeight_OID"
+			],
+			[
+				"opacity",
+				"Interface_UIPollenMeterOpacity_OID"
+			],
+			[
+				"interfa",
+				"interface_show_advanced_pollen"
+			],
+			[
+				"bottomright",
+				"NORMAL_METER_BOTTOMRIGHTOFFSET_Y"
+			],
+			[
+				"normal",
+				"NORMAL_METER_DEFAULT_HEIGHT"
+			],
+			[
+				"pollencolor",
+				"_WL_SettingMeterPollenColor"
+			],
+			[
+				"oilcolor",
+				"_WL_SettingMeterOilColor"
+			],
+			[
+				"ypos",
+				"_WL_SettingMeterOilYPos"
+			],
+			[
+				"xpos",
+				"_WL_SettingMeterOilXPos"
+			],
+			[
+				"settingheight",
+				"_WL_SettingMeterPollenHeight"
+			],
+			[
+				"SetSliderDial",
+				"SetSliderDialogRange	SKI_ConfigBase.SetSliderDialogRange (SkyUI)"
+			],
+			[
+				"filldirection",
+				"Interface_UIPollenMeterFillDirection_OID"
+			],
+			[
+				"SettingWidth",
+				"_WL_SettingMeterPollenWidth"
+			],
+			[
+				"width",
+				"Interface_UIPollenMeterWidth_OID"
+			],
+			[
+				"filldire",
+				"Interface_UIOilMeterFillDirection_OID"
 			],
 			[
 				"_test",
@@ -324,6 +364,10 @@
 				"current_square"
 			],
 			[
+				"current",
+				"current_square"
+			],
+			[
 				"max",
 				"max_ladder_index"
 			],
@@ -358,10 +402,6 @@
 			[
 				"displaytime",
 				"_Frost_Setting_MeterDisplayTime"
-			],
-			[
-				"opacity",
-				"_Frost_Setting_MeterOpacity"
 			],
 			[
 				"foll",
@@ -474,165 +514,94 @@
 			[
 				"regcoa",
 				"REGION_COAST"
-			],
-			[
-				"regtund",
-				"REGION_TUNDRAMARSH"
-			],
-			[
-				"regtun",
-				"REGION_TUNDRA"
-			],
-			[
-				"regvol",
-				"REGION_VOLCANICTUNDRA"
-			],
-			[
-				"PLEAS",
-				"WEATHERCLASS_PLEASANT"
-			],
-			[
-				"SNOW",
-				"WEATHERCLASS_SNOW"
-			],
-			[
-				"RAIN",
-				"WEATHERCLASS_RAIN"
-			],
-			[
-				"CLOUD",
-				"WEATHERCLASS_CLOUDY_OR_FOGGY"
-			],
-			[
-				"onacti",
-				"onactivate	OnActivate"
-			],
-			[
-				"SKSE",
-				"SKSE_MIN_VERSION"
-			],
-			[
-				"Option",
-				"OPTION_FLAG_DISABLED"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"contents": "scriptname testcompile extends Quest\n\nimport FrostUtil",
-			"file": "/C/Personal/ModOrganizer/mods/FrostDevKit 3.0.2 Dev/Scripts/Source/testcompile.psc",
-			"file_size": 56,
-			"file_write_time": 131012392444009961,
+			"file": "Scripts/Source/_WL_LanternOil_v3.psc",
 			"settings":
 			{
-				"buffer_size": 54,
+				"buffer_size": 28483,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Scripts/Source/_WL_Compatibility.psc",
+			"settings":
+			{
+				"buffer_size": 5981,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/CommonMeterInterfaceHandler.psc",
+			"settings":
+			{
+				"buffer_size": 7795,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Scripts/Source/_WL_PollenMeterInterfaceHandler.psc",
+			"settings":
+			{
+				"buffer_size": 362,
 				"line_ending": "Windows",
-				"name": "scriptname testcompile extends Quest"
+				"name": "scriptname _WL_OilMeterInterfaceHandler extends Co"
 			}
 		},
 		{
-			"file": "/C/Personal/ModOrganizer/mods/Campfire/CampDevKit/RequiredExternals/Scripts/Source/_Camp_TentSystem.psc",
+			"file": "Scripts/Source/_WL_PollenMeter.psc",
 			"settings":
 			{
-				"buffer_size": 462,
+				"buffer_size": 171,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/C/Personal/ModOrganizer/mods/Campfire/CampDevKit/RequiredExternals/Scripts/Source/_Camp_Compatibility.psc",
+			"file": "/E/ModOrganizerData/mods/PapyrusCommon/Scripts/Source/SKI_WidgetBase.psc",
 			"settings":
 			{
-				"buffer_size": 517,
+				"buffer_size": 7472,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/Common_SKI_MeterWidget.psc",
+			"settings":
+			{
+				"buffer_size": 5719,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"contents": "jimmydalton\n-----------\nHi, Chesko.\n\nI use Ordinator and take Speech Mastery that lets Intimidation attempt always succeed. The perk never fails on any humanoid dialogue options, but it doesn't always work with Simply Knock. Looks like the persuasion/intimidation in this mod is solely based on Speech level? \n\nChesko\n------\nSpeech checks in Simply Knock use the base game function call FavorDialogueScript.Intimidate(actorTarget), which is what all other speech checks in the game use.\n\nPresumably, Ordinator would modify this function on FavorDialogueScript instead of re-implementing his own method of doing this. I'm not sure how he did. But if he modified this function (which seems like the only sane way to do it) then you would still inherit that change.\n\nI'd have to look into it. I'm working on Campfire and Frostfall at the moment however. \n\njimmydalton\n-----------\nThanks for the quick reply :)\n\nIt's all right, whenever you have time :) \n\nEnaiSiaion\n----------\nIt uses the entry point Mod Player Intimidation. \n\nChesko\n------\nThanks Enai.\n\nIf it uses a perk, then, any call into FavorDialogueScript should inherit your change, right? \n\nChesko\n------\nI'm going to mark this as a \"Known Issue\" until such time that a work-around is discovered. ",
+			"file": "interface/translations/chesko_wearablelantern_english.txt",
 			"settings":
 			{
-				"buffer_size": 1255,
-				"line_ending": "Windows",
-				"name": "jimmydalton"
-			}
-		},
-		{
-			"file": "/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/FrostUtil.psc",
-			"settings":
-			{
-				"buffer_size": 37352,
+				"buffer_size": 7500,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/CampPlaceableObject.psc",
+			"file": "Scripts/Source/_WL_SkyUIConfigPanelScript.psc",
 			"settings":
 			{
-				"buffer_size": 17030,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/FrostfallAPI.psc",
-			"settings":
-			{
-				"buffer_size": 1627,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ClimateSystem.psc",
-			"settings":
-			{
-				"buffer_size": 19105,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_WetnessSystem.psc",
-			"settings":
-			{
-				"buffer_size": 8756,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ExposureSystem.psc",
-			"settings":
-			{
-				"buffer_size": 34447,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Personal/ModOrganizer/mods/PapyrusCommon/Scripts/Source/Armor.psc",
-			"settings":
-			{
-				"buffer_size": 5303,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_SkyUIConfigPanelScript.psc",
-			"settings":
-			{
-				"buffer_size": 66309,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/CampUtil.psc",
-			"settings":
-			{
-				"buffer_size": 39770,
+				"buffer_size": 50238,
 				"line_ending": "Windows"
 			}
 		}
 	],
 	"build_system": "Packages/Papyrus/Papyrus.sublime-build",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
 	"command_palette":
 	{
 		"height": 285.0,
+		"last_filter": "",
 		"selected_items":
 		[
 			[
@@ -736,7 +705,11 @@
 	},
 	"console":
 	{
-		"height": 0.0
+		"height": 0.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
 	},
 	"distraction_free":
 	{
@@ -747,72 +720,30 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
+	"expanded_folders":
+	[
+		"/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source"
+	],
 	"file_history":
 	[
-		"/C/Program Files (x86)/Steam/steamapps/common/skyrim/SkyrimEditorPrefs.ini",
-		"/C/Program Files (x86)/Steam/steamapps/common/skyrim/SkyrimEditor.ini",
-		"/C/Personal/ModOrganizer/mods/Campfire/FrostDevKit/RequiredExternals/Scripts/Source/_Frost_ExposureSystem.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/FrostDevKit/RequiredExternals/Scripts/Source/_Frost_WetnessSystem.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/doc/CampUtil.html",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/doc/githubber.py",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/doc/MakeFrostUtilHtml.bat",
-		"/C/Personal/ModOrganizer/mods/Campfire/.gitignore",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/doc/makedocs.bat",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/doc/FrostUtil.html",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/doc/makedocs.ahk",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/doc/robodoc.rc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/doc/MakeCampUtilHtml.bat",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/doc/pandoc.exe",
-		"/C/Personal/ModOrganizer/mods/PapyrusCommon/Scripts/Source/Form.psc",
-		"/C/Personal/ModOrganizer/mods/PapyrusCommon/Scripts/Source/ArmorAddon.psc",
-		"/C/Personal/ModOrganizer/mods/WearableLanterns/interface/translations/chesko_wearablelantern_english.txt",
-		"/C/Personal/ModOrganizer/mods/WearableLanterns/Scripts/Source/_WL_NPCLanternHandler.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ClothingSystem.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_EquipMonitor.psc",
-		"/C/Personal/ModOrganizer/mods/WearableLanterns/Scripts/Source/_WL_LanternOil_v3.psc",
-		"/C/Personal/ModOrganizer/mods/WearableLanterns/Scripts/Source/_WL_DialogueFrag_Back.psc",
-		"/C/Personal/ModOrganizer/mods/WearableLanterns/Scripts/Source/_WL_SkyUIConfigPanelScript.psc",
-		"/C/Personal/ModOrganizer/mods/WearableLanterns/Scripts/Source/_WL_FuelMeterUpdate.psc",
-		"/C/Personal/ModOrganizer/mods/WearableLanterns/Scripts/Source/_WL_Startup.psc",
-		"/C/Personal/ModOrganizer/mods/WearableLanterns/Scripts/Source/_WL_Compatibility.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_HeatSourceSystem.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ExposureSystem.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/CampDevKit/RequiredExternals/Scripts/Source/_Camp_LegalAreaCheck.psc",
-		"/C/Personal/ModOrganizer/mods/FrostDevKit 3.0.2 Dev/Scripts/Source/_Frost_ClimateSystem.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/CampfireAPI.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/CampfireData.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/CampDevKit/RequiredExternals/Scripts/Source/CampfireData.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/CampDevKit/RequiredExternals/Scripts/Source/CampfireAPI.psc",
-		"/C/Personal/ModOrganizer/mods/PapyrusCommon/Scripts/Source/Actor.psc",
-		"/C/Personal/ModOrganizer/mods/PapyrusCommon/Scripts/Source/Light.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_SkyUIConfigPanelScript.psc",
-		"/C/Users/David/Downloads/Wearable Lanterns 3_0b-17416-3-0b/Scripts/Source/_WL_LanternOil_v3.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_Compatibility.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_Compatibility.psc",
-		"/C/Program Files (x86)/Steam/steamapps/common/skyrim/Data/Scripts/Source/_DE_Frag_TestWarmHandsPkg.psc",
-		"/C/Program Files (x86)/Steam/steamapps/common/skyrim/Data/Scripts/Source/SKI_WidgetBase.psc",
-		"/C/Program Files (x86)/Steam/steamapps/common/skyrim/Data/Scripts/Source/SKI_WidgetManager.psc",
-		"/C/Program Files (x86)/Steam/steamapps/common/skyrim/Data/Scripts/Source/_WL_LanternOil_v3.psc",
-		"/C/Program Files (x86)/Steam/steamapps/common/skyrim/Data/Scripts/Source/_WL_SkyUIConfigPanelScript.psc",
-		"/C/Program Files (x86)/Steam/steamapps/common/skyrim/Data/Scripts/Source/_WL_Compatibility.psc",
-		"/C/Program Files (x86)/Steam/steamapps/common/skyrim/Data/Scripts/Source/_WL_FuelMeterUpdate.psc",
-		"/C/Personal/ModOrganizer/mods/WearableLanterns/BuildSingle.bat",
-		"/C/Program Files (x86)/Steam/steamapps/common/skyrim/Data/Scripts/Source/PRKF__WL_CatchTorchbug_020162FA.psc",
-		"/C/Program Files (x86)/Steam/steamapps/common/skyrim/Data/Scripts/Source/SKI_Main.psc",
-		"/C/Program Files (x86)/Steam/steamapps/common/skyrim/Data/Scripts/Source/CampUtil.psc",
-		"/C/Program Files (x86)/Steam/steamapps/common/skyrim/Data/Scripts/Source/CampfireAPI.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_ObjectPlacementThreadManager.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_CampInternal.psc",
-		"/C/Personal/ModOrganizer/mods/WearableLanterns/WearableLanterns.sublime-project",
+		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/_WL_FuelMeterUpdate.psc",
+		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/_WL_FuelMeter.psc",
+		"/E/ModOrganizerData/mods/WearableLanterns/.gitignore",
+		"/E/ModOrganizerData/mods/WearableLanterns/BuildSingle.bat",
+		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/CommonMeterInterfaceHandler.psc",
+		"/E/ModOrganizerData/mods/PapyrusCommon/Scripts/Source/SKI_WidgetBase.psc",
+		"/F/Media Drive Backup/skyrim backup before wipe/Wearable Lanterns/scripts/source/_WL_SKI_MeterWidget.psc",
 		"/C/Users/David/AppData/Local/Temp/Rar$DIa0.050/CampUtil.psc",
 		"/C/Program Files (x86)/Steam/steamapps/common/skyrim/EditorWarnings.txt",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/_Test_latestdevkit.psc",
 		"/C/Personal/ModOrganizer/mods/CampDevKit 1.7 Release/_Campfire_BuildSingle.bat",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_Compatibility.psc",
 		"/C/Personal/Frostfall/Scripts/Source/_DE_SKI_MeterWidget.psc",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_SKI_MeterWidget.psc",
 		"/C/Personal/ModOrganizer/mods/Campfire/CampDevKitArchiveManifest.txt",
 		"/C/Personal/ModOrganizer/mods/Campfire/CampDevKit/RequiredExternals/Scripts/Source/CampUtil.psc",
 		"/C/Personal/ModOrganizer/mods/CampDevKit 1.7 Release/Scripts/Source/CampUtil.psc",
+		"/C/Personal/ModOrganizer/mods/WearableLanterns/WearableLanterns.sublime-project",
 		"/C/Users/David/AppData/Local/Temp/Rar$DIa0.102/CampUtil.psc",
 		"/C/Personal/ModOrganizer/mods/Campfire/CampfireArchiveManifest.txt",
 		"/C/Users/David/AppData/Local/Temp/Rar$DIa0.912/CACO_AdjustPotionThread.psc",
@@ -825,6 +756,7 @@
 		"/C/snapweb_dev/snapweb/README.md",
 		"/C/Personal/ModOrganizer/mods/SimplyKnock/README.md",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_SkyUIConfigPanelScript.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_SkyUIConfigPanelScript.psc",
 		"/C/Personal/ModOrganizer/mods/SimplyKnock/BuildSingle.bat",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_HN_FoodSpawnSystem.psc",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/CampCampfire.psc",
@@ -837,7 +769,9 @@
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_PerkNodeControllerBehavior.psc",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_APDatastoreDefaultData.psc",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ArmorProtectionDatastoreHandler.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ClothingSystem.psc",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/FrostUtil.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_Compatibility.psc",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_ArrayHelper.psc",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_FollowerTentBehavior.psc",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_AL_FoodMarker.psc",
@@ -867,7 +801,9 @@
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_CampfireType_FragileScript.psc",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_TinderTypeScript.psc",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_DE_SkyUIConfigPanelScript.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ExposureSystem.psc",
 		"/C/Personal/ModOrganizer/mods/Campfire/Frostfall_BuildRelease.py",
+		"/C/Personal/ModOrganizer/mods/Campfire/.gitignore",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_DE_Compatibility.psc",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_VendorStock.psc",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/FrostMainLoopWorkingFileDELETEME.psc",
@@ -876,7 +812,48 @@
 		"/C/Personal/Frostfall/Scripts/Source/_DE_Tent.psc",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_WetnessSystem.psc",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ClimateSystem.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_CampfireUseMonitor.psc"
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_CampfireUseMonitor.psc",
+		"/C/snapweb/test/unit_tests/test_cal_db.py",
+		"/C/snapweb/bootsrv/update.py",
+		"/C/Git/snapweb/bootsrv/update.py",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_FrigidWaterSystem.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_DE_KindleEffectScript.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_TempRestoreExposureScript.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ShelterSystem.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_DE_ShelterTriggerScript.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ShelterDetectSensorScript.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_PlayerSpellMonitor.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_WarmHandsPackageRewrite.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_DE_ShelterDetectSensorScript.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/FrostfallAPI.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_RescueSystem.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_DE_Frag_TestWarmHandsPkg.psc",
+		"/C/snapweb/build.sh",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_HeatSourceSystem.psc",
+		"/C/Users/David/AppData/Local/Temp/Rar$DIa0.605/Papyrus.0.log",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_DE_ShelterDetectQuestScript.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_BaseSystem.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ShelterMonitor.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ExposureSystemWORKINGFILE.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_LightableFiresSystem.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Skyrim_Eids.csv",
+		"/C/Personal/ModOrganizer/mods/Campfire/proccessed_forms.txt",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Test_armoraliasscript.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/unprocessed_forms.txt",
+		"/C/Dragonborn_Eids.csv",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_EquipMonitor.psc",
+		"/C/Personal/ModOrganizer/profiles/Default/skyrimprefs.ini",
+		"/C/Personal/ModOrganizer/profiles/Default/skyrim.ini",
+		"/C/Users/David/Documents/donations_may_4_2015_sept_5_2015.csv",
+		"/C/Dawnguard_Eids.csv",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/CampPlaceableMiscItem.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_ObjectPlacementThreadManager.psc",
+		"/F/test.txt",
+		"/C/Personal/ModOrganizer/mods/Campfire/Interface/Translations/Campfire_ENGLISH.txt",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_FrostInternal.psc",
+		"/C/Personal/ModOrganizer/mods/Arissa/Scripts/Source/Arissa/_Arissa_iNPC_MonitoringPlayerScript.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_test_waitdisable.psc",
+		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ConditionValues.psc"
 	],
 	"find":
 	{
@@ -894,134 +871,134 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"_Frost_WorldspacesExteriorOblivion",
-			"RemoveOblivionWorldspace",
-			"_Frost_WorldspacesExteriorOblivion",
-			"AddOblivionWorldspace",
-			"_Frost_SevereWeatherList",
-			"Severe",
-			"severe",
-			"Severe",
-			"_Frost_SevereWeatherList",
-			"severe",
-			"Severe",
-			"severe",
-			"Severe",
-			"WEATHERCLASS_CLOUDY_OR_FOGGY",
-			"severe",
-			"Severe",
-			"severe",
-			"Severe",
-			"_Frost_SevereWeatherList",
-			"akWeather",
-			"Weather",
-			"RemoveSevereWeather",
-			"AddSevereWeather",
-			"ShowWetStateMessage",
-			"UpdateWetLevel",
-			"UpdateWetState",
-			"UpdateWetLevel",
-			"ModWetness",
-			"ModAttributeWetness",
-			"ModAttributeExposure",
-			"ModPlayerExposure",
-			"exposure",
-			"ModPlayerExposure",
-			"severe",
-			"AddSevereWeather",
-			"Global Functions",
-			"Member Functions",
-			"Global Functions",
-			"global functions",
-			"Member Functions",
-			"Warmth",
-			"GetPlayerArmorWarmth",
-			"warmth",
-			"Warmth",
-			"EXPOSURE_LEVEL_1",
-			"WETNESS_LEVEL_1",
-			"_Frost_FastTravelExceptions",
-			"exceptions",
-			"tent",
-			"setheatsourcesize",
-			"heatsourcesice",
-			"CampUtil",
-			"advance",
-			"Front",
-			"EquipItem",
-			"InvD",
-			"iIndex",
-			"scale",
-			"lanternmutex",
-			"torch01",
-			"automodelighton",
-			"ToggleLanternOff",
-			"automodelighton",
-			"ToggleLanternOff",
-			"animationevent",
-			"endif",
-			"togglelanternon",
-			"UpdatePollen",
-			"ContextualDisplayPollen",
-			"UpdateOil",
-			"ContextualDisplayOil",
-			"LanternQuest",
-			"RegisterForAnimationEvent",
-			"_wl_setting",
-			"_WL_SettingOffWhenSneaking",
-			"ToggleLanternOn",
-			"togglelanternon",
-			"sneak",
-			"SetShouldLightLanternAutomatically",
-			"GetFormFromFile",
-			"SetSlotMask",
-			"_WL_SettingHoldActivateToggleDuration",
-			"setslider",
-			"setslideroptionvalue",
-			"General_HotkeyHoldUseDuration_OID",
-			"slotmask",
-			"SetLanternSlot",
-			"_WL_WearableLanternApparel",
-			"General_SettingPollenToggle_OID",
-			"_WL_SettingFeeding",
-			"General_SettingDropLitToggle_OID",
-			"_WL_SettingDropLit",
-			"General_HotkeyLantern_OID",
-			"General_SettingDropLitToggle_OID",
-			"slot",
-			"RegisterForKeysOnLoad",
-			"ToggleLantern",
-			"candle",
-			"Interface_UICandleMeterColor_OID",
-			"UnequipItem",
-			"unequip_lock",
-			"HandleEquippedObject",
-			"unequip_lock",
-			"SetLantern",
-			"wait",
-			"DestroyNonDisplayLantern",
-			"unequip",
-			"DestroyNonDisplayLantern",
-			"shield",
-			"CritterFirefly",
-			"oil_level",
-			"_WL_FireflyCatch",
-			"ShowRemainingPollenMessage",
-			"flowersused",
-			"depleted",
-			"pPollenLevel",
+			"_WL_HasFuel",
+			"compatibility",
+			"continue",
 			"Oil",
-			"last_oil_level",
-			"oil_level",
-			"last_oil_level",
-			"setpollenlevel",
-			"_WL_LanternOilRemainingEmptyRanOut",
-			"SetPollenLevel",
-			"RefillLantern",
-			"pollen_used",
-			"PlayerRef.AddItem(_WL_Pollen, 8, true)",
+			"debug.trace",
+			"OpacityMax",
+			"if _WL_PollenLevel.GetValueInt() <= 0\n				SendEvent_ForcePollenMeterDisplay(true)\n			else\n				SendEvent_ForcePollenMeterDisplay()\n			endif",
+			"if _WL_OilLevel.GetValue() <= 0.0\n				SendEvent_ForceOilMeterDisplay(true)\n			else\n				SendEvent_ForceOilMeterDisplay()\n			endif",
+			"Pollen",
+			"SendEvent_ForcePollenMeterDisplay",
+			"CheckFuel",
+			"SettingIsEnabled",
+			"_WL_LanternOilRemainingEmpty",
+			"SendEvent_ForceOilMeterDisplay",
+			"togglelanternon",
+			"ToggleLantern",
+			"hotkey",
+			"HUD_MENU",
+			"Oil",
+			"_WL_CheckFuelDisplay",
+			"_WL_MeterDisplayTime",
+			"_WL_FuelMeterDisplay_Contextual",
+			"_WL_PollenColor",
+			"_WL_CheckFuelDisplay",
+			"height",
+			"_WL_SkI_MeterWidget",
+			"FuelMeterDisplay",
+			"_WL_FuelMeterUpdate",
+			"Lavender",
+			"_WL_PollenFlowers",
+			"DLC1LoadUp",
+			"MountainFlowerYellow",
+			"DLC2LoadUp",
+			"bIsDLC2Loaded",
+			"Thistle01",
+			"flower",
+			"ShowRemainingOilMessage",
+			"empty",
+			"_WL_LanternOil4",
+			"_WL_LanternOilRemainingMostlyEmpty",
+			"_WL_LanternOilRemainingLessThanHalf",
+			"ShowRemainingOilMessage",
+			"empty",
+			"SendEvent_UpdateOilMeter",
+			"SetOilLevel",
+			"SendEvent",
+			"ContextualDisplay",
+			"should_update",
+			"RegisterForSingleUpdate",
+			"MeterFadeUp",
 			"pollen_level",
-			"pPollenLevel"
+			"MeterFadeUp",
+			"iterations_remaining",
+			"display_iterations_remaining",
+			"HandleMeterUpdate",
+			"a",
+			"AuxSecondaryColor.GetValueInt()",
+			"AuxPrimaryColor.GetValueInt()",
+			"AttributeMax",
+			"_percent",
+			"meter_inversion_value",
+			" / ",
+			"HandleMeterUpdate",
+			"updateoil",
+			"meter",
+			"UpdateOil",
+			"SetOilLevel",
+			"meter",
+			"OilMeter",
+			"RegisterForEventsOnLoad",
+			"SendEvent_WearableLanternRemoveOilMeter",
+			"ChooseMeterPosition",
+			"ConfigureMeter",
+			"SetMeterPosition",
+			"_WL_SettingOil",
+			"registerforsingle",
+			"SetMeterColors",
+			"Meter_FadeUp",
+			"FadeUp",
+			"setcolors",
+			"SetColors",
+			"_Frost_ExposureMeterColorWarm_Dark",
+			"_Frost_ExposureMeterColorWarm_Light.GetValueInt()",
+			"PrimaryColor",
+			"bSkipDisplayHandling",
+			"_Frost_Setting_MeterDisplayMode",
+			"exposure_display_iterations_remaining",
+			"FuelMeter",
+			"fuelmeter",
+			"_WL_FuelMeter",
+			"OilMeter",
+			"afFillDirectionIdx",
+			"FuelMeter",
+			"Interface_UIPollenMeterVAnchor_OID",
+			"SetMenuDialogOptions",
+			"addmenuop",
+			"defaults",
+			"default",
+			"Center",
+			"Right",
+			"bottom",
+			"top",
+			"center",
+			"right",
+			"left",
+			"FuelMeter",
+			"anchor",
+			"Anchor",
+			"string a_value",
+			"Oil",
+			", int a_flags = 0",
+			"=",
+			"SetMeterPosition",
+			"PageReset_Interface",
+			"25.2",
+			"interface_show_advanced_oil",
+			"value",
+			" * 100.0",
+			"SetSliderDialogStartValue",
+			"NORMAL_METER_MIN_HEIGHT",
+			"1219.0",
+			"NORMAL_METER_DEFAULT_HEIGHT",
+			"U",
+			"normal_meter",
+			"choosemeterposition",
+			"_WL_SettingMeterOilOpacity",
+			"MeterLengthList",
+			"string a_formatString)"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1039,1529 +1016,308 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/C/Personal/ModOrganizer/mods/FrostDevKit 3.0.2 Dev/Scripts/Source/testcompile.psc",
+					"file": "Scripts/Source/_WL_LanternOil_v3.psc",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 54,
+						"buffer_size": 28483,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								54,
-								54
+								17834,
+								17834
 							]
 						],
 						"settings":
 						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"auto_name": "scriptname testcompile extends Quest",
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"devel": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": "load-save",
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Papyrus/Papyrus.tmLanguage"
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 8351.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "/C/Personal/ModOrganizer/mods/Campfire/CampDevKit/RequiredExternals/Scripts/Source/_Camp_TentSystem.psc",
+					"file": "Scripts/Source/_WL_Compatibility.psc",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 462,
+						"buffer_size": 5981,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								43,
-								462
+								3454,
+								3454
 							]
 						],
 						"settings":
 						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"devel": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": "load-save",
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Papyrus/Papyrus.tmLanguage"
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1635.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "/C/Personal/ModOrganizer/mods/Campfire/CampDevKit/RequiredExternals/Scripts/Source/_Camp_Compatibility.psc",
+					"file": "/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/CommonMeterInterfaceHandler.psc",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 517,
+						"buffer_size": 7795,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								5362,
+								5362
 							]
 						],
 						"settings":
 						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"devel": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": "load-save",
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Papyrus/Papyrus.tmLanguage"
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 3497.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
 					"buffer": 3,
+					"file": "Scripts/Source/_WL_PollenMeterInterfaceHandler.psc",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1255,
+						"buffer_size": 362,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								408,
-								408
+								79,
+								79
 							]
 						],
 						"settings":
 						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"auto_name": "jimmydalton",
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"devel": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": "load-save",
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"auto_name": "scriptname _WL_OilMeterInterfaceHandler extends Co",
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/FrostUtil.psc",
+					"file": "Scripts/Source/_WL_PollenMeter.psc",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 37352,
+						"buffer_size": 171,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								27278,
-								27278
+								21,
+								21
 							]
 						],
 						"settings":
 						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"devel": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": "load-save",
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Papyrus/Papyrus.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 20490.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
 					"buffer": 5,
-					"file": "/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/CampPlaceableObject.psc",
+					"file": "/E/ModOrganizerData/mods/PapyrusCommon/Scripts/Source/SKI_WidgetBase.psc",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 17030,
+						"buffer_size": 7472,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								167,
+								175
+							],
+							[
+								6203,
+								6211
+							],
+							[
+								6452,
+								6460
+							],
+							[
+								6767,
+								6775
+							],
+							[
+								6883,
+								6891
+							],
+							[
+								6988,
+								6996
+							],
+							[
+								7097,
+								7105
+							],
+							[
+								7207,
+								7215
+							],
+							[
+								7313,
+								7321
+							],
+							[
+								7417,
+								7425
 							]
 						],
 						"settings":
 						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"devel": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": "load-save",
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Papyrus/Papyrus.tmLanguage",
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 5245.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 6,
-					"file": "/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/FrostfallAPI.psc",
+					"file": "/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/Common_SKI_MeterWidget.psc",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1627,
+						"buffer_size": 5719,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								913,
-								942
+								2794,
+								2794
 							]
 						],
 						"settings":
 						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"devel": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": "load-save",
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Papyrus/Papyrus.tmLanguage"
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.x": -0.0,
+						"translation.y": 1996.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
 					"buffer": 7,
-					"file": "/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ClimateSystem.psc",
+					"file": "interface/translations/chesko_wearablelantern_english.txt",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 19105,
+						"buffer_size": 7500,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2655,
-								2683
-							],
-							[
-								7697,
-								7725
+								3053,
+								3053
 							]
 						],
 						"settings":
 						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"devel": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": "load-save",
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Papyrus/Papyrus.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 3875.0,
+						"translation.y": 765.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 6,
 					"type": "text"
-				},
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
 				{
 					"buffer": 8,
-					"file": "/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_WetnessSystem.psc",
+					"file": "Scripts/Source/_WL_SkyUIConfigPanelScript.psc",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8756,
+						"buffer_size": 50238,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7653,
-								7653
+								2992,
+								2992
 							]
 						],
 						"settings":
 						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"devel": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": "load-save",
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Papyrus/Papyrus.tmLanguage",
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 4274.0,
+						"translation.y": 1603.0,
 						"zoom_level": 1.0
 					},
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ExposureSystem.psc",
-					"settings":
-					{
-						"buffer_size": 34447,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2357,
-								2386
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"devel": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": "load-save",
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Papyrus/Papyrus.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 406.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "/C/Personal/ModOrganizer/mods/PapyrusCommon/Scripts/Source/Armor.psc",
-					"settings":
-					{
-						"buffer_size": 5303,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3418,
-								3418
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"devel": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": "load-save",
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Papyrus/Papyrus.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2052.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_SkyUIConfigPanelScript.psc",
-					"settings":
-					{
-						"buffer_size": 66309,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								49711,
-								49711
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"devel": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": "load-save",
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Papyrus/Papyrus.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 20543.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/CampUtil.psc",
-					"settings":
-					{
-						"buffer_size": 39770,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"devel": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": "load-save",
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Papyrus/Papyrus.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 18518.0,
-						"zoom_level": 1.0
-					},
+					"stack_index": 5,
 					"type": "text"
 				}
 			]
@@ -2584,11 +1340,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.522395833333,
 			1.0
 		],
 		"rows":
@@ -2602,6 +1365,12 @@
 	{
 		"height": 266.0
 	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "WearableLanterns.sublime-project",
 	"replace":
 	{
 		"height": 0.0
@@ -2610,79 +1379,48 @@
 	"select_file":
 	{
 		"height": 0.0,
+		"last_filter": "",
 		"selected_items":
 		[
 			[
-				"climate",
-				"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ClimateSystem.psc"
+				"common",
+				"Source\\CommonMeterInterfaceHandler.psc"
 			],
 			[
-				"frostui",
-				"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/FrostUtil.psc"
+				"ski",
+				"Source\\_WL_SKI_MeterWidget.psc"
 			],
 			[
-				"frostu",
-				"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/FrostUtil.psc"
+				"wl_",
+				"Source\\_WL_LanternOil_v3.psc"
 			],
 			[
-				"",
-				"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/CampUtil.psc"
+				"_wl_compa",
+				"Source\\_WL_Compatibility.psc"
 			],
 			[
-				"heatsour",
-				"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_HeatSourceSystem.psc"
-			],
-			[
-				"frag",
-				"Source/_WL_DialogueFrag_Back.psc"
-			],
-			[
-				"npcha",
-				"Source/_WL_NPCLanternHandler.psc"
-			],
-			[
-				"english",
-				"translations/chesko_wearablelantern_english.txt"
-			],
-			[
-				"npc",
-				"_WL_NPCLanternHandler.psc"
-			],
-			[
-				"wlsky",
-				"_WL_SkyUIConfigPanelScript.psc"
-			],
-			[
-				"fuel",
-				"_WL_FuelMeterUpdate.psc"
-			],
-			[
-				"lanter",
-				"_WL_LanternOil_v3.psc"
-			],
-			[
-				"wlskyui",
-				"_WL_SkyUIConfigPanelScript.psc"
-			],
-			[
-				"wl_compa",
-				"_WL_Compatibility.psc"
-			],
-			[
-				"wlcompa",
-				"_WL_Compatibility.psc"
-			],
-			[
-				"config",
-				"_WL_SkyUIConfigPanelScript.psc"
+				"_wl_skyui",
+				"Source\\_WL_SkyUIConfigPanelScript.psc"
 			],
 			[
 				"fuelme",
-				"_WL_FuelMeterUpdate.psc"
+				"Source\\_WL_FuelMeter.psc"
 			],
 			[
-				"wllan",
-				"_WL_LanternOil_v3.psc"
+				"meter",
+				"Source\\_WL_FuelMeterUpdate.psc"
+			],
+			[
+				"wlw",
+				"Source\\_WL_SKI_MeterWidget.psc"
+			],
+			[
+				"english",
+				"translations\\chesko_wearablelantern_english.txt"
+			],
+			[
+				"wl_skyui",
+				"Source\\_WL_SkyUIConfigPanelScript.psc"
 			],
 			[
 				"frostmain",
@@ -2755,6 +1493,10 @@
 			[
 				"camptentsys",
 				"_Camp_TentSystem.psc"
+			],
+			[
+				"",
+				"CampCampfire.psc"
 			],
 			[
 				"behavior",
@@ -2877,6 +1619,10 @@
 				"_Frost_InterfaceHandler.psc"
 			],
 			[
+				"climate",
+				"_Frost_ClimateSystem.psc"
+			],
+			[
 				"exposuresys",
 				"_Frost_ExposureSystem.psc"
 			],
@@ -2887,6 +1633,10 @@
 			[
 				"placeableobje",
 				"CampPlaceableObject.psc"
+			],
+			[
+				"frostu",
+				"FrostUtil.psc"
 			],
 			[
 				"deempon",
@@ -2951,6 +1701,10 @@
 			[
 				"exposuresystem",
 				"_Frost_ExposureSystem.psc"
+			],
+			[
+				"frostui",
+				"FrostUtil.psc"
 			],
 			[
 				"wetness",
@@ -3073,10 +1827,6 @@
 				"_Camp_Compatibility.psc"
 			],
 			[
-				"ski",
-				"BaseGame/SKI_ConfigBase.psc"
-			],
-			[
 				"compatib",
 				"_Camp_Compatibility.psc"
 			],
@@ -3123,6 +1873,26 @@
 			[
 				"nodecontroll",
 				"_Camp_PerkNodeController.psc"
+			],
+			[
+				"conditions",
+				"_Camp_ConditionValues.psc"
+			],
+			[
+				"wood",
+				"_Camp_woodharvestscriptEFFECT.psc"
+			],
+			[
+				"controllerbe",
+				"_Camp_PerkNodeControllerBehavior.psc"
+			],
+			[
+				"nodecontrol",
+				"_Camp_PerkNodeController.psc"
+			],
+			[
+				"navcontr",
+				"_Camp_PerkNavController.psc"
 			]
 		],
 		"width": 0.0
@@ -3130,6 +1900,7 @@
 	"select_project":
 	{
 		"height": 500.0,
+		"last_filter": "",
 		"selected_items":
 		[
 			[
@@ -3139,10 +1910,26 @@
 		],
 		"width": 380.0
 	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
 	"show_minimap": false,
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": false,
 	"side_bar_width": 235.0,
-	"status_bar_visible": true
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
 }

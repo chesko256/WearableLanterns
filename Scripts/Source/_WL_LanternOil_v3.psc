@@ -1,6 +1,6 @@
 scriptname _WL_LanternOil_v3 extends ReferenceAlias
 
-; Main script. Controls all light functions for the player and assigning Reference Aliases for followers.
+; Main script. Controls all light functions for the player.
 
 import debug
 import utility
@@ -111,9 +111,6 @@ Keyword property LocTypeStore auto
 Form fCandleLanternHeld
 Form fCandleLanternHeldDroppedLit
 
-;--------------
-;	States		\
-;------------------------------------------------------------------------------------
 
 State BlockEvents
 
@@ -121,6 +118,7 @@ State BlockEvents
 	endEvent
 	
 endState
+
 
 Event OnLocationChange(Location akOldLoc, Location akNewLoc)
 	SetShouldLightLanternAutomatically(akNewLoc)
@@ -287,9 +285,6 @@ function CatchTorchbug(ObjectReference akTorchbug)
 	endif
 endFunction
 
-;-----------------------
-;	Menu Functions		\
-;------------------------------------------------------------------------------------
 function ReleaseTorchbugMenu(Form akBaseObject)
 	int ibutton = _WL_TorchbugDropRelease.Show()
 	if ibutton == 0						;Release
@@ -321,9 +316,6 @@ ObjectReference function FindAndDropEmptyBugLantern(Form akBaseObject)
 	return myEmptyLantern
 endFunction
 
-;-------------------------------
-;	Generic Light Functions		\
-;------------------------------------------------------------------------------------
 function EquipNonPlayableLantern(int iLanternIndex)
 	int iPosition = _WL_SettingPosition.GetValueInt()
 	if iLanternIndex == 0 					;Travel
@@ -371,9 +363,6 @@ function EquipNonPlayableLantern(int iLanternIndex)
 	endif
 endFunction
 
-;-----------------------
-;	Misc Functions		\
-;------------------------------------------------------------------------------------
 function DropLantern()
 	if SettingIsEnabled(_WL_SettingDropLit) && !IsInMenuMode()
 		int iPosition = _WL_SettingPosition.GetValueInt()
@@ -497,7 +486,6 @@ endFunction
 function LanternMutex(Form akBaseObject)
 	;Ensure that the player can only equip one lantern at a time.
 	
-	;Travel Lanterns
 	PlayerRef.UnequipItem(_WL_WearableLanternApparel, false, true)
 	PlayerRef.UnequipItem(_WL_WearableLanternApparelFront, false, true)
 	PlayerRef.UnequipItem(_WL_LanternHeld, false, true)
@@ -690,11 +678,11 @@ function UpdatePollen()
 				pollen_update_counter = 0
 			endif
 			WLDebug(1, "Pollen Level: " + pollen_level)
+			SendEvent_UpdatePollenMeter()
 		else
 			pollen_update_counter += 1
 		endif
 	endif
-	SendEvent_UpdatePollenMeter()
 endFunction
 
 function ShowRemainingOilMessage(float oil_level)
