@@ -4,4 +4,5 @@ function RegisterForEvents()
 	RegisterForModEvent("WearableLanterns_ForcePollenMeterDisplay", "ForceMeterDisplay")
 	RegisterForModEvent("WearableLanterns_RemovePollenMeter", "RemoveMeter")
 	RegisterForModEvent("WearableLanterns_UpdatePollenMeter", "UpdateMeterDelegate")
+	RegisterForModEvent("WearableLanterns_CheckMeterRequirements", "CheckMeterRequirements")
 endFunction

@@ -140,19 +140,12 @@ Event OnConfigInit()
 	MeterDisplayList[1] = "$WearableLanternsAlwaysOn"	;"Always On"
 	MeterDisplayList[2] = "$WearableLanternsContextual"	;"Contextual"
 
-	MeterLayoutList = new string[12]
-	MeterLayoutList[0] = "$WearableLanternsMeterLayoutList1"	;"(16:9) Bottom Left"
-	MeterLayoutList[1] = "$WearableLanternsMeterLayoutList2"	;"(16:9) Bottom Right"
-	MeterLayoutList[2] = "$WearableLanternsMeterLayoutList3"	;"(16:9) Top Left"
-	MeterLayoutList[3] = "$WearableLanternsMeterLayoutList4"	;"(16:9) Top Right"
-	MeterLayoutList[4] = "$WearableLanternsMeterLayoutList5"	;"(16:10) Bottom Left"
-	MeterLayoutList[5] = "$WearableLanternsMeterLayoutList6"	;"(16:10) Bottom Right"
-	MeterLayoutList[6] = "$WearableLanternsMeterLayoutList7"	;"(16:10) Top Left"
-	MeterLayoutList[7] = "$WearableLanternsMeterLayoutList8"	;"(16:10) Top Right"
-	MeterLayoutList[8] = "$WearableLanternsMeterLayoutList9"	;"(4:3) Bottom Left"
-	MeterLayoutList[9] = "$WearableLanternsMeterLayoutList10"	;"(4:3) Bottom Right"
-	MeterLayoutList[10] = "$WearableLanternsMeterLayoutList11"	;"(4:3) Top Left"
-	MeterLayoutList[11] = "$WearableLanternsMeterLayoutList12"	;"(4:3) Top Right"
+	; UPDATE
+	MeterLayoutList = new string[4]
+	MeterLayoutList[0] = "$WearableLanternsMeterLayoutList1"	;"Bottom Left"
+	MeterLayoutList[1] = "$WearableLanternsMeterLayoutList2"	;"Bottom Right"
+	MeterLayoutList[2] = "$WearableLanternsMeterLayoutList3"	;"Top Left"
+	MeterLayoutList[3] = "$WearableLanternsMeterLayoutList4"	;"Top Right"
 
 	BrightnessList = new string[4]
 	BrightnessList[0] = "$WearableLanternsBrightnessList1"
@@ -1015,6 +1008,22 @@ function ApplyMeterPreset(int aiPresetIdx)
 	_WL_SettingMeterOilWidth.SetValue(NORMAL_METER_DEFAULT_WIDTH)
 	_WL_SettingMeterPollenHeight.SetValue(NORMAL_METER_DEFAULT_HEIGHT)
 	_WL_SettingMeterPollenWidth.SetValue(NORMAL_METER_DEFAULT_WIDTH)
+
+	int w = Utility.GetINIInt("iSize W:Display")
+	int h = Utility.GetINIInt("iSize H:Display")
+	float ratio = (w as float)/(h as float)
+	debug.trace("[Wearable Lanterns] Detected display resolution " + w + "x" + h + " (" + ratio + " aspect ratio).")
+	if ratio > 1.7 && ratio < 1.8
+		debug.trace("[Wearable Lanterns] Loading 16:9 aspect ratio meter preset.")
+	elseif ratio == 1.6
+		debug.trace("[Wearable Lanterns] Loading 16:10 aspect ratio meter preset.")
+		aiPresetIdx += 4
+	elseif ratio > 1.3 && ratio < 1.4
+		debug.trace("[Wearable Lanterns] Loading 4:3 aspect ratio meter preset.")
+		aiPresetIdx += 8
+	else
+		debug.trace("[Wearable Lanterns] The display aspect ratio wasn't supported. Defaulting to 16:9.")
+	endif
 
 	if aiPresetIdx == 0
 		; 16:9 Bottom Left

@@ -204,7 +204,7 @@ Event OnObjectUnequipped(Form akBaseObject, ObjectReference akReference)
 			UnequipDisplayLantern(akBaseObject)
 		endif
 		unequip_lock = false
-		;@TODO: kill meter if necessary
+		SendEvent_CheckMeterRequirements()
     endif
 endEvent
 
@@ -225,6 +225,15 @@ function SetLantern(Form akBaseObject, int aiLanternIndex, int aiLanternState, s
 	ToggleLanternOn()
 	Config.CheckFuel()
 endFunction
+
+Event OnItemAdded(Form akBaseItem, int aiItemCount, ObjectReference akItemReference, ObjectReference akSourceContainer)
+	; Attempt to refill torchbug lantern on flower pickup
+	if SettingIsEnabled(_WL_SettingFeeding) && current_lantern == LANTERN_TORCHBUG
+		if _WL_PollenLevel.GetValueInt() <= 24 && _WL_PollenFlowers.HasForm(akBaseItem)
+			RefillTorchbug()
+		endif
+	endif
+EndEvent
 
 Event OnItemRemoved(Form akBaseItem, int aiItemCount, ObjectReference akItemReference, ObjectReference akDestContainer)
 	if _WL_InvBugLanterns.HasForm(akBaseItem) && akDestContainer == none && PlayerRef.IsSneaking()
@@ -763,6 +772,13 @@ function SendEvent_ForcePollenMeterDisplay(bool abFlash = false)
 	int handle = ModEvent.Create("WearableLanterns_ForcePollenMeterDisplay")
 	if handle
 		ModEvent.PushBool(handle, abFlash)
+		ModEvent.Send(handle)
+	endif
+endFunction
+
+function SendEvent_CheckMeterRequirements()
+	int handle = ModEvent.Create("WearableLanterns_CheckMeterRequirements")
+	if handle
 		ModEvent.Send(handle)
 	endif
 endFunction

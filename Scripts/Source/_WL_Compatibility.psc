@@ -20,6 +20,7 @@ Formlist property _WL_GlowingBugList auto
 FormList property _WL_InteriorWorldspaces auto
 
 GlobalVariable property _WL_SettingOffWhenSneaking auto
+GlobalVariable property _WL_Upgraded_4_0 auto
 
 Ingredient property MountainFlowerYellow auto hidden
 Activator property FireflyBUG auto hidden
@@ -48,6 +49,10 @@ function CompatibilityCheck()
 	trace("                             Wearable Lanterns is now performing compatibility checks.                            ")
 	trace("========================================[ Wearable Lanterns: Warning End ]========================================")
 	
+	if _WL_Upgraded_4_0.GetValueInt() != 2
+		Upgrade_4_0()
+	endif
+
 	bIsDLC1Loaded = IsPluginLoaded(0x02009403, "Dawnguard.esm")
 	bIsDLC2Loaded = IsPluginLoaded(0x0201FB99, "Dragonborn.esm")
 	bIsSKYUILoaded = IsPluginLoaded(0x01000814, "SkyUI.esp")
@@ -104,6 +109,27 @@ function CompatibilityCheck()
 	trace("========================================[Wearable Lanterns: Warning Start]========================================")
 	trace("                                          Compatibility check complete.                                           ")
 	trace("========================================[ Wearable Lanterns: Warning End ]========================================")
+endFunction
+
+function Upgrade_4_0()
+	; Load a meter preset for the user's display aspect ratio
+	int w = Utility.GetINIInt("iSize W:Display")
+	int h = Utility.GetINIInt("iSize H:Display")
+	float ratio = (w as float)/(h as float)
+	debug.trace("[WearableLanterns] Detected display resolution " + w + "x" + h + " (" + ratio + " aspect ratio).")
+	if ratio > 1.7 && ratio < 1.8
+		trace("[WearableLanterns] Loading 16:9 aspect ratio meter preset.")
+		WLConfig.ApplyMeterPreset(1)
+	elseif ratio == 1.6
+		trace("[WearableLanterns] Loading 16:10 aspect ratio meter preset.")
+		WLConfig.ApplyMeterPreset(5)
+	elseif ratio > 1.3 && ratio < 1.4
+		trace("[WearableLanterns] Loading 4:3 aspect ratio meter preset.")
+		WLConfig.ApplyMeterPreset(9)
+	endif
+	
+	trace("[WearableLanterns] Upgraded to 4.0.")
+	_WL_Upgraded_4_0.SetValueInt(2)
 endFunction
 
 function DLC1LoadUp()
