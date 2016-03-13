@@ -204,6 +204,7 @@ Event OnObjectUnequipped(Form akBaseObject, ObjectReference akReference)
 			UnequipDisplayLantern(akBaseObject)
 		endif
 		unequip_lock = false
+		;@TODO: kill meter if necessary
     endif
 endEvent
 
@@ -657,6 +658,7 @@ function SetPollenLevel()
 			_WL_HasFuel.SetValueInt(1)
 		elseif last_pollen_level > 0 && pollen_level == 0 				; Pollen depleted
 			_WL_LanternPollenRemainingEmptyRanOut.Show()
+			SendEvent_ForcePollenMeterDisplay(true)
 			_WL_HasFuel.SetValueInt(2)
 		elseif pollen_level == 0
 			_WL_HasFuel.SetValueInt(2)

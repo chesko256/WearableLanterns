@@ -392,6 +392,14 @@ event OnOptionHighlight(int option)
 		SetInfoText("$WearableLanternsMeterHeightHighlight")
 	elseif option == Interface_UIMeterColor_OID
 		SetInfoText("$WearableLanternsMeterColorHighlight")
+	elseif option == Interface_UIMeterXPos_OID
+		SetInfoText("$WearableLanternsMeterXPosHighlight")
+	elseif option == Interface_UIMeterYPos_OID
+		SetInfoText("$WearableLanternsMeterYPosHighlight")
+	elseif option == Interface_UIMeterHAnchor_OID
+		SetInfoText("$WearableLanternsMeterHAnchorHighlight")
+	elseif option == Interface_UIMeterVAnchor_OID
+		SetInfoText("$WearableLanternsMeterVAnchorHighlight")
 	endif
 endEvent
 
@@ -813,6 +821,13 @@ event OnOptionMenuAccept(int option, int index)
 	elseif option == Interface_UIMeterDisplay_OID
 		SetMenuOptionValue(Interface_UIMeterDisplay_OID, MeterDisplayList[index])
 		_WL_SettingFuelMeterDisplay_Contextual.SetValueInt(index)
+		if index == 0
+			SendEvent_WearableLanternRemoveOilMeter()
+			SendEvent_WearableLanternRemovePollenMeter()
+		else
+			SendEvent_ForceOilMeterDisplay()
+			SendEvent_ForcePollenMeterDisplay()
+		endif
 	elseif option == Interface_UIMeterLayout_OID
 		bool result = ShowMessage("$WearableLanternsInterfaceSettingUIMeterLayoutConfirm")
 		if result == true
