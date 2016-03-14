@@ -4,6 +4,106 @@
 		"selected_items":
 		[
 			[
+				"Ise",
+				"IsEquipped	Actor.IsEquipped"
+			],
+			[
+				"pollencolor",
+				"_WL_SettingMeterPollenColorSecondary"
+			],
+			[
+				"flashif",
+				"ForcePollenMeterFlashIfEmpty"
+			],
+			[
+				"ForceMeter",
+				"WearableLanterns_ForcePollenMeterDisplay"
+			],
+			[
+				"con",
+				"config_is_open"
+			],
+			[
+				"Upgraded",
+				"_WL_Upgraded_4_0"
+			],
+			[
+				"Upgrad",
+				"Upgrade_4_0"
+			],
+			[
+				"Feedin",
+				"_WL_SettingFeeding"
+			],
+			[
+				"Req",
+				"RequiredSettingGlobal"
+			],
+			[
+				"Requi",
+				"RequiredSettingGlobal"
+			],
+			[
+				"SendEvent_For",
+				"SendEvent_ForcePollenMeterDisplay"
+			],
+			[
+				"hancor",
+				"Interface_UIMeterHAnchor_OID"
+			],
+			[
+				"_SettinDisplay",
+				"_WL_SettingFuelMeterDisplay_Contextual"
+			],
+			[
+				"default_h",
+				"NORMAL_METER_DEFAULT_HEIGHT"
+			],
+			[
+				"bottomleft",
+				"NORMAL_METER_BOTTOMLEFT_16_9_Y"
+			],
+			[
+				"NORMAL",
+				"NORMAL_METER_BOTTOMRIGHT_16_9_Y"
+			],
+			[
+				"NORM",
+				"NORMAL_METER_BOTTOMRIGHTOFFSET_X"
+			],
+			[
+				"confi",
+				"configuring_pollen_meter"
+			],
+			[
+				"conf",
+				"configuring_pollen_meter"
+			],
+			[
+				"configur",
+				"configuring_pollen_meter"
+			],
+			[
+				"config",
+				"configuring_oil_meter"
+			],
+			[
+				"pollenhan",
+				"_WL_SettingMeterPollenHAnchor"
+			],
+			[
+				"settingheight",
+				"_WL_SettingMeterOilHeight"
+			],
+			[
+				"ai",
+				"aiMeterIdx"
+			],
+			[
+				"MyMeter",
+				"MyMeterHandler"
+			],
+			[
 				"poll",
 				"pollen_level"
 			],
@@ -14,10 +114,6 @@
 			[
 				"PollenLevel",
 				"_WL_PollenLevel"
-			],
-			[
-				"ForceMeter",
-				"SendEvent_ForceOilMeterDisplay"
 			],
 			[
 				"OilLeve",
@@ -140,10 +236,6 @@
 				"NORMAL_METER_DEFAULT_HEIGHT"
 			],
 			[
-				"pollencolor",
-				"_WL_SettingMeterPollenColor"
-			],
-			[
 				"oilcolor",
 				"_WL_SettingMeterOilColor"
 			],
@@ -154,10 +246,6 @@
 			[
 				"xpos",
 				"_WL_SettingMeterOilXPos"
-			],
-			[
-				"settingheight",
-				"_WL_SettingMeterPollenHeight"
 			],
 			[
 				"SetSliderDial",
@@ -426,94 +514,6 @@
 			[
 				"full",
 				"full_screen_effects"
-			],
-			[
-				"follower",
-				"_Frost_Setting_FollowerAnimation"
-			],
-			[
-				"forcefeed",
-				"_Frost_Setting_ForceFeedback"
-			],
-			[
-				"fullscreen",
-				"_Frost_Setting_FullScreenEffects"
-			],
-			[
-				"soundeffe",
-				"_Frost_Setting_SoundEffects"
-			],
-			[
-				"wetshader",
-				"_Frost_Setting_WetShaderOn"
-			],
-			[
-				"frostshader",
-				"_Frost_Setting_FrostShaderOn"
-			],
-			[
-				"AspectRa",
-				"_Frost_Setting_MeterAspectRatio"
-			],
-			[
-				"1pall",
-				"_Frost_Setting_1PAnimationAllowed"
-			],
-			[
-				"animat",
-				"_Frost_Setting_Animation"
-			],
-			[
-				"forcefee",
-				"_Frost_Setting_ForceFeedback"
-			],
-			[
-				"Fullscree",
-				"_Frost_Setting_FullScreenEffects"
-			],
-			[
-				"soundeff",
-				"_Frost_Setting_SoundEffects"
-			],
-			[
-				"notifi",
-				"_Frost_Setting_Notifications_EquipmentValues"
-			],
-			[
-				"infoli",
-				"Overview_InfoLine1_OID"
-			],
-			[
-				"frostbite",
-				"frostbite_chance"
-			],
-			[
-				"exposure_upper",
-				"exposure_upper_bound_near_fire"
-			],
-			[
-				"exposure_lower",
-				"exposure_lower_bound_near_fire"
-			],
-			[
-				"dialogue",
-				"_Frost_Setting_ExposurePauseDialogue"
-			],
-			[
-				"curre",
-				"current_weather"
-			],
-			[
-				"REGION",
-				"REGION_OBLIVION"
-			],
-			[
-				"incom",
-				"incoming_weather"
-			],
-			[
-				"regcoa",
-				"REGION_COAST"
 			]
 		]
 	},
@@ -523,15 +523,7 @@
 			"file": "Scripts/Source/_WL_LanternOil_v3.psc",
 			"settings":
 			{
-				"buffer_size": 28483,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Scripts/Source/_WL_Compatibility.psc",
-			"settings":
-			{
-				"buffer_size": 5981,
+				"buffer_size": 28532,
 				"line_ending": "Windows"
 			}
 		},
@@ -539,33 +531,8 @@
 			"file": "/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/CommonMeterInterfaceHandler.psc",
 			"settings":
 			{
-				"buffer_size": 7795,
+				"buffer_size": 8667,
 				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Scripts/Source/_WL_PollenMeterInterfaceHandler.psc",
-			"settings":
-			{
-				"buffer_size": 362,
-				"line_ending": "Windows",
-				"name": "scriptname _WL_OilMeterInterfaceHandler extends Co"
-			}
-		},
-		{
-			"file": "Scripts/Source/_WL_PollenMeter.psc",
-			"settings":
-			{
-				"buffer_size": 171,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/E/ModOrganizerData/mods/PapyrusCommon/Scripts/Source/SKI_WidgetBase.psc",
-			"settings":
-			{
-				"buffer_size": 7472,
-				"line_ending": "Unix"
 			}
 		},
 		{
@@ -577,10 +544,53 @@
 			}
 		},
 		{
+			"file": "Scripts/Source/_WL_OilMeterInterfaceHandler.psc",
+			"settings":
+			{
+				"buffer_size": 440,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Scripts/Source/_WL_PollenMeterInterfaceHandler.psc",
+			"settings":
+			{
+				"buffer_size": 452,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "Scriptname _WL_Compatibility extends ReferenceAlias\n\nimport debug\n\n_WL_SkyUIConfigPanelScript property WLConfig Auto 			;SkyUI Configuration script\n_WL_LanternOil_v3 property LanternQuest auto\n_WL_OilMeterInterfaceHandler property OilMeter auto\n_WL_PollenMeterInterfaceHandler property PollenMeter auto\n\nActor property PlayerRef auto\nPerk property _WL_CatchTorchbug auto\n\nbool property bIsSKYUILoaded auto hidden\nbool property bIsDLC1Loaded auto hidden\nbool property bIsDLC2Loaded auto hidden\nbool property bIsBUGSLoaded auto hidden\n\nFormlist property _WL_PollenFlowers auto\nFormlist property _WL_GlowingBugList auto\nFormList property _WL_InteriorWorldspaces auto\n\nGlobalVariable property _WL_SettingOffWhenSneaking auto\nGlobalVariable property _WL_Upgraded_4_0 auto\n\nIngredient property MountainFlowerYellow auto hidden\nActivator property FireflyBUG auto hidden\n\n;Legacy mod warnings\nbool bIsGuardLanternLoaded\nbool bIsKhajiitLanternLoaded\nbool bIsCLNLoaded\nbool bIsCLNDGLoaded\nbool bIsBUGSLoaded\nMessage property _WL_CLNWarning auto\nMessage property _WL_CLNDGWarning auto\nMessage property _WL_GuardLanternWarning auto\nMessage property _WL_KhajiitLanternWarning auto\nMessage property _WL_SkyUIErrorMessage auto\n\nEvent OnPlayerLoadGame()\n	CompatibilityCheck()\n	RegisterForEventsOnLoad()\n	AddPerks()\n	RegisterForKeysOnLoad()\nendEvent\n\nfunction CompatibilityCheck()\n	trace(\"========================================[Wearable Lanterns: Warning Start]========================================\")\n	trace(\"                             Wearable Lanterns is now performing compatibility checks.                            \")\n	trace(\"========================================[ Wearable Lanterns: Warning End ]========================================\")\n	\n	if _WL_Upgraded_4_0.GetValueInt() != 2\n		Upgrade_4_0()\n	endif\n\n	bIsDLC1Loaded = IsPluginLoaded(0x02009403, \"Dawnguard.esm\")\n	bIsDLC2Loaded = IsPluginLoaded(0x0201FB99, \"Dragonborn.esm\")\n	bIsSKYUILoaded = IsPluginLoaded(0x01000814, \"SkyUI.esp\")\n	Activator GetFirefly = GetBUGSLoaded()\n	\n	if bIsDLC1Loaded\n		DLC1LoadUp()\n	else\n		MountainFlowerYellow = none\n	endif\n\n	if bIsDLC2Loaded\n		;DLC2 was just added.\n		DLC2LoadUp()\n	else\n		;DLC2 is not active or was removed.\n		RemovePaperLanterns()\n	endif\n\n	if !bIsSKYUILoaded\n		_WL_SkyUIErrorMessage.Show()\n	endif\n\n	if GetFirefly\n		FireflyBUG = GetFirefly\n		bIsBUGSLoaded = true\n		if !_WL_GlowingBugList.HasForm(FireflyBUG)\n			_WL_GlowingBugList.AddForm(FireflyBUG)\n		endif\n	else\n		FireflyBUG = none\n		bIsBUGSLoaded = false\n	endif\n\n\n	;Legacy mod warnings\n	bIsCLNLoaded = IsPluginLoaded(0x01001DB7, \"Chesko_WearableLantern_Candle.esp\")		;Candle Lanterns of the North\n	if bIsCLNLoaded\n		_WL_CLNWarning.Show()\n	endif\n	bIsCLNDGLoaded = IsPluginLoaded(0x01001DB7, \"Chesko_WearableLantern_Candle_DG.esp\")	;Candle Lanterns of the North (DG)\n	if bIsCLNDGLoaded\n		_WL_CLNDGWarning.Show()\n	endif\n	bIsGuardLanternLoaded = IsPluginLoaded(0x01000D62, \"Chesko_WearableLantern_Guards.esp\")			;Lanterns for Guards\n	if bIsGuardLanternLoaded\n		_WL_GuardLanternWarning.Show()\n	endif\n	bIsKhajiitLanternLoaded = IsPluginLoaded(0x01000D62, \"Chesko_WearableLantern_Caravaner.esp\")	;Lanterns for Caravans\n	if bIsKhajiitLanternLoaded\n		_WL_KhajiitLanternWarning.Show()\n	endif\n	\n	trace(\"========================================[Wearable Lanterns: Warning Start]========================================\")\n	trace(\"                                          Compatibility check complete.                                           \")\n	trace(\"========================================[ Wearable Lanterns: Warning End ]========================================\")\nendFunction\n\nfunction Upgrade_4_0()\n	; Load a meter preset for the user's display aspect ratio\n	WLConfig.ApplyMeterPreset(1)\n	\n	trace(\"[WearableLanterns] Upgraded to 4.0.\")\n	_WL_Upgraded_4_0.SetValueInt(2)\nendFunction\n\nfunction DLC1LoadUp()\n	MountainFlowerYellow = Game.GetFormFromFile(0x01002A78, \"Dawnguard.esm\") as Ingredient\n	if !_WL_PollenFlowers.HasForm(MountainFlowerYellow)\n		_WL_PollenFlowers.AddForm(MountainFlowerYellow)\n	endif\n	Form DLC01WS05 = Game.GetFormFromFile(0x020048C7, \"Dawnguard.esm\")			;DLC1AncestorsGladeWorld\n	Form DLC01WS06 = Game.GetFormFromFile(0x02004BEA, \"Dawnguard.esm\")			;DLC1DarkfallPassageWorld\n	Form DLC01WS07 = Game.GetFormFromFile(0x02002F64, \"Dawnguard.esm\")			;DLC1ForebearsHoldout\n	\n	if !(_WL_InteriorWorldspaces.HasForm(DLC01WS05))\n		_WL_InteriorWorldspaces.AddForm(DLC01WS05)\n		_WL_InteriorWorldspaces.AddForm(DLC01WS06)\n		_WL_InteriorWorldspaces.AddForm(DLC01WS07)\n	endif\nendFunction\n\nfunction DLC2LoadUp()\n	WLConfig.DLC2Loaded = true\nendFunction\n\nActivator function GetBUGSLoaded()\n	Activator myBug\n\n	bool bugs_loaded = IsPluginLoaded(0x01001894, \"83Willows_101BUGS_V4_HighRes.esp\")\n	if bugs_loaded\n		myBug = Game.GetFormFromFile(0x01001894, \"83Willows_101BUGS_V4_HighRes.esp\") as Activator\n	endif\n\n	if !bugs_loaded\n		bugs_loaded = IsPluginLoaded(0x01001894, \"83Willows_101BUGS_V4_LowRes.esp\")\n		if bugs_loaded\n			myBug = Game.GetFormFromFile(0x01001894, \"83Willows_101BUGS_V4_LowRes.esp\") as Activator\n		endif\n	endif\n\n	if !bugs_loaded\n		bugs_loaded = IsPluginLoaded(0x01001894, \"83Willows_101BUGS_V4_HighRes_HighSpawn.esp\")\n		if bugs_loaded\n			myBug = Game.GetFormFromFile(0x01001894, \"83Willows_101BUGS_V4_HighRes_HighSpawn.esp\") as Activator\n		endif\n	endif\n\n	if !bugs_loaded\n		bugs_loaded = IsPluginLoaded(0x01001894, \"83Willows_101BUGS_V4_LowerRes_HighSpawn.esp\")\n		if bugs_loaded\n			myBug = Game.GetFormFromFile(0x01001894, \"83Willows_101BUGS_V4_LowerRes_HighSpawn.esp\") as Activator\n		endif\n	endif\n\n	return myBug\nendFunction\n\nfunction RemovePaperLanterns()\n	WLConfig.DLC2Loaded = false\nendFunction\n\nfunction AddPerks()\n	if !PlayerRef.HasPerk(_WL_CatchTorchbug)\n		PlayerRef.AddPerk(_WL_CatchTorchbug)\n	endif\nendFunction\n\nfunction RegisterForEventsOnLoad()\n	LanternQuest.RegisterForSingleUpdateGameTime(0.1)\n	if _WL_SettingOffWhenSneaking.GetValueInt() == 2\n		LanternQuest.RegisterForSneakEvents()\n	else\n		LanternQuest.UnregisterForSneakEvents()\n	endif\n	OilMeter.RegisterForEvents()\n	PollenMeter.RegisterForEvents()\nendFunction\n\nFunction RegisterForKeysOnLoad()\n	WLConfig.RegisterForKeysOnLoad()\nendFunction\n\nbool function IsPluginLoaded(int iFormID, string sPluginName)\n	int i = Game.GetModByName(sPluginName)\n	if i != 255\n		debug.trace(\"[Frostfall] Loaded: \" + sPluginName)\n		return true\n	else\n		return false\n	endif\nendFunction",
+			"file": "Scripts/Source/_WL_Compatibility.psc",
+			"file_size": 7220,
+			"file_write_time": 131023548281040694,
+			"settings":
+			{
+				"buffer_size": 6388,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Frost_Compatibility.psc",
+			"settings":
+			{
+				"buffer_size": 131324,
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "interface/translations/chesko_wearablelantern_english.txt",
 			"settings":
 			{
-				"buffer_size": 7500,
+				"buffer_size": 7512,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Frost_SkyUIConfigPanelScript.psc",
+			"settings":
+			{
+				"buffer_size": 66309,
 				"line_ending": "Windows"
 			}
 		},
@@ -588,7 +598,15 @@
 			"file": "Scripts/Source/_WL_SkyUIConfigPanelScript.psc",
 			"settings":
 			{
-				"buffer_size": 50238,
+				"buffer_size": 60561,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Camp_SkyUIConfigPanelScript.psc",
+			"settings":
+			{
+				"buffer_size": 57084,
 				"line_ending": "Windows"
 			}
 		}
@@ -726,12 +744,22 @@
 	],
 	"file_history":
 	[
+		"/E/ModOrganizerData/mods/Campfire/Scripts/Source/CampPerkNodeControllerBehavior.psc",
+		"/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/CommonMeterInterfaceHandler.psc",
+		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/_WL_PollenMeterInterfaceHandler.psc",
+		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/_WL_PollenMeter.psc",
+		"/E/ModOrganizerData/mods/PapyrusCommon/Scripts/Source/UI.psc",
+		"/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/Common_SKI_MeterWidget.psc",
+		"/E/git/skyui/dist/Data/Scripts/Source/SKI_WidgetBase.psc",
+		"/E/git/skyui/dist/Data/Scripts/Source/SKI_WidgetManager.psc",
+		"/E/Imported/skyui-master/skyui-master/src/hudmenu/HUDMenu.as",
+		"/E/ModOrganizerData/mods/PapyrusCommon/Scripts/Source/SKI_WidgetManager.psc",
+		"/E/ModOrganizerData/mods/PapyrusCommon/Scripts/Source/SKI_WidgetBase.psc",
 		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/_WL_FuelMeterUpdate.psc",
 		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/_WL_FuelMeter.psc",
 		"/E/ModOrganizerData/mods/WearableLanterns/.gitignore",
 		"/E/ModOrganizerData/mods/WearableLanterns/BuildSingle.bat",
 		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/CommonMeterInterfaceHandler.psc",
-		"/E/ModOrganizerData/mods/PapyrusCommon/Scripts/Source/SKI_WidgetBase.psc",
 		"/F/Media Drive Backup/skyrim backup before wipe/Wearable Lanterns/scripts/source/_WL_SKI_MeterWidget.psc",
 		"/C/Users/David/AppData/Local/Temp/Rar$DIa0.050/CampUtil.psc",
 		"/C/Program Files (x86)/Steam/steamapps/common/skyrim/EditorWarnings.txt",
@@ -843,17 +871,7 @@
 		"/C/Dragonborn_Eids.csv",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_EquipMonitor.psc",
 		"/C/Personal/ModOrganizer/profiles/Default/skyrimprefs.ini",
-		"/C/Personal/ModOrganizer/profiles/Default/skyrim.ini",
-		"/C/Users/David/Documents/donations_may_4_2015_sept_5_2015.csv",
-		"/C/Dawnguard_Eids.csv",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/CampPlaceableMiscItem.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_ObjectPlacementThreadManager.psc",
-		"/F/test.txt",
-		"/C/Personal/ModOrganizer/mods/Campfire/Interface/Translations/Campfire_ENGLISH.txt",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_FrostInternal.psc",
-		"/C/Personal/ModOrganizer/mods/Arissa/Scripts/Source/Arissa/_Arissa_iNPC_MonitoringPlayerScript.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_test_waitdisable.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ConditionValues.psc"
+		"/C/Personal/ModOrganizer/profiles/Default/skyrim.ini"
 	],
 	"find":
 	{
@@ -871,134 +889,134 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"_WL_HasFuel",
-			"compatibility",
-			"continue",
-			"Oil",
-			"debug.trace",
-			"OpacityMax",
-			"if _WL_PollenLevel.GetValueInt() <= 0\n				SendEvent_ForcePollenMeterDisplay(true)\n			else\n				SendEvent_ForcePollenMeterDisplay()\n			endif",
-			"if _WL_OilLevel.GetValue() <= 0.0\n				SendEvent_ForceOilMeterDisplay(true)\n			else\n				SendEvent_ForceOilMeterDisplay()\n			endif",
-			"Pollen",
-			"SendEvent_ForcePollenMeterDisplay",
-			"CheckFuel",
-			"SettingIsEnabled",
-			"_WL_LanternOilRemainingEmpty",
-			"SendEvent_ForceOilMeterDisplay",
-			"togglelanternon",
-			"ToggleLantern",
-			"hotkey",
-			"HUD_MENU",
-			"Oil",
-			"_WL_CheckFuelDisplay",
-			"_WL_MeterDisplayTime",
-			"_WL_FuelMeterDisplay_Contextual",
-			"_WL_PollenColor",
-			"_WL_CheckFuelDisplay",
-			"height",
-			"_WL_SkI_MeterWidget",
-			"FuelMeterDisplay",
-			"_WL_FuelMeterUpdate",
-			"Lavender",
-			"_WL_PollenFlowers",
-			"DLC1LoadUp",
-			"MountainFlowerYellow",
-			"DLC2LoadUp",
-			"bIsDLC2Loaded",
-			"Thistle01",
-			"flower",
-			"ShowRemainingOilMessage",
-			"empty",
-			"_WL_LanternOil4",
-			"_WL_LanternOilRemainingMostlyEmpty",
-			"_WL_LanternOilRemainingLessThanHalf",
-			"ShowRemainingOilMessage",
-			"empty",
-			"SendEvent_UpdateOilMeter",
-			"SetOilLevel",
-			"SendEvent",
-			"ContextualDisplay",
-			"should_update",
-			"RegisterForSingleUpdate",
-			"MeterFadeUp",
-			"pollen_level",
-			"MeterFadeUp",
-			"iterations_remaining",
-			"display_iterations_remaining",
-			"HandleMeterUpdate",
-			"a",
-			"AuxSecondaryColor.GetValueInt()",
-			"AuxPrimaryColor.GetValueInt()",
-			"AttributeMax",
-			"_percent",
-			"meter_inversion_value",
-			" / ",
-			"HandleMeterUpdate",
-			"updateoil",
-			"meter",
-			"UpdateOil",
-			"SetOilLevel",
-			"meter",
-			"OilMeter",
-			"RegisterForEventsOnLoad",
-			"SendEvent_WearableLanternRemoveOilMeter",
-			"ChooseMeterPosition",
-			"ConfigureMeter",
-			"SetMeterPosition",
-			"_WL_SettingOil",
-			"registerforsingle",
-			"SetMeterColors",
-			"Meter_FadeUp",
-			"FadeUp",
+			"RequiredWornEquipment",
+			"RequiredWornFormList",
+			"Form akItem",
+			"WLDebug",
+			"activate_button_held",
+			"Activate",
+			"oncontrol",
+			";",
+			"filldirection",
+			"aiFillDirectionIdx",
+			"UpdateMeterConfiguration",
+			"FillDirectionList",
+			"FILL_DIRECTIONS",
+			"_WL_SettingMeterOilColor",
 			"setcolors",
-			"SetColors",
-			"_Frost_ExposureMeterColorWarm_Dark",
-			"_Frost_ExposureMeterColorWarm_Light.GetValueInt()",
-			"PrimaryColor",
-			"bSkipDisplayHandling",
-			"_Frost_Setting_MeterDisplayMode",
-			"exposure_display_iterations_remaining",
-			"FuelMeter",
-			"fuelmeter",
-			"_WL_FuelMeter",
-			"OilMeter",
-			"afFillDirectionIdx",
-			"FuelMeter",
-			"Interface_UIPollenMeterVAnchor_OID",
-			"SetMenuDialogOptions",
-			"addmenuop",
-			"defaults",
-			"default",
-			"Center",
-			"Right",
-			"bottom",
-			"top",
-			"center",
-			"right",
-			"left",
-			"FuelMeter",
-			"anchor",
-			"Anchor",
-			"string a_value",
-			"Oil",
-			", int a_flags = 0",
-			"=",
-			"SetMeterPosition",
-			"PageReset_Interface",
-			"25.2",
-			"interface_show_advanced_oil",
-			"value",
-			" * 100.0",
-			"SetSliderDialogStartValue",
-			"NORMAL_METER_MIN_HEIGHT",
-			"1219.0",
-			"NORMAL_METER_DEFAULT_HEIGHT",
-			"U",
-			"normal_meter",
-			"choosemeterposition",
-			"_WL_SettingMeterOilOpacity",
+			"_WL_SettingMeterOilColor",
+			";",
+			"[Wearable",
+			"[WearableLan",
+			"settingfeeding",
+			"checkfuel",
+			"CheckFuel",
+			"MeterDisplayList",
+			"config_is_open",
+			"CurrentVersion",
+			"(16:9) ",
+			"trace",
+			"Upgrade_3_0_1",
+			"MeterFadeUp",
+			"RefillTorchbug",
+			"SendEvent_CheckMeterRequirements",
+			"SendEvent_ForceOilMeterDisplay",
+			"sendevent_Force",
+			"WearableLanterns_RemoveOilMeter",
+			"Interface_UIMeterDisplay_OID",
+			"MeterDisplayList",
+			"getwidgetsource",
+			"WearableLanternsMeter",
+			"924.0",
+			"95",
+			"926.5",
+			"609",
+			"112.0",
+			"592.0",
+			"918.0",
+			"VERTICAL_ANCHORS",
+			"HORIZONTAL_ANCHORS",
+			"FILL_DIRECTIONS",
+			"$WearableLanterns",
+			"MeterDisplayIndex",
+			"MeterDisplayList",
+			"MeterLayoutList",
+			"MeterLengthIndex",
 			"MeterLengthList",
-			"string a_formatString)"
+			"MeterHeightIndex",
+			"MeterHeightList",
+			"VERTICAL_ANCHORS",
+			"HORIZONTAL_ANCHORS",
+			"FILL_DIRECTIONS",
+			"aiFillDirectionIdx",
+			"FILL_DIRECTIONS",
+			"_WL_SettingMeterOilFillDirection",
+			"ApplyMeterPreset",
+			"Interface_UIMeterLayout_OID",
+			"select",
+			"WearableLanternsMeterLayoutList",
+			";",
+			"16:9",
+			";",
+			"NORMAL_METER_DEFAULT_HEIGHT",
+			"NORMAL_METER_TOPRIGHT_4_3_X",
+			"_16_10",
+			"_16_9",
+			"BOTTOMRIGHT",
+			"BOTTOMLEFT",
+			"NORMAL_METER_BOTTOMLEFT_16_9_X",
+			"BOTTOMLEFT",
+			"25.2",
+			"16_10",
+			"16_9",
+			"OFFSET",
+			"NORMAL_METER_BOTTOMRIGHTOFFSET_Y",
+			"NORMAL_METER_BOTTOMRIGHTOFFSET_X",
+			"RIGHT",
+			"NORMAL_METER_BOTTOMRIGHTOFFSET_X",
+			"_WL_SettingMeterPollenFillDirection",
+			"Oil",
+			"_WL_Setting",
+			"if",
+			"configuring_oil_meter",
+			"debug.trace",
+			"debug.trace(\"g\")",
+			"MeterFadeUp",
+			"fuel",
+			"uipollenmeter",
+			"uioilmeter",
+			"Interface_UIOilMeterOpacity_OID",
+			"uioilmeter",
+			"Interface_UIOilMeterFillDirection_OID",
+			"Interface_UIPollenMeterYPos_OID",
+			"Interface_UIPollenMeterXPos_OID",
+			"Interface_UIPollenMeterWidth_OID",
+			"Interface_UIPollenMeterHeight_OID",
+			"Interface_UIPollenMeterOpacity_OID",
+			"UIPollenMeter",
+			"UIOilMeter",
+			"uioilmeter",
+			"option == Interface_UIOilMeter",
+			"UIOilMeter",
+			"ption == Interface_UIMeter",
+			"UIOilMeter",
+			"option == Interface_UIOilMeter",
+			"Interface_UIOilMeter",
+			"UIOilMeter",
+			"elseif option",
+			"UIOilMeter",
+			"configurename",
+			"Interface_UIMeterConfigureName_OID",
+			"Interface_UIMeterColor_OID",
+			"elseif configuring_pollen_meter",
+			"elseif",
+			"SetSliderOptionValue",
+			"SetValue",
+			"UIOilMeter",
+			"interface_show_advanced_pollen",
+			"interface_show_advanced_oil",
+			"UIOilMeter",
+			"UIPollenMeter"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1016,7 +1034,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -1025,15 +1043,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 28483,
+						"buffer_size": 28532,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								17834,
-								17834
+								28045,
+								28054
 							]
 						],
 						"settings":
@@ -1042,114 +1060,85 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 8351.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "Scripts/Source/_WL_Compatibility.psc",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5981,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3454,
-								3454
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1635.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/CommonMeterInterfaceHandler.psc",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7795,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5362,
-								5362
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 3497.0,
+						"translation.y": 14524.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "Scripts/Source/_WL_PollenMeterInterfaceHandler.psc",
+					"buffer": 1,
+					"file": "/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/CommonMeterInterfaceHandler.psc",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 362,
+						"buffer_size": 8667,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								79,
-								79
+								861,
+								861
 							]
 						],
 						"settings":
 						{
-							"auto_name": "scriptname _WL_OilMeterInterfaceHandler extends Co",
-							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage"
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 133.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/Common_SKI_MeterWidget.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5719,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2163,
+								2176
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1091.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "Scripts/Source/_WL_PollenMeter.psc",
+					"buffer": 3,
+					"file": "Scripts/Source/_WL_OilMeterInterfaceHandler.psc",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 171,
+						"buffer_size": 440,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								21,
-								21
+								428,
+								428
 							]
 						],
 						"settings":
@@ -1164,56 +1153,48 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "/E/ModOrganizerData/mods/PapyrusCommon/Scripts/Source/SKI_WidgetBase.psc",
+					"buffer": 4,
+					"file": "Scripts/Source/_WL_PollenMeterInterfaceHandler.psc",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7472,
+						"buffer_size": 452,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								167,
-								175
-							],
+								352,
+								440
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Scripts/Source/_WL_Compatibility.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6388,
+						"regions":
+						{
+						},
+						"selection":
+						[
 							[
-								6203,
-								6211
-							],
-							[
-								6452,
-								6460
-							],
-							[
-								6767,
-								6775
-							],
-							[
-								6883,
-								6891
-							],
-							[
-								6988,
-								6996
-							],
-							[
-								7097,
-								7105
-							],
-							[
-								7207,
-								7215
-							],
-							[
-								7313,
-								7321
-							],
-							[
-								7417,
-								7425
+								3745,
+								3757
 							]
 						],
 						"settings":
@@ -1222,27 +1203,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 5245.0,
+						"translation.y": 1828.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
 					"buffer": 6,
-					"file": "/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/Common_SKI_MeterWidget.psc",
+					"file": "/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Frost_Compatibility.psc",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5719,
+						"buffer_size": 131324,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2794,
-								2794
+								19118,
+								18892
 							]
 						],
 						"settings":
@@ -1250,11 +1231,11 @@
 							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": -0.0,
-						"translation.y": 1996.0,
+						"translation.x": 0.0,
+						"translation.y": 8482.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
@@ -1263,15 +1244,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7500,
+						"buffer_size": 7512,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3053,
-								3053
+								5601,
+								5601
 							]
 						],
 						"settings":
@@ -1279,10 +1260,39 @@
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 765.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Frost_SkyUIConfigPanelScript.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 66309,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6480,
+								6480
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2736.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -1292,20 +1302,20 @@
 			"sheets":
 			[
 				{
-					"buffer": 8,
+					"buffer": 9,
 					"file": "Scripts/Source/_WL_SkyUIConfigPanelScript.psc",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 50238,
+						"buffer_size": 60561,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2992,
-								2992
+								53037,
+								53044
 							]
 						],
 						"settings":
@@ -1314,10 +1324,39 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1603.0,
+						"translation.y": 22542.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Camp_SkyUIConfigPanelScript.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 57084,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5279,
+								5088
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2268.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
 					"type": "text"
 				}
 			]
@@ -1351,7 +1390,7 @@
 		"cols":
 		[
 			0.0,
-			0.522395833333,
+			0.600520833333,
 			1.0
 		],
 		"rows":
@@ -1382,6 +1421,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"ski_",
+				"Source\\Common_SKI_MeterWidget.psc"
+			],
 			[
 				"common",
 				"Source\\CommonMeterInterfaceHandler.psc"
@@ -1889,10 +1932,6 @@
 			[
 				"nodecontrol",
 				"_Camp_PerkNodeController.psc"
-			],
-			[
-				"navcontr",
-				"_Camp_PerkNavController.psc"
 			]
 		],
 		"width": 0.0

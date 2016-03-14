@@ -374,37 +374,23 @@ function EquipNonPlayableLantern(int iLanternIndex)
 endFunction
 
 function DropLantern()
-	if SettingIsEnabled(_WL_SettingDropLit) && !IsInMenuMode()
-		int iPosition = _WL_SettingPosition.GetValueInt()
-		if PlayerRef.IsEquipped(_WL_WearableLanternInvDisplay) && iPosition == 2
-			if SettingIsEnabled(_WL_SettingOil)
-				if _WL_Oillevel.GetValue() > 0.0
-					PlayerRef.UnequipItem(_WL_WearableLanternInvDisplay, abSilent = true)
-					PlayerRef.RemoveItem(_WL_WearableLanternInvDisplay, abSilent = true)
-					PlayerRef.PlaceAtMe(_WL_LanternDroppedLit)
-				else
-					return
-				endif
+	int iPosition = _WL_SettingPosition.GetValueInt()
+	if PlayerRef.IsEquipped(_WL_WearableLanternInvDisplay) && iPosition == 2
+		PlayerRef.UnequipItem(_WL_WearableLanternInvDisplay, abSilent = true)
+		if SettingIsEnabled(_WL_SettingDropLit) && !IsInMenuMode()
+			if SettingIsEnabled(_WL_SettingOil) && _WL_Oillevel.GetValue() <= 0.0
+				return
 			else
-				PlayerRef.UnequipItem(_WL_WearableLanternInvDisplay, abSilent = true)
 				PlayerRef.RemoveItem(_WL_WearableLanternInvDisplay, abSilent = true)
 				PlayerRef.PlaceAtMe(_WL_LanternDroppedLit)
 			endif
-		elseif PlayerRef.IsEquipped(_WL_WearableTorchbugInvDisplay) && iPosition == 2
-			if SettingIsEnabled(_WL_SettingFeeding)
-				if _WL_PollenLevel.GetValueInt() > 0
-					PlayerRef.UnequipItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
-					if PlayerRef.IsSneaking()
-						GoToState("BlockEvents")
-					endif
-					PlayerRef.RemoveItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
-					PlayerRef.PlaceAtMe(_WL_TorchbugDroppedLit)
-					GoToState("")
-				else
-					return
-				endif
+		endif
+	elseif PlayerRef.IsEquipped(_WL_WearableTorchbugInvDisplay) && iPosition == 2
+		PlayerRef.UnequipItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
+		if SettingIsEnabled(_WL_SettingDropLit) && !IsInMenuMode()
+			if SettingIsEnabled(_WL_SettingFeeding) && _WL_PollenLevel.GetValueInt() <= 0
+				return
 			else
-				PlayerRef.UnequipItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
 				if PlayerRef.IsSneaking()
 					GoToState("BlockEvents")
 				endif
@@ -412,40 +398,27 @@ function DropLantern()
 				PlayerRef.PlaceAtMe(_WL_TorchbugDroppedLit)
 				GoToState("")
 			endif
-		elseif PlayerRef.IsEquipped(_WL_WearableTorchbugInvDisplayRED) && iPosition == 2
-			if SettingIsEnabled(_WL_SettingFeeding)
-				if _WL_PollenLevel.GetValueInt() > 0
-					PlayerRef.UnequipItem(_WL_WearableTorchbugInvDisplayRED, abSilent = true)
-					if PlayerRef.IsSneaking()
-						GoToState("BlockEvents")
-					endif
-					PlayerRef.RemoveItem(_WL_WearableTorchbugInvDisplayRED, abSilent = true)
-					PlayerRef.PlaceAtMe(_WL_TorchbugREDDroppedLit)
-					GoToState("")
-				else
-					return
-				endif
+		endif
+	elseif PlayerRef.IsEquipped(_WL_WearableTorchbugInvDisplayRED) && iPosition == 2
+		PlayerRef.UnequipItem(_WL_WearableTorchbugInvDisplayRED, abSilent = true)
+		if SettingIsEnabled(_WL_SettingDropLit) && !IsInMenuMode()
+			if SettingIsEnabled(_WL_SettingFeeding) && _WL_PollenLevel.GetValueInt() <= 0
+				return
 			else
-				PlayerRef.UnequipItem(_WL_WearableTorchbugInvDisplayRED, abSilent = true)
-				If PlayerRef.IsSneaking()
+				if PlayerRef.IsSneaking()
 					GoToState("BlockEvents")
 				endif
 				PlayerRef.RemoveItem(_WL_WearableTorchbugInvDisplayRED, abSilent = true)
 				PlayerRef.PlaceAtMe(_WL_TorchbugREDDroppedLit)
 				GoToState("")
-
 			endif
-		elseif PlayerRef.IsEquipped(_WL_WearablePaperInvDisplay) && iPosition == 2
-			if SettingIsEnabled(_WL_SettingOil)
-				if _WL_Oillevel.GetValue() > 0.0
-					PlayerRef.UnequipItem(_WL_WearablePaperInvDisplay, abSilent = true)
-					PlayerRef.RemoveItem(_WL_WearablePaperInvDisplay, abSilent = true)
-					PlayerRef.PlaceAtMe(_WL_PaperHeldDroppedLit)
-				else
-					return
-				endif
+		endif
+	elseif PlayerRef.IsEquipped(_WL_WearablePaperInvDisplay) && iPosition == 2
+		PlayerRef.UnequipItem(_WL_WearablePaperInvDisplay, abSilent = true)
+		if SettingIsEnabled(_WL_SettingDropLit) && !IsInMenuMode()
+			if SettingIsEnabled(_WL_SettingOil) && _WL_Oillevel.GetValue() <= 0.0
+				return
 			else
-				PlayerRef.UnequipItem(_WL_WearablePaperInvDisplay, abSilent = true)
 				PlayerRef.RemoveItem(_WL_WearablePaperInvDisplay, abSilent = true)
 				PlayerRef.PlaceAtMe(_WL_PaperHeldDroppedLit)
 			endif
