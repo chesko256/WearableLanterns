@@ -166,8 +166,8 @@ Event OnUpdateGameTime()
 endEvent
 
 Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
-	if (akBaseObject as Armor && akBaseObject.HasKeyword(ArmorShield)) || (akBaseObject as Weapon && PlayerRef.GetEquippedItemType(0) <= 4)	;I equipped a shield or off-hand weapon
-		WLDebug(1, "OnObjectEquipped Event, Weapon or Shield")
+	if (akBaseObject as Armor && akBaseObject.HasKeyword(ArmorShield)) || ((akBaseObject as Weapon && PlayerRef.GetEquippedItemType(0) <= 4) || PlayerRef.GetEquippedItemType(0) == 11)
+		WLDebug(1, "OnObjectEquipped Event, Weapon, Shield, or Torch")
 		DropLantern()
     elseif akBaseObject == _WL_WearableLanternInvDisplay
     	SetLantern(akBaseObject, 0, LANTERN_OIL, "Lantern")
