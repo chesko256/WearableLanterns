@@ -1,5 +1,7 @@
 Scriptname _WL_SkyUIConfigPanelScript extends SKI_ConfigBase conditional
 
+string CONFIG_PATH = "../WearableLanternsData/"
+
 _WL_LanternOil_v3 property LanternQuest auto
 Actor property PlayerRef auto
 
@@ -47,6 +49,12 @@ int Interface_UIMeterVAnchor_OID
 int Interface_UIOilMeterShowAdvanced_OID
 int Interface_UIPollenMeterShowAdvanced_OID
 
+int SaveLoad_SelectProfile_OID
+int SaveLoad_RenameProfile_OID
+int SaveLoad_DefaultProfile_OID
+int SaveLoad_ProfileHelp_OID
+int SaveLoad_Enable_OID
+
 bool property DLC2Loaded auto hidden conditional
 
 GlobalVariable property _WL_OilLevel auto
@@ -65,6 +73,8 @@ GlobalVariable Property _WL_SettingAutomatic auto
 GlobalVariable property _WL_SettingCheckFuelDisplay auto
 GlobalVariable property _WL_SettingFuelMeterDisplay_Contextual auto
 GlobalVariable property _WL_SettingMeterDisplayTime auto
+GlobalVariable property _WL_Setting_AutoSaveLoad auto
+GlobalVariable property _WL_Setting_CurrentProfile auto
 
 GlobalVariable property _WL_HotkeyPlayerLantern auto
 GlobalVariable property _WL_HotkeyCheckFuel auto
@@ -130,7 +140,7 @@ Event OnConfigInit()
 	Pages = new string[3]
 	Pages[0] = "$WearableLanternsGeneralPage"
 	Pages[1] = "$WearableLanternsInterfacePage"
-	Pages[2] = "$WearableLanternsProfilePage"
+	Pages[2] = "$WearableLanternsSaveLoadPage"
 
 	LanternPositionList = new string[3]
 	LanternPositionList[0] = "$WearableLanternsPositionList1"
@@ -359,6 +369,56 @@ function PageReset_Interface()
 	endif
 endFunction
 
+function PageReset_SaveLoad()
+	SetCursorFillMode(TOP_TO_BOTTOM)
+
+	AddHeaderOption("$WearableLanternsSaveLoadHeaderProfile")
+	if _SK_Setting_AutoSaveLoad.GetValueInt() == 2
+		SaveLoad_SelectProfile_OID = AddMenuOption("$WearableLanternsSaveLoadCurrentProfile", GetProfileName(_SK_Setting_CurrentProfile.GetValueInt()))
+	else
+		SaveLoad_SelectProfile_OID = AddMenuOption("$WearableLanternsSaveLoadCurrentProfile", GetProfileName(_SK_Setting_CurrentProfile.GetValueInt()), OPTION_FLAG_DISABLED)
+	endif
+	AddEmptyOption()
+	AddEmptyOption()
+	AddEmptyOption()
+	AddEmptyOption()
+	AddEmptyOption()
+	AddEmptyOption()
+	AddEmptyOption()
+	AddEmptyOption()
+	SaveLoad_ProfileHelp_OID = AddTextOption("$WearableLanternsSaveLoadAboutProfiles", "")
+	if _SK_Setting_AutoSaveLoad.GetValueInt() == 2
+		SaveLoad_Enable_OID = AddToggleOption("$WearableLanternsSaveLoadEnable", true)
+	else
+		SaveLoad_Enable_OID = AddToggleOption("$WearableLanternsSaveLoadEnable", false)
+	endif
+	
+	SetCursorPosition(1) ; Move cursor to top right position
+
+	AddEmptyOption()
+	if _SK_Setting_AutoSaveLoad.GetValueInt() == 2
+		SKI_Main skyui = Game.GetFormFromFile(0x00000814, "SkyUI.esp") as SKI_Main
+		int version = skyui.ReqSWFRelease
+		if version >= 1026 	; SkyUI 5.1+
+			SaveLoad_RenameProfile_OID = AddInputOption("", "$WearableLanternsSaveLoadRenameProfile")
+		else
+			SaveLoad_RenameProfile_OID = AddTextOption("$WearableLanternsSkyUI51Required", "$WearableLanternsSaveLoadRenameProfile", OPTION_FLAG_DISABLED)
+		endif
+		SaveLoad_DefaultProfile_OID = AddTextOption("", "$WearableLanternsSaveLoadDefaultProfile")
+	endif
+	AddEmptyOption()
+	AddEmptyOption()
+	AddEmptyOption()
+	AddEmptyOption()
+	AddEmptyOption()
+	AddEmptyOption()
+	AddEmptyOption()
+	AddEmptyOption()
+	if _SK_Setting_AutoSaveLoad.GetValueInt() == 2
+		AddTextOption("$WearableLanternsSaveLoadSettingsSaved", "", OPTION_FLAG_DISABLED)
+	endif
+endFunction
+
 event OnOptionHighlight(int option)
 
 	if option == General_SettingBrightnessMenu_OID
@@ -397,6 +457,8 @@ event OnOptionHighlight(int option)
 		SetInfoText("$WearableLanternsMeterOpacityHighlight")
 	elseif option == Interface_UIMeterDisplayTime_OID
 		SetInfoText("$WearableLanternsMeterDisplayTimeHighlight")
+	elseif option Interface_UIMeterFillDirection_OID
+		SetInfoText("$WearableLanternsMeterFillDirectionHighlight")
 	elseif option == Interface_UIMeterHeight_OID
 		SetInfoText("$WearableLanternsMeterHeightHighlight")
 	elseif option == Interface_UIMeterColor_OID
@@ -409,6 +471,14 @@ event OnOptionHighlight(int option)
 		SetInfoText("$WearableLanternsMeterHAnchorHighlight")
 	elseif option == Interface_UIMeterVAnchor_OID
 		SetInfoText("$WearableLanternsMeterVAnchorHighlight")
+	elseif option == SaveLoad_SelectProfile_OID
+		SetInfoText("$WearableLanternsOptionHighlightSettingSelectProfile")
+	elseif option == SaveLoad_RenameProfile_OID
+		SetInfoText("$WearableLanternsOptionHighlightSettingRenameProfile")
+	elseif option == SaveLoad_DefaultProfile_OID
+		SetInfoText("$WearableLanternsOptionHighlightSettingDefaultProfile")
+	elseif option == SaveLoad_Enable_OID
+		SetInfoText("$WearableLanternsOptionHighlightSettingEnableSaveLoad")
 	endif
 endEvent
 
@@ -483,6 +553,33 @@ event OnOptionSelect(int option)
 			configuring_oil_meter = false
 		endif
 		ForcePageReset()
+
+	elseif option == SaveLoad_Enable_OID
+		if _WL_Setting_AutoSaveLoad.GetValueInt() == 2
+			_WL_Setting_AutoSaveLoad.SetValueInt(1)
+			SetToggleOptionValue(SaveLoad_Enable_OID, false)
+			JsonUtil.SetIntValue(CONFIG_PATH + "common", "auto_load", 1)
+			JsonUtil.Save(CONFIG_PATH + "common")
+		elseif _WL_Setting_AutoSaveLoad.GetValueInt() == 1
+			_WL_Setting_AutoSaveLoad.SetValueInt(2)
+			SetToggleOptionValue(SaveLoad_Enable_OID, true)
+			JsonUtil.SetIntValue(CONFIG_PATH + "common", "auto_load", 2)
+			JsonUtil.Save(CONFIG_PATH + "common")
+			SaveAllSettings(_SK_Setting_CurrentProfile.GetValueInt())
+		endIf
+		ForcePageReset()
+	elseif option == SaveLoad_DefaultProfile_OID
+		bool b = ShowMessage("$WearableLanternsSaveLoadDefaultProfileConfirm")
+		if b
+			GenerateDefaultProfile(_WL_Setting_CurrentProfile.GetValueInt())
+			SwitchToProfile(_WL_Setting_CurrentProfile.GetValueInt())
+			ForcePageReset()
+		endif
+	endif
+
+	if option == SaveLoad_ProfileHelp_OID
+		ShowProfileHelp()
+	endif
 	endif
 endEvent
 
@@ -805,6 +902,17 @@ event OnOptionMenuOpen(int option)
 			SetMenuDialogStartIndex(_WL_SettingMeterPollenVAnchor.GetValueInt())
 			SetMenuDialogDefaultIndex(1)
 		endif
+	elseif option == SaveLoad_SelectProfile_OID
+		string[] profile_list = new string[10]
+		int i = 0
+		while i < 10
+			string pname = GetProfileName(i + 1)
+			profile_list[i] = pname
+			i += 1
+		endWhile
+		SetMenuDialogOptions(profile_list)
+		SetMenuDialogStartIndex(_WL_Setting_CurrentProfile.GetValueInt() - 1)
+		SetMenuDialogDefaultIndex(0)
 	endif
 endEvent
 
@@ -875,6 +983,31 @@ event OnOptionMenuAccept(int option, int index)
 			_WL_SettingMeterPollenVAnchor.SetValueInt(index)
 			SetMenuOptionValue(Interface_UIMeterVAnchor_OID, VerticalAnchorList[index])
 			UpdateMeterConfiguration(1)
+		endif
+	elseif option == SaveLoad_SelectProfile_OID
+		bool b = ShowMessage("$WearableLanternsSaveLoadConfirm")
+		if b
+			SwitchToProfile(index + 1)
+			ForcePageReset()
+		endif
+	endif
+endEvent
+
+event OnOptionInputOpen(int option)
+	if option == SaveLoad_RenameProfile_OID
+		SetInputDialogStartText(GetProfileName(_WL_Setting_CurrentProfile.GetValueInt()))
+	endif
+endEvent
+
+event OnOptionInputAccept(int option, string str)
+	if option == SaveLoad_RenameProfile_OID
+		if str != ""
+			string profile_path = CONFIG_PATH + "profile" + _WL_Setting_CurrentProfile.GetValueInt()
+			JsonUtil.SetStringValue(profile_path, "profile_name", str)
+			JsonUtil.Save(profile_path)
+			ForcePageReset()
+		else
+			ShowMessage("$WearableLanternsSaveLoadRenameErrorBlank", false)
 		endif
 	endif
 endEvent
@@ -1371,6 +1504,143 @@ function ForcePollenMeterFlashIfEmpty()
 	else
 		SendEvent_ForcePollenMeterDisplay()
 	endif
+endFunction
+
+
+
+string function GetProfileName(int aiProfileIndex)
+	return JsonUtil.GetStringValue(CONFIG_PATH + "profile" + aiProfileIndex, "profile_name", missing = "Profile " + aiProfileIndex)
+endFunction
+
+function SetProfileName(int aiProfileIndex, string asProfileName)
+	JsonUtil.SetStringValue(CONFIG_PATH + "profile" + aiProfileIndex, "profile_name", asProfileName)
+endFunction
+
+function SaveSettingToCurrentProfileFloat(string asKeyName, float afValue)
+	if _WL_Setting_AutoSaveLoad.GetValueInt() == 2
+		int current_profile_index = _WL_Setting_CurrentProfile.GetValueInt()
+		JsonUtil.SetFloatValue(CONFIG_PATH + "profile" + current_profile_index, asKeyName, afValue)
+		JsonUtil.Save(CONFIG_PATH + "profile" + current_profile_index)
+	endif
+endFunction
+
+function SaveSettingToCurrentProfile(string asKeyName, int aiValue)
+	if _WL_Setting_AutoSaveLoad.GetValueInt() == 2
+		int current_profile_index = _WL_Setting_CurrentProfile.GetValueInt()
+		JsonUtil.SetIntValue(CONFIG_PATH + "profile" + current_profile_index, asKeyName, aiValue)
+		JsonUtil.Save(CONFIG_PATH + "profile" + current_profile_index)
+	endif
+endFunction
+
+int function LoadSettingFromProfile(int aiProfileIndex, string asKeyName)
+	return JsonUtil.GetIntValue(CONFIG_PATH + "profile" + aiProfileIndex, asKeyName, -1)
+endFunction
+
+function LoadProfileOnStartup()
+	int auto_load = JsonUtil.GetIntValue(CONFIG_PATH + "common", "auto_load", 0)
+	if auto_load == 2
+		_WL_Setting_AutoSaveLoad.SetValueInt(2)
+		int last_profile = JsonUtil.GetIntValue(CONFIG_PATH + "common", "last_profile", 0)
+		if last_profile != 0
+			_WL_Setting_CurrentProfile.SetValueInt(last_profile)
+			SwitchToProfile(last_profile)
+		else
+			; default to Profile 1 and write the file
+			_WL_Setting_CurrentProfile.SetValueInt(1)
+			JsonUtil.SetIntValue(CONFIG_PATH + "common", "last_profile", 1)
+			JsonUtil.Save(CONFIG_PATH + "common")
+			SwitchToProfile(1)
+		endif
+	elseif auto_load == 1
+		_WL_Setting_AutoSaveLoad.SetValueInt(1)
+	elseif auto_load == 0
+		; The file or setting does not exist, create it and default to auto-loading.
+		; default to Profile 1 and write the file
+		_WL_Setting_AutoSaveLoad.SetValueInt(2)
+		_WL_Setting_CurrentProfile.SetValueInt(1)
+		JsonUtil.SetIntValue(CONFIG_PATH + "common", "auto_load", 2)
+		JsonUtil.SetIntValue(CONFIG_PATH + "common", "last_profile", 1)
+		JsonUtil.Save(CONFIG_PATH + "common")
+		SwitchToProfile(1)
+	endif
+endFunction
+
+function SwitchToProfile(int aiProfileIndex)
+	_WL_Setting_CurrentProfile.SetValueInt(aiProfileIndex)
+	JsonUtil.SetIntValue(CONFIG_PATH + "common", "last_profile", aiProfileIndex)
+	JsonUtil.Save(CONFIG_PATH + "common")
+
+	string pname = JsonUtil.GetStringValue(CONFIG_PATH + "profile" + aiProfileIndex, "profile_name", "")
+	if pname == ""
+		GenerateDefaultProfile(aiProfileIndex)
+	endif
+	CleanProfile(aiProfileIndex)
+
+	;@TODO SETTINGS GO HERE
+	;@TODO SETTINGS GO HERE
+	;@TODO SETTINGS GO HERE
+	int val = LoadSettingFromProfile(aiProfileIndex, "speech_success_chance")
+	if val != -1
+		_SK_Setting_SpeechSuccessChance.SetValue(val)
+	endif
+	val = LoadSettingFromProfile(aiProfileIndex, "success_timeout_duration")
+	if val != -1
+		_SK_Setting_SuccessTimeoutDuration.SetValueInt(val)
+	endif
+	val = LoadSettingFromProfile(aiProfileIndex, "failure_timeout_duration")
+	if val != -1
+		_SK_Setting_FailureTimeoutDuration.SetValueInt(val)
+	endif
+	val = LoadSettingFromProfile(aiProfileIndex, "friends_allow_entry")
+	if val != -1
+		_SK_Setting_FriendsAllowEntry.SetValueInt(val)
+	endif
+	;@TODO SETTINGS GO HERE
+	;@TODO SETTINGS GO HERE
+	;@TODO SETTINGS GO HERE
+endFunction
+
+function GenerateDefaultProfile(int aiProfileIndex)
+	string profile_path = CONFIG_PATH + "profile" + aiProfileIndex
+	JsonUtil.SetStringValue(profile_path, "profile_name", "Profile " + aiProfileIndex)
+
+	;@TODO SETTINGS GO HERE
+	;@TODO SETTINGS GO HERE
+	;@TODO SETTINGS GO HERE
+	JsonUtil.SetFloatValue(profile_path, "speech_success_chance", 0.5)
+	JsonUtil.SetFloatValue(profile_path, "success_timeout_duration", 12.0)
+	JsonUtil.SetFloatValue(profile_path, "failure_timeout_duration", 24.0)
+	JsonUtil.SetIntValue(profile_path, "friends_allow_entry", 2)
+	;@TODO SETTINGS GO HERE
+	;@TODO SETTINGS GO HERE
+	;@TODO SETTINGS GO HERE
+
+	JsonUtil.Save(profile_path)
+endFunction
+
+function SaveAllSettings(int aiProfileIndex)
+	string profile_path = CONFIG_PATH + "profile" + aiProfileIndex
+	;@TODO SETTINGS GO HERE
+	;@TODO SETTINGS GO HERE
+	;@TODO SETTINGS GO HERE
+	JsonUtil.SetFloatValue(profile_path, "speech_success_chance", _SK_Setting_SpeechSuccessChance.GetValue())
+	JsonUtil.SetFloatValue(profile_path, "success_timeout_duration", _SK_Setting_SuccessTimeoutDuration.GetValue())
+	JsonUtil.SetFloatValue(profile_path, "failure_timeout_duration", _SK_Setting_FailureTimeoutDuration.GetValue())
+	JsonUtil.SetIntValue(profile_path, "friends_allow_entry", _SK_Setting_FriendsAllowEntry.GetValueInt())
+	;@TODO SETTINGS GO HERE
+	;@TODO SETTINGS GO HERE
+	;@TODO SETTINGS GO HERE
+	JsonUtil.Save(profile_path)
+endFunction
+
+function CleanProfile(int aiProfileIndex)
+	; pass
+endFunction
+
+function ShowProfileHelp()
+	ShowMessage("$WearableLanternsSaveLoadTopic", false)
+	ShowMessage("$WearableLanternsSaveLoadTopicCont", false)
+	ShowMessage("$WearableLanternsSaveLoadTopicCont2", false)
 endFunction
 
 function SendEvent_ForceOilMeterDisplay(bool abFlash = false)
