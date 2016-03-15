@@ -813,62 +813,74 @@ event OnOptionSliderAccept(int option, float value)
 		_WL_SettingSlot.SetValue(value)
 		SetSliderOptionValue(General_SettingSlot_OID, value, "{0}")
 		SetLanternSlot()
+		SaveSettingToCurrentProfile("lantern_slot", value as int)
 	elseif option == General_HotkeyHoldUseDuration_OID
 		_WL_SettingHoldActivateToggleDuration.SetValue(value)
 		SetSliderOptionValue(General_HotkeyHoldUseDuration_OID, value, "{1} sec")
+		SaveSettingToCurrentProfileFloat("hold_activate_toggle_duration", value)
 	elseif option == Interface_UIMeterDisplayTime_OID
 		_WL_SettingMeterDisplayTime.SetValue(value/2)
 		SetSliderOptionValue(Interface_UIMeterDisplayTime_OID, value, "{0}")
-	
+		SaveSettingToCurrentProfile("meter_display_time", _WL_SettingMeterDisplayTime.GetValueInt())
 	elseif option == Interface_UIMeterOpacity_OID
 		if configuring_oil_meter
 			_WL_SettingMeterOilOpacity.SetValue(value)
 			SetSliderOptionValue(Interface_UIMeterOpacity_OID, value, "{0}%")
 			UpdateMeterConfiguration(0)
+			SaveSettingToCurrentProfileFloat("oil_meter_opacity", value)
 		elseif configuring_pollen_meter
 			_WL_SettingMeterPollenOpacity.SetValue(value)
 			SetSliderOptionValue(Interface_UIMeterOpacity_OID, value, "{0}%")
 			UpdateMeterConfiguration(1)
+			SaveSettingToCurrentProfileFloat("pollen_meter_opacity", value)
 		endif
 	elseif option == Interface_UIMeterHeight_OID
 		if configuring_oil_meter
 			_WL_SettingMeterOilHeight.SetValue(value)
 			SetSliderOptionValue(Interface_UIMeterHeight_OID, value, "{1}")
 			UpdateMeterConfiguration(0)
+			SaveSettingToCurrentProfileFloat("oil_meter_height", value)
 		elseif configuring_pollen_meter
 			_WL_SettingMeterPollenHeight.SetValue(value)
 			SetSliderOptionValue(Interface_UIMeterHeight_OID, value, "{1}")
 			UpdateMeterConfiguration(1)
+			SaveSettingToCurrentProfileFloat("pollen_meter_height", value)
 		endif
 	elseif option == Interface_UIMeterWidth_OID
 		if configuring_oil_meter
 			_WL_SettingMeterOilWidth.SetValue(value)
 			SetSliderOptionValue(Interface_UIMeterWidth_OID, value, "{1}")
 			UpdateMeterConfiguration(0)
+			SaveSettingToCurrentProfileFloat("oil_meter_width", value)
 		elseif configuring_pollen_meter
 			_WL_SettingMeterPollenWidth.SetValue(value)
 			SetSliderOptionValue(Interface_UIMeterWidth_OID, value, "{1}")
 			UpdateMeterConfiguration(1)
+			SaveSettingToCurrentProfileFloat("pollen_meter_width", value)
 		endif
 	elseif option == Interface_UIMeterXPos_OID
 		if configuring_oil_meter
 			_WL_SettingMeterOilXPos.SetValue(value)
 			SetSliderOptionValue(Interface_UIMeterXPos_OID, value, "{1}")
 			UpdateMeterConfiguration(0)
+			SaveSettingToCurrentProfileFloat("oil_meter_xpos", value)
 		elseif configuring_pollen_meter
 			_WL_SettingMeterPollenXPos.SetValue(value)
 			SetSliderOptionValue(Interface_UIMeterXPos_OID, value, "{1}")
 			UpdateMeterConfiguration(1)
+			SaveSettingToCurrentProfileFloat("pollen_meter_xpos", value)
 		endif
 	elseif option == Interface_UIMeterYPos_OID
 		if configuring_oil_meter
 			_WL_SettingMeterOilYPos.SetValue(value)
 			SetSliderOptionValue(Interface_UIMeterYPos_OID, value, "{1}")
 			UpdateMeterConfiguration(0)
+			SaveSettingToCurrentProfileFloat("oil_meter_ypos", value)
 		elseif configuring_pollen_meter
 			_WL_SettingMeterPollenYPos.SetValue(value)
 			SetSliderOptionValue(Interface_UIMeterYPos_OID, value, "{1}")
 			UpdateMeterConfiguration(1)
+			SaveSettingToCurrentProfileFloat("pollen_meter_ypos", value)
 		endif		
 	endif
 endEvent
