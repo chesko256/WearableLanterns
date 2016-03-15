@@ -73,15 +73,8 @@ GlobalVariable Property _WL_SettingAutomatic auto
 GlobalVariable property _WL_SettingCheckFuelDisplay auto
 GlobalVariable property _WL_SettingFuelMeterDisplay_Contextual auto
 GlobalVariable property _WL_SettingMeterDisplayTime auto
-GlobalVariable property _WL_Setting_AutoSaveLoad auto
-GlobalVariable property _WL_Setting_CurrentProfile auto
-
-GlobalVariable property _WL_HotkeyPlayerLantern auto
-GlobalVariable property _WL_HotkeyCheckFuel auto
-GlobalVariable property _WL_gToggle auto
-
-GlobalVariable property _WL_Debug auto
-
+GlobalVariable property _WL_SettingAutoSaveLoad auto
+GlobalVariable property _WL_SettingCurrentProfile auto
 GlobalVariable property _WL_SettingMeterOilColor auto
 GlobalVariable property _WL_SettingMeterOilOpacity auto
 GlobalVariable property _WL_SettingMeterOilFillDirection auto
@@ -91,7 +84,6 @@ GlobalVariable property _WL_SettingMeterOilXPos auto
 GlobalVariable property _WL_SettingMeterOilYPos auto
 GlobalVariable property _WL_SettingMeterOilHAnchor auto
 GlobalVariable property _WL_SettingMeterOilVAnchor auto
-
 GlobalVariable property _WL_SettingMeterPollenColor auto
 GlobalVariable property _WL_SettingMeterPollenOpacity auto
 GlobalVariable property _WL_SettingMeterPollenFillDirection auto
@@ -101,6 +93,13 @@ GlobalVariable property _WL_SettingMeterPollenXPos auto
 GlobalVariable property _WL_SettingMeterPollenYPos auto
 GlobalVariable property _WL_SettingMeterPollenHAnchor auto
 GlobalVariable property _WL_SettingMeterPollenVAnchor auto
+
+GlobalVariable property _WL_HotkeyPlayerLantern auto
+GlobalVariable property _WL_HotkeyCheckFuel auto
+GlobalVariable property _WL_gToggle auto
+
+GlobalVariable property _WL_Debug auto
+
 
 Sound property _WL_OilLanternOff auto
 Sound property _WL_OilLanternOn auto
@@ -555,13 +554,13 @@ event OnOptionSelect(int option)
 		ForcePageReset()
 
 	elseif option == SaveLoad_Enable_OID
-		if _WL_Setting_AutoSaveLoad.GetValueInt() == 2
-			_WL_Setting_AutoSaveLoad.SetValueInt(1)
+		if _WL_SettingAutoSaveLoad.GetValueInt() == 2
+			_WL_SettingAutoSaveLoad.SetValueInt(1)
 			SetToggleOptionValue(SaveLoad_Enable_OID, false)
 			JsonUtil.SetIntValue(CONFIG_PATH + "common", "auto_load", 1)
 			JsonUtil.Save(CONFIG_PATH + "common")
-		elseif _WL_Setting_AutoSaveLoad.GetValueInt() == 1
-			_WL_Setting_AutoSaveLoad.SetValueInt(2)
+		elseif _WL_SettingAutoSaveLoad.GetValueInt() == 1
+			_WL_SettingAutoSaveLoad.SetValueInt(2)
 			SetToggleOptionValue(SaveLoad_Enable_OID, true)
 			JsonUtil.SetIntValue(CONFIG_PATH + "common", "auto_load", 2)
 			JsonUtil.Save(CONFIG_PATH + "common")
@@ -571,8 +570,8 @@ event OnOptionSelect(int option)
 	elseif option == SaveLoad_DefaultProfile_OID
 		bool b = ShowMessage("$WearableLanternsSaveLoadDefaultProfileConfirm")
 		if b
-			GenerateDefaultProfile(_WL_Setting_CurrentProfile.GetValueInt())
-			SwitchToProfile(_WL_Setting_CurrentProfile.GetValueInt())
+			GenerateDefaultProfile(_WL_SettingCurrentProfile.GetValueInt())
+			SwitchToProfile(_WL_SettingCurrentProfile.GetValueInt())
 			ForcePageReset()
 		endif
 	endif
@@ -911,7 +910,7 @@ event OnOptionMenuOpen(int option)
 			i += 1
 		endWhile
 		SetMenuDialogOptions(profile_list)
-		SetMenuDialogStartIndex(_WL_Setting_CurrentProfile.GetValueInt() - 1)
+		SetMenuDialogStartIndex(_WL_SettingCurrentProfile.GetValueInt() - 1)
 		SetMenuDialogDefaultIndex(0)
 	endif
 endEvent
@@ -995,14 +994,14 @@ endEvent
 
 event OnOptionInputOpen(int option)
 	if option == SaveLoad_RenameProfile_OID
-		SetInputDialogStartText(GetProfileName(_WL_Setting_CurrentProfile.GetValueInt()))
+		SetInputDialogStartText(GetProfileName(_WL_SettingCurrentProfile.GetValueInt()))
 	endif
 endEvent
 
 event OnOptionInputAccept(int option, string str)
 	if option == SaveLoad_RenameProfile_OID
 		if str != ""
-			string profile_path = CONFIG_PATH + "profile" + _WL_Setting_CurrentProfile.GetValueInt()
+			string profile_path = CONFIG_PATH + "profile" + _WL_SettingCurrentProfile.GetValueInt()
 			JsonUtil.SetStringValue(profile_path, "profile_name", str)
 			JsonUtil.Save(profile_path)
 			ForcePageReset()
@@ -1517,16 +1516,16 @@ function SetProfileName(int aiProfileIndex, string asProfileName)
 endFunction
 
 function SaveSettingToCurrentProfileFloat(string asKeyName, float afValue)
-	if _WL_Setting_AutoSaveLoad.GetValueInt() == 2
-		int current_profile_index = _WL_Setting_CurrentProfile.GetValueInt()
+	if _WL_SettingAutoSaveLoad.GetValueInt() == 2
+		int current_profile_index = _WL_SettingCurrentProfile.GetValueInt()
 		JsonUtil.SetFloatValue(CONFIG_PATH + "profile" + current_profile_index, asKeyName, afValue)
 		JsonUtil.Save(CONFIG_PATH + "profile" + current_profile_index)
 	endif
 endFunction
 
 function SaveSettingToCurrentProfile(string asKeyName, int aiValue)
-	if _WL_Setting_AutoSaveLoad.GetValueInt() == 2
-		int current_profile_index = _WL_Setting_CurrentProfile.GetValueInt()
+	if _WL_SettingAutoSaveLoad.GetValueInt() == 2
+		int current_profile_index = _WL_SettingCurrentProfile.GetValueInt()
 		JsonUtil.SetIntValue(CONFIG_PATH + "profile" + current_profile_index, asKeyName, aiValue)
 		JsonUtil.Save(CONFIG_PATH + "profile" + current_profile_index)
 	endif
@@ -1539,25 +1538,25 @@ endFunction
 function LoadProfileOnStartup()
 	int auto_load = JsonUtil.GetIntValue(CONFIG_PATH + "common", "auto_load", 0)
 	if auto_load == 2
-		_WL_Setting_AutoSaveLoad.SetValueInt(2)
+		_WL_SettingAutoSaveLoad.SetValueInt(2)
 		int last_profile = JsonUtil.GetIntValue(CONFIG_PATH + "common", "last_profile", 0)
 		if last_profile != 0
-			_WL_Setting_CurrentProfile.SetValueInt(last_profile)
+			_WL_SettingCurrentProfile.SetValueInt(last_profile)
 			SwitchToProfile(last_profile)
 		else
 			; default to Profile 1 and write the file
-			_WL_Setting_CurrentProfile.SetValueInt(1)
+			_WL_SettingCurrentProfile.SetValueInt(1)
 			JsonUtil.SetIntValue(CONFIG_PATH + "common", "last_profile", 1)
 			JsonUtil.Save(CONFIG_PATH + "common")
 			SwitchToProfile(1)
 		endif
 	elseif auto_load == 1
-		_WL_Setting_AutoSaveLoad.SetValueInt(1)
+		_WL_SettingAutoSaveLoad.SetValueInt(1)
 	elseif auto_load == 0
 		; The file or setting does not exist, create it and default to auto-loading.
 		; default to Profile 1 and write the file
-		_WL_Setting_AutoSaveLoad.SetValueInt(2)
-		_WL_Setting_CurrentProfile.SetValueInt(1)
+		_WL_SettingAutoSaveLoad.SetValueInt(2)
+		_WL_SettingCurrentProfile.SetValueInt(1)
 		JsonUtil.SetIntValue(CONFIG_PATH + "common", "auto_load", 2)
 		JsonUtil.SetIntValue(CONFIG_PATH + "common", "last_profile", 1)
 		JsonUtil.Save(CONFIG_PATH + "common")
@@ -1566,7 +1565,7 @@ function LoadProfileOnStartup()
 endFunction
 
 function SwitchToProfile(int aiProfileIndex)
-	_WL_Setting_CurrentProfile.SetValueInt(aiProfileIndex)
+	_WL_SettingCurrentProfile.SetValueInt(aiProfileIndex)
 	JsonUtil.SetIntValue(CONFIG_PATH + "common", "last_profile", aiProfileIndex)
 	JsonUtil.Save(CONFIG_PATH + "common")
 
@@ -1576,60 +1575,231 @@ function SwitchToProfile(int aiProfileIndex)
 	endif
 	CleanProfile(aiProfileIndex)
 
-	;@TODO SETTINGS GO HERE
-	;@TODO SETTINGS GO HERE
-	;@TODO SETTINGS GO HERE
-	int val = LoadSettingFromProfile(aiProfileIndex, "speech_success_chance")
-	if val != -1
-		_SK_Setting_SpeechSuccessChance.SetValue(val)
+	int ival
+	float fval
+	; ints
+	ival = LoadSettingFromProfile(aiProfileIndex, "brightness")
+	if ival != -1
+		_WL_SettingBrightness.SetValueInt(ival)
 	endif
-	val = LoadSettingFromProfile(aiProfileIndex, "success_timeout_duration")
-	if val != -1
-		_SK_Setting_SuccessTimeoutDuration.SetValueInt(val)
+	ival = LoadSettingFromProfile(aiProfileIndex, "position")
+	if ival != -1
+		_WL_SettingPosition.SetValueInt(ival)
 	endif
-	val = LoadSettingFromProfile(aiProfileIndex, "failure_timeout_duration")
-	if val != -1
-		_SK_Setting_FailureTimeoutDuration.SetValueInt(val)
+	ival = LoadSettingFromProfile(aiProfileIndex, "auto_drop_lit")
+	if ival != -1
+		_WL_SettingDropLit.SetValueInt(ival)
 	endif
-	val = LoadSettingFromProfile(aiProfileIndex, "friends_allow_entry")
-	if val != -1
-		_SK_Setting_FriendsAllowEntry.SetValueInt(val)
+	ival = LoadSettingFromProfile(aiProfileIndex, "fuel_oil")
+	if ival != -1
+		_WL_SettingOil.SetValueInt(ival)
 	endif
-	;@TODO SETTINGS GO HERE
-	;@TODO SETTINGS GO HERE
-	;@TODO SETTINGS GO HERE
+	ival = LoadSettingFromProfile(aiProfileIndex, "fuel_pollen")
+	if ival != -1
+		_WL_SettingFeeding.SetValueInt(ival)
+	endif
+	ival = LoadSettingFromProfile(aiProfileIndex, "lantern_slot")
+	if ival != -1
+		_WL_SettingSlot.SetValueInt(ival)
+	endif
+	ival = LoadSettingFromProfile(aiProfileIndex, "off_when_sneaking")
+	if ival != -1
+		_WL_SettingOffWhenSneaking.SetValueInt(ival)
+	endif
+	ival = LoadSettingFromProfile(aiProfileIndex, "hold_activate_toggle")
+	if ival != -1
+		_WL_SettingHoldActivateToggle.SetValueInt(ival)
+	endif
+	ival = LoadSettingFromProfile(aiProfileIndex, "automatic_mode")
+	if ival != -1
+		_WL_SettingAutomatic.SetValueInt(ival)
+	endif
+	ival = LoadSettingFromProfile(aiProfileIndex, "check_fuel_display")
+	if ival != -1
+		_WL_SettingCheckFuelDisplay.SetValueInt(ival)
+	endif
+	ival = LoadSettingFromProfile(aiProfileIndex, "meter_display_mode")
+	if ival != -1
+		_WL_SettingFuelMeterDisplay_Contextual.SetValueInt(ival)
+	endif
+	ival = LoadSettingFromProfile(aiProfileIndex, "meter_display_time")
+	if ival != -1
+		_WL_SettingMeterDisplayTime.SetValueInt(ival)
+	endif
+	ival = LoadSettingFromProfile(aiProfileIndex, "auto_load")
+	if ival != -1
+		_WL_SettingAutoSaveLoad.SetValueInt(ival)
+	endif
+	ival = LoadSettingFromProfile(aiProfileIndex, "current_profile_index")
+	if ival != -1
+		_WL_SettingCurrentProfile.SetValueInt(ival)
+	endif
+	ival = LoadSettingFromProfile(aiProfileIndex, "oil_meter_color")
+	if ival != -1
+		_WL_SettingMeterOilColor.SetValueInt(ival)
+	endif
+	ival = LoadSettingFromProfile(aiProfileIndex, "oil_meter_fill_direction")
+	if ival != -1
+		_WL_SettingMeterOilFillDirection.SetValueInt(ival)
+	endif
+	ival = LoadSettingFromProfile(aiProfileIndex, "oil_meter_hanchor")
+	if ival != -1
+		_WL_SettingMeterOilHAnchor.SetValueInt(ival)
+	endif
+	ival = LoadSettingFromProfile(aiProfileIndex, "oil_meter_vanchor")
+	if ival != -1
+		_WL_SettingMeterOilVAnchor.SetValueInt(ival)
+	endif
+	ival = LoadSettingFromProfile(aiProfileIndex, "pollen_meter_color")
+	if ival != -1
+		_WL_SettingMeterPollenColor.SetValueInt(ival)
+	endif
+	ival = LoadSettingFromProfile(aiProfileIndex, "pollen_meter_fill_direction")
+	if ival != -1
+		_WL_SettingMeterPollenFillDirection.SetValueInt(ival)
+	endif
+	ival = LoadSettingFromProfile(aiProfileIndex, "pollen_meter_hanchor")
+	if ival != -1
+		_WL_SettingMeterPollenHAnchor.SetValueInt(ival)
+	endif
+	ival = LoadSettingFromProfile(aiProfileIndex, "pollen_meter_vanchor")
+	if ival != -1
+		_WL_SettingMeterPollenVAnchor.SetValueInt(ival)
+	endif
+	; floats
+	fval = LoadSettingFromProfile(aiProfileIndex, "hold_activate_toggle_duration")
+	if fval != -1.0
+		_WL_SettingHoldActivateToggleDuration.SetValue(fval)
+	endif
+	fval = LoadSettingFromProfile(aiProfileIndex, "oil_meter_opacity")
+	if fval != -1.0
+		_WL_SettingMeterOilOpacity.SetValue(fval)
+	endif
+	fval = LoadSettingFromProfile(aiProfileIndex, "oil_meter_height")
+	if fval != -1.0
+		_WL_SettingMeterOilHeight.SetValue(fval)
+	endif
+	fval = LoadSettingFromProfile(aiProfileIndex, "oil_meter_width")
+	if fval != -1.0
+		_WL_SettingMeterOilWidth.SetValue(fval)
+	endif
+	fval = LoadSettingFromProfile(aiProfileIndex, "oil_meter_xpos")
+	if fval != -1.0
+		_WL_SettingMeterOilXPos.SetValue(fval)
+	endif
+	fval = LoadSettingFromProfile(aiProfileIndex, "oil_meter_ypos")
+	if fval != -1.0
+		_WL_SettingMeterOilYPos.SetValue(fval)
+	endif
+	fval = LoadSettingFromProfile(aiProfileIndex, "pollen_meter_opacity")
+	if fval != -1.0
+		_WL_SettingMeterPollenOpacity.SetValue(fval)
+	endif
+	fval = LoadSettingFromProfile(aiProfileIndex, "pollen_meter_height")
+	if fval != -1.0
+		_WL_SettingMeterPollenHeight.SetValue(fval)
+	endif
+	fval = LoadSettingFromProfile(aiProfileIndex, "pollen_meter_width")
+	if fval != -1.0
+		_WL_SettingMeterPollenWidth.SetValue(fval)
+	endif
+	fval = LoadSettingFromProfile(aiProfileIndex, "pollen_meter_xpos")
+	if fval != -1.0
+		_WL_SettingMeterPollenXPos.SetValue(fval)
+	endif
+	fval = LoadSettingFromProfile(aiProfileIndex, "pollen_meter_ypos")
+	if fval != -1.0
+		_WL_SettingMeterPollenYPos.SetValue(fval)
+	endif
+	;@TODO APPLY COLORS
+	;@TODO APPLY METER CHANGES
+	;@TODO HOTKEYS GO HERE
 endFunction
 
 function GenerateDefaultProfile(int aiProfileIndex)
 	string profile_path = CONFIG_PATH + "profile" + aiProfileIndex
 	JsonUtil.SetStringValue(profile_path, "profile_name", "Profile " + aiProfileIndex)
 
-	;@TODO SETTINGS GO HERE
-	;@TODO SETTINGS GO HERE
-	;@TODO SETTINGS GO HERE
-	JsonUtil.SetFloatValue(profile_path, "speech_success_chance", 0.5)
-	JsonUtil.SetFloatValue(profile_path, "success_timeout_duration", 12.0)
-	JsonUtil.SetFloatValue(profile_path, "failure_timeout_duration", 24.0)
-	JsonUtil.SetIntValue(profile_path, "friends_allow_entry", 2)
-	;@TODO SETTINGS GO HERE
-	;@TODO SETTINGS GO HERE
-	;@TODO SETTINGS GO HERE
+	JsonUtil.SetIntValue(profile_path, "brightness", )
+	JsonUtil.SetIntValue(profile_path, "position", )
+	JsonUtil.SetIntValue(profile_path, "auto_drop_lit", )
+	JsonUtil.SetIntValue(profile_path, "fuel_oil", )
+	JsonUtil.SetIntValue(profile_path, "fuel_pollen", )
+	JsonUtil.SetIntValue(profile_path, "lantern_slot", )
+	JsonUtil.SetIntValue(profile_path, "off_when_sneaking", )
+	JsonUtil.SetIntValue(profile_path, "hold_activate_toggle", )
+	JsonUtil.SetIntValue(profile_path, "automatic_mode", )
+	JsonUtil.SetIntValue(profile_path, "check_fuel_display", )
+	JsonUtil.SetIntValue(profile_path, "meter_display_mode", )
+	JsonUtil.SetIntValue(profile_path, "meter_display_time", )
+	JsonUtil.SetIntValue(profile_path, "auto_load", )
+	JsonUtil.SetIntValue(profile_path, "current_profile_index", )
+	JsonUtil.SetIntValue(profile_path, "oil_meter_color", )
+	JsonUtil.SetIntValue(profile_path, "oil_meter_fill_direction", )
+	JsonUtil.SetIntValue(profile_path, "oil_meter_hanchor", )
+	JsonUtil.SetIntValue(profile_path, "oil_meter_vanchor", )
+	JsonUtil.SetIntValue(profile_path, "pollen_meter_color", )
+	JsonUtil.SetIntValue(profile_path, "pollen_meter_fill_direction", )
+	JsonUtil.SetIntValue(profile_path, "pollen_meter_hanchor", )
+	JsonUtil.SetIntValue(profile_path, "pollen_meter_vanchor", )
+
+	JsonUtil.SetFloatValue(profile_path, "hold_activate_toggle_duration", )
+	JsonUtil.SetFloatValue(profile_path, "oil_meter_opacity", )
+	JsonUtil.SetFloatValue(profile_path, "oil_meter_height", )
+	JsonUtil.SetFloatValue(profile_path, "oil_meter_width", )
+	JsonUtil.SetFloatValue(profile_path, "oil_meter_xpos", )
+	JsonUtil.SetFloatValue(profile_path, "oil_meter_ypos", )
+	JsonUtil.SetFloatValue(profile_path, "pollen_meter_opacity", )
+	JsonUtil.SetFloatValue(profile_path, "pollen_meter_height", )
+	JsonUtil.SetFloatValue(profile_path, "pollen_meter_width", )
+	JsonUtil.SetFloatValue(profile_path, "pollen_meter_xpos", )
+	JsonUtil.SetFloatValue(profile_path, "pollen_meter_ypos", )
+
+	;@TODO APPLY COLORS
+	;@TODO APPLY METER CHANGES
+	;@TODO HOTKEYS GO HERE
 
 	JsonUtil.Save(profile_path)
 endFunction
 
 function SaveAllSettings(int aiProfileIndex)
 	string profile_path = CONFIG_PATH + "profile" + aiProfileIndex
-	;@TODO SETTINGS GO HERE
-	;@TODO SETTINGS GO HERE
-	;@TODO SETTINGS GO HERE
-	JsonUtil.SetFloatValue(profile_path, "speech_success_chance", _SK_Setting_SpeechSuccessChance.GetValue())
-	JsonUtil.SetFloatValue(profile_path, "success_timeout_duration", _SK_Setting_SuccessTimeoutDuration.GetValue())
-	JsonUtil.SetFloatValue(profile_path, "failure_timeout_duration", _SK_Setting_FailureTimeoutDuration.GetValue())
-	JsonUtil.SetIntValue(profile_path, "friends_allow_entry", _SK_Setting_FriendsAllowEntry.GetValueInt())
-	;@TODO SETTINGS GO HERE
-	;@TODO SETTINGS GO HERE
-	;@TODO SETTINGS GO HERE
+
+	JsonUtil.SetIntValue(profile_path, "brightness", _WL_SettingBrightness.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "position", _WL_SettingPosition.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "auto_drop_lit", _WL_SettingDropLit.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "fuel_oil", _WL_SettingOil.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "fuel_pollen", _WL_SettingFeeding.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "lantern_slot", _WL_SettingSlot.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "off_when_sneaking", _WL_SettingOffWhenSneaking.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "hold_activate_toggle", _WL_SettingHoldActivateToggle.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "automatic_mode", _WL_SettingAutomatic.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "check_fuel_display", _WL_SettingCheckFuelDisplay.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "meter_display_mode", _WL_SettingFuelMeterDisplay_Contextual.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "meter_display_time", _WL_SettingMeterDisplayTime.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "auto_load", _WL_SettingAutoSaveLoad.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "current_profile_index", _WL_SettingCurrentProfile.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "oil_meter_color", _WL_SettingMeterOilColor.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "oil_meter_fill_direction", _WL_SettingMeterOilFillDirection.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "oil_meter_hanchor", _WL_SettingMeterOilHAnchor.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "oil_meter_vanchor", _WL_SettingMeterOilVAnchor.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "pollen_meter_color", _WL_SettingMeterPollenColor.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "pollen_meter_fill_direction", _WL_SettingMeterPollenFillDirection.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "pollen_meter_hanchor", _WL_SettingMeterPollenHAnchor.GetValueInt()
+	JsonUtil.SetIntValue(profile_path, "pollen_meter_vanchor", _WL_SettingMeterPollenVAnchor.GetValueInt()
+
+	JsonUtil.SetFloatValue(profile_path, "hold_activate_toggle_duration", _WL_SettingHoldActivateToggleDuration.GetValue()
+	JsonUtil.SetFloatValue(profile_path, "oil_meter_opacity", _WL_SettingMeterOilOpacity.GetValue()
+	JsonUtil.SetFloatValue(profile_path, "oil_meter_height", _WL_SettingMeterOilHeight.GetValue()
+	JsonUtil.SetFloatValue(profile_path, "oil_meter_width", _WL_SettingMeterOilWidth.GetValue()
+	JsonUtil.SetFloatValue(profile_path, "oil_meter_xpos", _WL_SettingMeterOilXPos.GetValue()
+	JsonUtil.SetFloatValue(profile_path, "oil_meter_ypos", _WL_SettingMeterOilYPos.GetValue()
+	JsonUtil.SetFloatValue(profile_path, "pollen_meter_opacity", _WL_SettingMeterPollenOpacity.GetValue()
+	JsonUtil.SetFloatValue(profile_path, "pollen_meter_height", _WL_SettingMeterPollenHeight.GetValue()
+	JsonUtil.SetFloatValue(profile_path, "pollen_meter_width", _WL_SettingMeterPollenWidth.GetValue()
+	JsonUtil.SetFloatValue(profile_path, "pollen_meter_xpos", _WL_SettingMeterPollenXPos.GetValue()
+	JsonUtil.SetFloatValue(profile_path, "pollen_meter_ypos", _WL_SettingMeterPollenYPos.GetValue()
+
 	JsonUtil.Save(profile_path)
 endFunction
 
