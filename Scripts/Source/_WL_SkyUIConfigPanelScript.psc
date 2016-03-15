@@ -604,6 +604,7 @@ event OnOptionDefault(int option)
 		_WL_SettingSlot.SetValue(55.0)
 		SetSliderOptionValue(General_SettingSlot_OID, 55.0, "{0}")
 		SetLanternSlot()
+		ShowMessage("$WearableLanternsChangedLanternSetting")
 		SaveSettingToCurrentProfile("lantern_slot", 55)
 	elseif option == General_SettingModeMenu_OID
 		ModeIndex = 0
@@ -819,6 +820,7 @@ event OnOptionSliderAccept(int option, float value)
 		_WL_SettingSlot.SetValue(value)
 		SetSliderOptionValue(General_SettingSlot_OID, value, "{0}")
 		SetLanternSlot()
+		ShowMessage("$WearableLanternsChangedLanternSetting")
 		SaveSettingToCurrentProfile("lantern_slot", value as int)
 	elseif option == General_HotkeyHoldUseDuration_OID
 		_WL_SettingHoldActivateToggleDuration.SetValue(value)
@@ -1762,10 +1764,13 @@ function SwitchToProfile(int aiProfileIndex)
 		_WL_SettingMeterPollenYPos.SetValue(fval)
 	endif
 
+	SetLanternSlot()
 	OilHandler.SetMeterColors(_WL_SettingMeterOilColor.GetValueInt(), -1)
 	PollenHandler.SetMeterColors(_WL_SettingMeterPollenColor.GetValueInt(), -1)
 	UpdateMeterConfiguration(0)
 	UpdateMeterConfiguration(1)
+	SendEvent_ForceOilMeterDisplay()
+	SendEvent_ForcePollenMeterDisplay()
 
 	ival = LoadSettingFromProfile(aiProfileIndex, "hotkey_togglelantern")
 	if ival != -1 && ival != 0
@@ -1783,6 +1788,7 @@ function SwitchToProfile(int aiProfileIndex)
 		UnregisterForKey(_WL_HotkeyCheckFuel.GetValueInt())
 		_WL_HotkeyCheckFuel.SetValue(0)
 	endif
+	ShowMessage("$WearableLanternsChangedLanternSetting")
 endFunction
 
 function GenerateDefaultProfile(int aiProfileIndex)
