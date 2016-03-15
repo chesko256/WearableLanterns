@@ -485,57 +485,62 @@ event OnOptionSelect(int option)
 	if option == General_SettingDropLitToggle_OID
 		if _WL_SettingDropLit.GetValueInt() == 2
 			SetToggleOptionValue(General_SettingDropLitToggle_OID, false)
-			_WL_SettingDropLit.SetValue(1)
+			_WL_SettingDropLit.SetValueInt(1)
 		else
 			SetToggleOptionValue(General_SettingDropLitToggle_OID, true)
-			_WL_SettingDropLit.SetValue(2)
+			_WL_SettingDropLit.SetValueInt(2)
 		endif
+		SaveSettingToCurrentProfile("auto_drop_lit", _WL_SettingDropLit.GetValueInt())
 	elseif option == General_SettingOffWhenSneaking_OID
 		if _WL_SettingOffWhenSneaking.GetValueInt() == 2
 			SetToggleOptionValue(General_SettingOffWhenSneaking_OID, false)
-			_WL_SettingOffWhenSneaking.SetValue(1)
+			_WL_SettingOffWhenSneaking.SetValueInt(1)
 			LanternQuest.UnregisterForSneakEvents()
 		else
 			SetToggleOptionValue(General_SettingOffWhenSneaking_OID, true)
-			_WL_SettingOffWhenSneaking.SetValue(2)
+			_WL_SettingOffWhenSneaking.SetValueInt(2)
 			LanternQuest.RegisterForSneakEvents()
 		endif
+		SaveSettingToCurrentProfile("off_when_sneaking", _WL_SettingOffWhenSneaking.GetValueInt())
 	elseif option == General_SettingOilToggle_OID
 		if _WL_SettingOil.GetValueInt() == 2
 			SetToggleOptionValue(General_SettingOilToggle_OID, false)
-			_WL_SettingOil.SetValue(1)
+			_WL_SettingOil.SetValueInt(1)
 			SendEvent_WearableLanternRemoveOilMeter()
 			LanternQuest.ToggleLanternOn()
 		else
 			SetToggleOptionValue(General_SettingOilToggle_OID, true)
-			_WL_SettingOil.SetValue(2)
+			_WL_SettingOil.SetValueInt(2)
 			LanternQuest.ToggleLanternOn()
 			ForceOilMeterFlashIfEmpty()
 		endif
+		SaveSettingToCurrentProfile("fuel_oil", _WL_SettingOil.GetValueInt())
 	elseif option == General_SettingPollenToggle_OID
 		if _WL_SettingFeeding.GetValueInt() == 2
 			SetToggleOptionValue(General_SettingPollenToggle_OID, false)
-			_WL_SettingFeeding.SetValue(1)
+			_WL_SettingFeeding.SetValueInt(1)
 			SendEvent_WearableLanternRemovePollenMeter()
 			LanternQuest.ToggleLanternOn()
 		else
 			SetToggleOptionValue(General_SettingPollenToggle_OID, true)
-			_WL_SettingFeeding.SetValue(2)
+			_WL_SettingFeeding.SetValueInt(2)
 			LanternQuest.ToggleLanternOn()
 			ForcePollenMeterFlashIfEmpty()
 		endif
+		SaveSettingToCurrentProfile("fuel_pollen", _WL_SettingFeeding.GetValueInt())
 	elseif option == General_HotkeyHoldUse_OID
 		if _WL_SettingHoldActivateToggle.GetValueInt() == 2
 			SetToggleOptionValue(General_HotkeyHoldUse_OID, false)
-			_WL_SettingHoldActivateToggle.SetValue(1)
+			_WL_SettingHoldActivateToggle.SetValueInt(1)
 			UnregisterForControl("Activate")
 			ForcePageReset()
 		else
 			SetToggleOptionValue(General_HotkeyHoldUse_OID, true)
-			_WL_SettingHoldActivateToggle.SetValue(2)
+			_WL_SettingHoldActivateToggle.SetValueInt(2)
 			RegisterForControl("Activate")
 			ForcePageReset()
 		endif
+		SaveSettingToCurrentProfile("hold_activate_toggle", _WL_SettingHoldActivateToggle.GetValueInt())
 	elseif option == Interface_UIOilMeterShowAdvanced_OID
 		if configuring_oil_meter
 			configuring_oil_meter = false
@@ -564,7 +569,7 @@ event OnOptionSelect(int option)
 			SetToggleOptionValue(SaveLoad_Enable_OID, true)
 			JsonUtil.SetIntValue(CONFIG_PATH + "common", "auto_load", 2)
 			JsonUtil.Save(CONFIG_PATH + "common")
-			SaveAllSettings(_SK_Setting_CurrentProfile.GetValueInt())
+			SaveAllSettings(_WL_SettingCurrentProfile.GetValueInt())
 		endIf
 		ForcePageReset()
 	elseif option == SaveLoad_DefaultProfile_OID
@@ -1104,10 +1109,12 @@ event OnOptionColorAccept(int option, int color)
 			_WL_SettingMeterOilColor.SetValueInt(color)
 			SetColorOptionValue(option, color)
 			OilHandler.SetMeterColors(color, -1)
+			SaveSettingToCurrentProfile("oil_meter_color", color)
 		elseif configuring_pollen_meter
 			_WL_SettingMeterPollenColor.SetValueInt(color)
 			SetColorOptionValue(option, color)
 			PollenHandler.SetMeterColors(color, -1)
+			SaveSettingToCurrentProfile("pollen_meter_color", color)
 		endif		
 	endif
 endEvent
