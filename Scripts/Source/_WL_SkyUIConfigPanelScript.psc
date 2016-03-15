@@ -959,11 +959,13 @@ event OnOptionMenuAccept(int option, int index)
 		BrightnessIndex = index
 		SetMenuOptionValue(General_SettingBrightnessMenu_OID, BrightnessList[BrightnessIndex])
 		_WL_SettingBrightness.SetValueInt(index + 1)
+		SaveSettingToCurrentProfile("brightness", index + 1)
 	elseif option == General_SettingPositionMenu_OID
 		PositionIndex = index
 		SetMenuOptionValue(General_SettingPositionMenu_OID, LanternPositionList[PositionIndex])
 		_WL_SettingPosition.SetValueInt(index)
 		ShowMessage("$WearableLanternsChangedLanternSetting")
+		SaveSettingToCurrentProfile("position", index)
 	elseif option == General_SettingModeMenu_OID
 		ModeIndex = index
 		SetMenuOptionValue(General_SettingModeMenu_OID, ModeList[ModeIndex])
@@ -971,10 +973,12 @@ event OnOptionMenuAccept(int option, int index)
 		if _WL_SettingAutomatic.GetValueInt() == 2
 			LanternQuest.ToggleLanternOn()
 		endIf
+		SaveSettingToCurrentProfile("automatic_mode", index + 1)
 	elseif option == General_SettingCheckFuelDisplayMenu_OID
 		CheckFuelDisplayIndex = index
 		SetMenuOptionValue(General_SettingCheckFuelDisplayMenu_OID, CheckFuelDisplayList[CheckFuelDisplayIndex])
 		_WL_SettingCheckFuelDisplay.SetValueInt(index)
+		SaveSettingToCurrentProfile("check_fuel_display", index)
 	elseif option == Interface_UIMeterDisplay_OID
 		SetMenuOptionValue(Interface_UIMeterDisplay_OID, MeterDisplayList[index])
 		_WL_SettingFuelMeterDisplay_Contextual.SetValueInt(index)
@@ -985,6 +989,7 @@ event OnOptionMenuAccept(int option, int index)
 			SendEvent_ForceOilMeterDisplay()
 			SendEvent_ForcePollenMeterDisplay()
 		endif
+		SaveSettingToCurrentProfile("meter_display_mode", index)
 	elseif option == Interface_UIMeterLayout_OID
 		bool result = ShowMessage("$WearableLanternsInterfaceSettingUIMeterLayoutConfirm")
 		if result == true
@@ -997,30 +1002,36 @@ event OnOptionMenuAccept(int option, int index)
 			_WL_SettingMeterOilFillDirection.SetValueInt(index)
 			SetMenuOptionValue(Interface_UIMeterFillDirection_OID, FillDirectionList[index])
 			UpdateMeterConfiguration(0)
+			SaveSettingToCurrentProfile("oil_meter_fill_direction", index)
 		elseif configuring_pollen_meter
 			_WL_SettingMeterPollenFillDirection.SetValueInt(index)
 			SetMenuOptionValue(Interface_UIMeterFillDirection_OID, FillDirectionList[index])
 			UpdateMeterConfiguration(1)
+			SaveSettingToCurrentProfile("pollen_meter_fill_direction", index)
 		endif
 	elseif option == Interface_UIMeterHAnchor_OID
 		if configuring_oil_meter
 			_WL_SettingMeterOilHAnchor.SetValueInt(index)
 			SetMenuOptionValue(Interface_UIMeterHAnchor_OID, HorizontalAnchorList[index])
 			UpdateMeterConfiguration(0)
+			SaveSettingToCurrentProfile("oil_meter_hanchor", index)
 		elseif configuring_pollen_meter
 			_WL_SettingMeterPollenHAnchor.SetValueInt(index)
 			SetMenuOptionValue(Interface_UIMeterHAnchor_OID, HorizontalAnchorList[index])
 			UpdateMeterConfiguration(1)
+			SaveSettingToCurrentProfile("pollen_meter_hanchor", index)
 		endif
 	elseif option == Interface_UIMeterVAnchor_OID
 		if configuring_oil_meter
 			_WL_SettingMeterOilVAnchor.SetValueInt(index)
 			SetMenuOptionValue(Interface_UIMeterVAnchor_OID, VerticalAnchorList[index])
 			UpdateMeterConfiguration(0)
+			SaveSettingToCurrentProfile("oil_meter_vanchor", index)
 		elseif configuring_pollen_meter
 			_WL_SettingMeterPollenVAnchor.SetValueInt(index)
 			SetMenuOptionValue(Interface_UIMeterVAnchor_OID, VerticalAnchorList[index])
 			UpdateMeterConfiguration(1)
+			SaveSettingToCurrentProfile("pollen_meter_vanchor", index)
 		endif
 	elseif option == SaveLoad_SelectProfile_OID
 		bool b = ShowMessage("$WearableLanternsSaveLoadConfirm")
