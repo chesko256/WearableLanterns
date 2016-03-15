@@ -39,6 +39,7 @@ Message property _WL_SkyUIErrorMessage auto
 
 Event OnPlayerLoadGame()
 	CompatibilityCheck()
+	WLConfig.LoadProfileOnStartup()
 	RegisterForEventsOnLoad()
 	AddPerks()
 	RegisterForKeysOnLoad()
@@ -113,20 +114,7 @@ endFunction
 
 function Upgrade_4_0()
 	; Load a meter preset for the user's display aspect ratio
-	int w = Utility.GetINIInt("iSize W:Display")
-	int h = Utility.GetINIInt("iSize H:Display")
-	float ratio = (w as float)/(h as float)
-	debug.trace("[WearableLanterns] Detected display resolution " + w + "x" + h + " (" + ratio + " aspect ratio).")
-	if ratio > 1.7 && ratio < 1.8
-		trace("[WearableLanterns] Loading 16:9 aspect ratio meter preset.")
-		WLConfig.ApplyMeterPreset(1)
-	elseif ratio == 1.6
-		trace("[WearableLanterns] Loading 16:10 aspect ratio meter preset.")
-		WLConfig.ApplyMeterPreset(5)
-	elseif ratio > 1.3 && ratio < 1.4
-		trace("[WearableLanterns] Loading 4:3 aspect ratio meter preset.")
-		WLConfig.ApplyMeterPreset(9)
-	endif
+	WLConfig.ApplyMeterPreset(1)
 	
 	trace("[WearableLanterns] Upgraded to 4.0.")
 	_WL_Upgraded_4_0.SetValueInt(2)
