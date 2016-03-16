@@ -135,6 +135,11 @@ ArmorAddon property _WL_WearableTorchbugFrontAA_empty auto hidden
 ArmorAddon property _WL_WearableTorchbugFrontREDAA auto hidden
 ArmorAddon property _WL_WearableTorchbugREDAA auto hidden
 
+_WL_OilMeter property OilMeter auto
+_WL_OilMeterInterfaceHandler property OilHandler auto
+_WL_PollenMeter property PollenMeter auto
+_WL_PollenMeterInterfaceHandler property PollenHandler auto
+
 Event OnConfigInit()
 	Pages = new string[3]
 	Pages[0] = "$WearableLanternsGeneralPage"
@@ -1003,6 +1008,7 @@ event OnOptionMenuAccept(int option, int index)
 		if result == true
 			ApplyMeterPreset(index)
 			ShowMessage("$WearableLanternsInterfaceSettingUIMeterLayoutConfirmDone", false)
+			SaveAllSettings(_WL_SettingCurrentProfile.GetValueInt())
 			ForcePageReset()
 		endif
 	elseif option == Interface_UIMeterFillDirection_OID
@@ -1163,11 +1169,6 @@ string function GetCustomControl(int keyCode)
 		return ""
 	endIf
 endFunction
-
-_WL_OilMeter property OilMeter auto
-_WL_OilMeterInterfaceHandler property OilHandler auto
-_WL_PollenMeter property PollenMeter auto
-_WL_PollenMeterInterfaceHandler property PollenHandler auto
 
 function UpdateMeterConfiguration(int aiMeterIdx)
 	if aiMeterIdx == 0
@@ -1595,6 +1596,10 @@ int function LoadSettingFromProfile(int aiProfileIndex, string asKeyName)
 	return JsonUtil.GetIntValue(CONFIG_PATH + "profile" + aiProfileIndex, asKeyName, -1)
 endFunction
 
+float function LoadSettingFromProfileFloat(int aiProfileIndex, string asKeyName)
+	return JsonUtil.GetFloatValue(CONFIG_PATH + "profile" + aiProfileIndex, asKeyName, -1.0)
+endFunction
+
 function LoadProfileOnStartup()
 	int auto_load = JsonUtil.GetIntValue(CONFIG_PATH + "common", "auto_load", 0)
 	if auto_load == 2
@@ -1719,56 +1724,72 @@ function SwitchToProfile(int aiProfileIndex)
 		_WL_SettingMeterPollenVAnchor.SetValueInt(ival)
 	endif
 	; floats
-	fval = LoadSettingFromProfile(aiProfileIndex, "hold_activate_toggle_duration")
+	fval = LoadSettingFromProfileFloat(aiProfileIndex, "hold_activate_toggle_duration")
 	if fval != -1.0
 		_WL_SettingHoldActivateToggleDuration.SetValue(fval)
 	endif
-	fval = LoadSettingFromProfile(aiProfileIndex, "oil_meter_opacity")
+	fval = LoadSettingFromProfileFloat(aiProfileIndex, "oil_meter_opacity")
 	if fval != -1.0
 		_WL_SettingMeterOilOpacity.SetValue(fval)
 	endif
-	fval = LoadSettingFromProfile(aiProfileIndex, "oil_meter_height")
+	fval = LoadSettingFromProfileFloat(aiProfileIndex, "oil_meter_height")
 	if fval != -1.0
 		_WL_SettingMeterOilHeight.SetValue(fval)
 	endif
-	fval = LoadSettingFromProfile(aiProfileIndex, "oil_meter_width")
+	fval = LoadSettingFromProfileFloat(aiProfileIndex, "oil_meter_width")
 	if fval != -1.0
 		_WL_SettingMeterOilWidth.SetValue(fval)
 	endif
-	fval = LoadSettingFromProfile(aiProfileIndex, "oil_meter_xpos")
+	fval = LoadSettingFromProfileFloat(aiProfileIndex, "oil_meter_xpos")
 	if fval != -1.0
 		_WL_SettingMeterOilXPos.SetValue(fval)
 	endif
-	fval = LoadSettingFromProfile(aiProfileIndex, "oil_meter_ypos")
+	fval = LoadSettingFromProfileFloat(aiProfileIndex, "oil_meter_ypos")
 	if fval != -1.0
 		_WL_SettingMeterOilYPos.SetValue(fval)
 	endif
-	fval = LoadSettingFromProfile(aiProfileIndex, "pollen_meter_opacity")
+	fval = LoadSettingFromProfileFloat(aiProfileIndex, "pollen_meter_opacity")
 	if fval != -1.0
 		_WL_SettingMeterPollenOpacity.SetValue(fval)
 	endif
-	fval = LoadSettingFromProfile(aiProfileIndex, "pollen_meter_height")
+	fval = LoadSettingFromProfileFloat(aiProfileIndex, "pollen_meter_height")
 	if fval != -1.0
 		_WL_SettingMeterPollenHeight.SetValue(fval)
 	endif
-	fval = LoadSettingFromProfile(aiProfileIndex, "pollen_meter_width")
+	fval = LoadSettingFromProfileFloat(aiProfileIndex, "pollen_meter_width")
 	if fval != -1.0
 		_WL_SettingMeterPollenWidth.SetValue(fval)
 	endif
-	fval = LoadSettingFromProfile(aiProfileIndex, "pollen_meter_xpos")
+	fval = LoadSettingFromProfileFloat(aiProfileIndex, "pollen_meter_xpos")
 	if fval != -1.0
 		_WL_SettingMeterPollenXPos.SetValue(fval)
 	endif
-	fval = LoadSettingFromProfile(aiProfileIndex, "pollen_meter_ypos")
+	fval = LoadSettingFromProfileFloat(aiProfileIndex, "pollen_meter_ypos")
 	if fval != -1.0
 		_WL_SettingMeterPollenYPos.SetValue(fval)
 	endif
 
 	SetLanternSlot()
+
+	; Wait for the meters to initialize before setting their values
+	int i = 0
+	while !OilMeter.Ready && i < 50
+		debug.trace("Waiting for initialize of oil meter... " + i)
+		Utility.Wait(0.2)
+		i += 1
+	endWhile
 	OilHandler.SetMeterColors(_WL_SettingMeterOilColor.GetValueInt(), -1)
-	PollenHandler.SetMeterColors(_WL_SettingMeterPollenColor.GetValueInt(), -1)
 	UpdateMeterConfiguration(0)
+
+	i = 0
+	while !PollenMeter.Ready && i < 50
+		debug.trace("Waiting for initialize of pollen meter... " + i)
+		Utility.Wait(0.2)
+		i += 1
+	endWhile
+	PollenHandler.SetMeterColors(_WL_SettingMeterPollenColor.GetValueInt(), -1)
 	UpdateMeterConfiguration(1)
+
 	SendEvent_ForceOilMeterDisplay()
 	SendEvent_ForcePollenMeterDisplay()
 
