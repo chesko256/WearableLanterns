@@ -4,8 +4,8 @@ import debug
 
 _WL_SkyUIConfigPanelScript property WLConfig Auto 			;SkyUI Configuration script
 _WL_LanternOil_v3 property LanternQuest auto
-_WL_OilMeterInterfaceHandler property OilMeter auto
-_WL_PollenMeterInterfaceHandler property PollenMeter auto
+_WL_OilMeterInterfaceHandler property OilMeterHandler auto
+_WL_PollenMeterInterfaceHandler property PollenMeterHandler auto
 
 Actor property PlayerRef auto
 Perk property _WL_CatchTorchbug auto
@@ -189,8 +189,9 @@ function RegisterForEventsOnLoad()
 	else
 		LanternQuest.UnregisterForSneakEvents()
 	endif
-	OilMeter.RegisterForEvents()
-	PollenMeter.RegisterForEvents()
+	OilMeterHandler.RegisterForEvents()
+	PollenMeterHandler.RegisterForEvents()
+	debug.trace("[Wearable Lanterns] Registered for mod events.")
 endFunction
 
 Function RegisterForKeysOnLoad()

@@ -720,6 +720,7 @@ bool function IsRefInInterior(ObjectReference akReference)
 endFunction
 
 function SendEvent_UpdateOilMeter()
+	WLDebug(0, "SendEvent_UpdateOilMeter")
 	int handle = ModEvent.Create("WearableLanterns_UpdateOilMeter")
 	if handle
 		ModEvent.Send(handle)
@@ -727,6 +728,7 @@ function SendEvent_UpdateOilMeter()
 endFunction
 
 function SendEvent_ForceOilMeterDisplay(bool abFlash = false)
+	WLDebug(0, "SendEvent_ForceOilMeterDisplay")
 	int handle = ModEvent.Create("WearableLanterns_ForceOilMeterDisplay")
 	if handle
 		ModEvent.PushBool(handle, abFlash)
@@ -735,6 +737,7 @@ function SendEvent_ForceOilMeterDisplay(bool abFlash = false)
 endFunction
 
 function SendEvent_UpdatePollenMeter()
+	WLDebug(0, "SendEvent_UpdatePollenMeter")
 	int handle = ModEvent.Create("WearableLanterns_UpdatePollenMeter")
 	if handle
 		ModEvent.Send(handle)
@@ -742,6 +745,7 @@ function SendEvent_UpdatePollenMeter()
 endFunction
 
 function SendEvent_ForcePollenMeterDisplay(bool abFlash = false)
+	WLDebug(0, "SendEvent_ForcePollenMeterDisplay")
 	int handle = ModEvent.Create("WearableLanterns_ForcePollenMeterDisplay")
 	if handle
 		ModEvent.PushBool(handle, abFlash)
@@ -750,6 +754,7 @@ function SendEvent_ForcePollenMeterDisplay(bool abFlash = false)
 endFunction
 
 function SendEvent_CheckMeterRequirements()
+	WLDebug(0, "SendEvent_CheckMeterRequirements")
 	int handle = ModEvent.Create("WearableLanterns_CheckMeterRequirements")
 	if handle
 		ModEvent.Send(handle)
