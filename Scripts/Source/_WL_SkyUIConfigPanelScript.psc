@@ -1774,7 +1774,6 @@ function SwitchToProfile(int aiProfileIndex)
 	; Wait for the meters to initialize before setting their values
 	int i = 0
 	while !OilMeter.Ready && i < 50
-		debug.trace("Waiting for initialize of oil meter... " + i)
 		Utility.Wait(0.2)
 		i += 1
 	endWhile
@@ -1783,7 +1782,6 @@ function SwitchToProfile(int aiProfileIndex)
 
 	i = 0
 	while !PollenMeter.Ready && i < 50
-		debug.trace("Waiting for initialize of pollen meter... " + i)
 		Utility.Wait(0.2)
 		i += 1
 	endWhile
@@ -1809,7 +1807,10 @@ function SwitchToProfile(int aiProfileIndex)
 		UnregisterForKey(_WL_HotkeyCheckFuel.GetValueInt())
 		_WL_HotkeyCheckFuel.SetValue(0)
 	endif
-	ShowMessage("$WearableLanternsChangedLanternSetting")
+
+	if config_is_open
+		ShowMessage("$WearableLanternsChangedLanternSetting")
+	endif
 endFunction
 
 function GenerateDefaultProfile(int aiProfileIndex)

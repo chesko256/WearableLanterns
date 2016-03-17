@@ -191,7 +191,6 @@ function RegisterForEventsOnLoad()
 	endif
 	OilMeterHandler.RegisterForEvents()
 	PollenMeterHandler.RegisterForEvents()
-	debug.trace("[Wearable Lanterns] Registered for mod events.")
 endFunction
 
 Function RegisterForKeysOnLoad()
