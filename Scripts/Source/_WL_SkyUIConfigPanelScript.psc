@@ -6,7 +6,7 @@ _WL_LanternOil_v3 property LanternQuest auto
 Actor property PlayerRef auto
 
 bool config_is_open = false
-bool activate_button_held = false
+bool toggle_control_held = false
 string[] MeterDisplayList
 string[] MeterLayoutList
 string[] BrightnessList
@@ -1173,22 +1173,22 @@ Event OnKeyDown(int KeyCode)
 endEvent
 
 Event OnControlDown(string control)
-	if _WL_SettingHoldActivateToggle.GetValueInt() == 2 && control == "Activate" && !Utility.IsInMenuMode()
-		activate_button_held = true
+	if _WL_SettingHoldActivateToggle.GetValueInt() == 2 && control == HOLD_CONTROLS[_WL_SettingHoldActivateToggleControl.GetValueInt()] && !Utility.IsInMenuMode()
+		toggle_control_held = true
 		RegisterForSingleUpdate(_WL_SettingHoldActivateToggleDuration.GetValue())
 	endif
 endEvent
 
 Event OnControlUp(string control, float HoldTime)
-	if control == "Activate" && !Utility.IsInMenuMode()
+	if control == HOLD_CONTROLS[_WL_SettingHoldActivateToggleControl.GetValueInt()] && !Utility.IsInMenuMode()
 		Utility.Wait(0.1)
-		activate_button_held = false
+		toggle_control_held = false
 		UnregisterForUpdate()
 	endif
 endEvent
 
 Event OnUpdate()
-	if activate_button_held
+	if toggle_control_held
 		ToggleLantern()
 	endif
 EndEvent
