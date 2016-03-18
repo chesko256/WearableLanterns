@@ -24,6 +24,7 @@ FormList property _WL_PollenFlowers auto
 Formlist property _WL_AllLanterns auto
 Formlist property _WL_GlowingBugList auto
 FormList property _WL_InvBugLanterns auto
+FormList property _WL_HeldLanterns auto
 
 MiscObject property _WL_LanternOil4 auto
 
@@ -166,7 +167,7 @@ Event OnUpdateGameTime()
 endEvent
 
 Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
-	if (akBaseObject as Armor && akBaseObject.HasKeyword(ArmorShield)) || ((akBaseObject as Weapon && PlayerRef.GetEquippedItemType(0) <= 4) || PlayerRef.GetEquippedItemType(0) == 11)
+	if (akBaseObject as Armor && akBaseObject.HasKeyword(ArmorShield)) || ((akBaseObject as Weapon && PlayerRef.GetEquippedItemType(0) <= 4) || (PlayerRef.GetEquippedItemType(0) == 11 && !_WL_HeldLanterns.HasForm(akBaseObject)))
 		WLDebug(1, "OnObjectEquipped Event, Weapon, Shield, or Torch")
 		DropLantern()
     elseif akBaseObject == _WL_WearableLanternInvDisplay
