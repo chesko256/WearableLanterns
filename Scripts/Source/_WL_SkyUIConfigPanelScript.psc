@@ -20,6 +20,8 @@ string[] ModeList
 int ModeIndex = 0
 string[] CheckFuelDisplayList
 int CheckFuelDisplayIndex = 0
+string[] ToggleControlList
+string[] HOLD_CONTROLS
 
 int General_SettingBrightnessMenu_OID
 int General_SettingPositionMenu_OID
@@ -29,6 +31,7 @@ int General_SettingDropLitToggle_OID
 int General_SettingOffWhenSneaking_OID
 int General_SettingOilToggle_OID
 int General_HotkeyHoldUse_OID
+int General_HotkeyHoldUseControl_OID
 int General_HotkeyHoldUseDuration_OID
 int General_HotkeyLantern_OID
 int General_HotkeyCheckFuel_OID
@@ -68,6 +71,7 @@ GlobalVariable property _WL_SettingFeeding auto
 GlobalVariable property _WL_SettingSlot auto
 GlobalVariable property _WL_SettingOffWhenSneaking auto
 GlobalVariable property _WL_SettingHoldActivateToggle auto
+GlobalVariable property _WL_SettingHoldActivateToggleControl auto
 GlobalVariable property _WL_SettingHoldActivateToggleDuration auto
 GlobalVariable Property _WL_SettingAutomatic auto
 GlobalVariable property _WL_SettingCheckFuelDisplay auto
@@ -151,6 +155,11 @@ Event OnConfigInit()
 	LanternPositionList[1] = "$WearableLanternsPositionList2"
 	LanternPositionList[2] = "$WearableLanternsPositionList3"
 
+	ToggleControlList = new string[3]
+	ToggleControlList[0] = "$WearableLanternsUse"
+	ToggleControlList[1] = "$WearableLanternsSprint"
+	ToggleControlList[2] = "$WearableLanternsDraw"
+
 	MeterDisplayList = new string[3]
 	MeterDisplayList[0] = "$WearableLanternsOff"		;"Off"
 	MeterDisplayList[1] = "$WearableLanternsAlwaysOn"	;"Always On"
@@ -192,6 +201,11 @@ Event OnConfigInit()
 	VerticalAnchorList[0] = "$WearableLanternsTop"
 	VerticalAnchorList[1] = "$WearableLanternsBottom"
 	VerticalAnchorList[2] = "$WearableLanternsCenter"
+
+	HOLD_CONTROLS = new string[3]
+	HOLD_CONTROLS[0] = "Activate"
+	HOLD_CONTROLS[1] = "Sprint"
+	HOLD_CONTROLS[2] = "Ready Weapon"
 
 	FILL_DIRECTIONS = new string[3]
 	FILL_DIRECTIONS[0] = "Left"
@@ -283,9 +297,11 @@ function PageReset_General()
 	AddHeaderOption("$WearableLanternsGeneralHeaderHotkeys") ;Hotkeys
 	if _WL_SettingHoldActivateToggle.GetValueInt() == 2
 		General_HotkeyHoldUse_OID = AddToggleOption("$WearableLanternsGeneralSettingHotkeyLanternUseKey", true)
+		General_HotkeyHoldUseControl_OID = AddMenuOption("$WearableLanternsGeneralSettingHotkeyLanternUseKeyControl", ToggleControlList[_WL_SettingHoldActivateToggleControl.GetValueInt()])
 		General_HotkeyHoldUseDuration_OID = AddSliderOption("$WearableLanternsGeneralSettingHotkeyLanternUseKeyDuration", _WL_SettingHoldActivateToggleDuration.GetValue(), "{1} sec")
 	else
 		General_HotkeyHoldUse_OID = AddToggleOption("$WearableLanternsGeneralSettingHotkeyLanternUseKey", false)
+		General_HotkeyHoldUseControl_OID = AddMenuOption("$WearableLanternsGeneralSettingHotkeyLanternUseKeyControl", ToggleControlList[_WL_SettingHoldActivateToggleControl.GetValueInt()], OPTION_FLAG_DISABLED)
 		General_HotkeyHoldUseDuration_OID = AddSliderOption("$WearableLanternsGeneralSettingHotkeyLanternUseKeyDuration", _WL_SettingHoldActivateToggleDuration.GetValue(), "{1} sec", OPTION_FLAG_DISABLED)
 	endif
 	General_HotkeyLantern_OID = AddKeyMapOption("$WearableLanternsGeneralSettingHotkeyLantern", _WL_HotkeyPlayerLantern.GetValueInt())
@@ -539,12 +555,13 @@ event OnOptionSelect(int option)
 		if _WL_SettingHoldActivateToggle.GetValueInt() == 2
 			SetToggleOptionValue(General_HotkeyHoldUse_OID, false)
 			_WL_SettingHoldActivateToggle.SetValueInt(1)
-			UnregisterForControl("Activate")
+			UnregisterForAllControls()
 			ForcePageReset()
 		else
 			SetToggleOptionValue(General_HotkeyHoldUse_OID, true)
 			_WL_SettingHoldActivateToggle.SetValueInt(2)
-			RegisterForControl("Activate")
+			UnregisterForAllControls()
+			RegisterForControl(HOLD_CONTROLS[_WL_SettingHoldActivateToggleControl.GetValueInt()])
 			ForcePageReset()
 		endif
 		SaveSettingToCurrentProfile("hold_activate_toggle", _WL_SettingHoldActivateToggle.GetValueInt())
@@ -636,9 +653,15 @@ event OnOptionDefault(int option)
 	elseif option == General_HotkeyHoldUse_OID
 		SetToggleOptionValue(General_HotkeyHoldUse_OID, false)
 		_WL_SettingHoldActivateToggle.SetValueInt(1)
-		UnregisterForControl("Activate")
+		UnregisterForAllControls()
 		SaveSettingToCurrentProfile("hold_activate_toggle", 1)
 		ForcePageReset()
+	elseif option == General_HotkeyHoldUseControl_OID
+		SetMenuOptionValue(General_HotkeyHoldUseControl_OID, ToggleControlList[0])
+		_WL_SettingHoldActivateToggleControl.SetValueInt(0)
+		UnregisterForAllControls()
+		RegisterForControl(HOLD_CONTROLS[_WL_SettingHoldActivateToggleControl.GetValueInt()])
+		SaveSettingToCurrentProfile("hold_activate_toggle_control", 0)
 	elseif option == General_HotkeyHoldUseDuration_OID
 		SetSliderOptionValue(General_HotkeyHoldUseDuration_OID, 1.0, "{1} sec")
 		_WL_SettingHoldActivateToggleDuration.SetValue(1.0)
@@ -907,6 +930,10 @@ event OnOptionMenuOpen(int option)
 		SetMenuDialogOptions(LanternPositionList)
 		SetMenuDialogStartIndex(PositionIndex)
 		SetMenuDialogDefaultIndex(0)
+	elseif option == General_HotkeyHoldUseControl_OID
+		SetMenuDialogOptions(ToggleControlList)
+		SetMenuDialogStartIndex(_WL_SettingHoldActivateToggleControl.GetValueInt())
+		SetMenuDialogDefaultIndex(0)
 	elseif option == General_SettingModeMenu_OID
 		SetMenuDialogOptions(ModeList)
 		SetMenuDialogStartIndex(ModeIndex)
@@ -979,6 +1006,12 @@ event OnOptionMenuAccept(int option, int index)
 		_WL_SettingPosition.SetValueInt(index)
 		ShowMessage("$WearableLanternsChangedLanternSetting")
 		SaveSettingToCurrentProfile("position", index)
+	elseif option == General_HotkeyHoldUseControl_OID
+		SetMenuOptionValue(General_HotkeyHoldUseControl_OID, ToggleControlList[index])
+		_WL_SettingHoldActivateToggleControl.SetValueInt(index)
+		UnregisterForAllControls()
+		RegisterForControl(HOLD_CONTROLS[_WL_SettingHoldActivateToggleControl.GetValueInt()])
+		SaveSettingToCurrentProfile("hold_activate_toggle_control", index)
 	elseif option == General_SettingModeMenu_OID
 		ModeIndex = index
 		SetMenuOptionValue(General_SettingModeMenu_OID, ModeList[ModeIndex])
@@ -1483,7 +1516,8 @@ endFunction
 
 function RegisterForKeysOnLoad()
 	if _WL_SettingHoldActivateToggle.GetValueInt() == 2
-		RegisterForControl("Activate")
+		UnregisterForAllControls()
+		RegisterForControl(HOLD_CONTROLS[_WL_SettingHoldActivateToggleControl.GetValueInt()])
 	endif
 	if _WL_HotkeyPlayerLantern.GetValueInt() != 0
 		RegisterForKey(_WL_HotkeyPlayerLantern.GetValueInt())
@@ -1675,6 +1709,10 @@ function SwitchToProfile(int aiProfileIndex)
 	if ival != -1
 		_WL_SettingHoldActivateToggle.SetValueInt(ival)
 	endif
+	ival = LoadSettingFromProfile(aiProfileIndex, "hold_activate_toggle_control")
+	if ival != -1
+		_WL_SettingHoldActivateToggleControl.SetValueInt(ival)
+	endif
 	ival = LoadSettingFromProfile(aiProfileIndex, "automatic_mode")
 	if ival != -1
 		_WL_SettingAutomatic.SetValueInt(ival)
@@ -1791,6 +1829,12 @@ function SwitchToProfile(int aiProfileIndex)
 	SendEvent_ForceOilMeterDisplay()
 	SendEvent_ForcePollenMeterDisplay()
 
+	if _WL_SettingHoldActivateToggle.GetValueInt() == 2
+		UnregisterForAllControls()
+		RegisterForControl(HOLD_CONTROLS[ival])
+	else
+		UnregisterForAllControls()
+	endif
 	ival = LoadSettingFromProfile(aiProfileIndex, "hotkey_togglelantern")
 	if ival != -1 && ival != 0
 		RegisterForKey(ival)
@@ -1825,6 +1869,7 @@ function GenerateDefaultProfile(int aiProfileIndex)
 	JsonUtil.SetIntValue(profile_path, "lantern_slot", 55)
 	JsonUtil.SetIntValue(profile_path, "off_when_sneaking", 1)
 	JsonUtil.SetIntValue(profile_path, "hold_activate_toggle", 1)
+	JsonUtil.SetIntValue(profile_path, "hold_activate_toggle_control", 0)
 	JsonUtil.SetIntValue(profile_path, "automatic_mode", 1)
 	JsonUtil.SetIntValue(profile_path, "check_fuel_display", 0)
 	JsonUtil.SetIntValue(profile_path, "meter_display_mode", 2)
@@ -1867,6 +1912,7 @@ function SaveAllSettings(int aiProfileIndex)
 	JsonUtil.SetIntValue(profile_path, "lantern_slot", _WL_SettingSlot.GetValueInt())
 	JsonUtil.SetIntValue(profile_path, "off_when_sneaking", _WL_SettingOffWhenSneaking.GetValueInt())
 	JsonUtil.SetIntValue(profile_path, "hold_activate_toggle", _WL_SettingHoldActivateToggle.GetValueInt())
+	JsonUtil.SetIntValue(profile_path, "hold_activate_toggle_control", _WL_SettingHoldActivateToggleControl.GetValueInt())
 	JsonUtil.SetIntValue(profile_path, "automatic_mode", _WL_SettingAutomatic.GetValueInt())
 	JsonUtil.SetIntValue(profile_path, "check_fuel_display", _WL_SettingCheckFuelDisplay.GetValueInt())
 	JsonUtil.SetIntValue(profile_path, "meter_display_mode", _WL_SettingFuelMeterDisplay_Contextual.GetValueInt())
