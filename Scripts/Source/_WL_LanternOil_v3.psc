@@ -6,7 +6,7 @@ import debug
 import utility
 
 Actor property PlayerRef auto
-_WL_Compatibility property Compatibility auto
+ReferenceAlias property CompatibilityAlias auto
 _WL_SkyUIConfigPanelScript property Config auto
 FormList property _WL_InteriorWorldspaces auto
 
@@ -177,7 +177,7 @@ Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
 	elseif akBaseObject == _WL_WearableTorchbugInvDisplayRED
 		SetLantern(akBaseObject, 2, LANTERN_TORCHBUG, "Torchbug")
 	elseif akBaseObject == _WL_WearablePaperInvDisplay
-		if Compatibility.bIsDLC2Loaded
+		if (CompatibilityAlias as _WL_Compatibility).bIsDLC2Loaded
 			SetLantern(akBaseObject, 3, LANTERN_OIL, "Paper")
 		else
 			debug.notification("Dragonborn not installed.")
@@ -275,7 +275,7 @@ function ToggleLanternOff()
 endFunction
 
 function CatchTorchbug(ObjectReference akTorchbug)
-	if Compatibility.bIsBUGSLoaded && akTorchbug.GetBaseObject() == Compatibility.FireflyBUG
+	if (CompatibilityAlias as _WL_Compatibility).bIsBUGSLoaded && akTorchbug.GetBaseObject() == (CompatibilityAlias as _WL_Compatibility).FireflyBUG
 		;Firefly (101BUGS)
 		PlayerRef.UnequipItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, abSilent = true)
 		PlayerRef.RemoveItem(_WL_WearableTorchbugApparel_EmptyInvDisplay, abSilent = true)
@@ -305,8 +305,8 @@ function ReleaseTorchbugMenu(Form akBaseObject)
 			myTorchbug.MoveTo(myEmptyLantern, 50.0, 0.0, 75.0)
 		elseif akBaseObject == _WL_WearableTorchbugInvDisplayRED
 			ObjectReference myEmptyLantern = FindAndDropEmptyBugLantern(_WL_WearableTorchbugInvDisplayRED)
-			if Compatibility.FireflyBUG != none
-				objectreference myTorchbug = myEmptyLantern.PlaceAtMe(Compatibility.FireflyBUG)
+			if (CompatibilityAlias as _WL_Compatibility).FireflyBUG != none
+				objectreference myTorchbug = myEmptyLantern.PlaceAtMe((CompatibilityAlias as _WL_Compatibility).FireflyBUG)
 				myTorchbug.MoveTo(myEmptyLantern, 50.0, 0.0, 75.0)
 			endif
 		endif

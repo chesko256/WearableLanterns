@@ -12,19 +12,19 @@ Actor akSpeaker = akSpeakerRef as Actor
 	endWhile
 	if akSpeaker.IsEquipped(_WL_WearableLanternInvDisplay)
 		akSpeaker.AddItem(_WL_LanternHeld)
-		akSpeaker.EquipItem(_WL_LanternHeld)
+		akSpeaker.EquipItem(_WL_LanternHeld, true, true)
 	;Torchbug Lanterns
 	elseif akSpeaker.IsEquipped(_WL_WearableTorchbugInvDisplay)
 		akSpeaker.AddItem(_WL_TorchbugHeld)
-		akSpeaker.EquipItem(_WL_TorchbugHeld)
+		akSpeaker.EquipItem(_WL_TorchbugHeld, true, true)
 	;Firefly Lanterns
 	elseif akSpeaker.IsEquipped(_WL_WearableTorchbugInvDisplayRED)
 		akSpeaker.AddItem(_WL_TorchbugHeldRED)
-		akSpeaker.EquipItem(_WL_TorchbugHeldRED)
+		akSpeaker.EquipItem(_WL_TorchbugHeldRED, true, true)
 	;Paper Lanterns
 	elseif akSpeaker.IsEquipped(_WL_WearablePaperInvDisplay)
 		akSpeaker.AddItem(_WL_PaperHeld)
-		akSpeaker.EquipItem(_WL_PaperHeld)
+		akSpeaker.EquipItem(_WL_PaperHeld, true, true)
 	endif
 ;END CODE
 EndFunction

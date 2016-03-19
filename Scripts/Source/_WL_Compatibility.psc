@@ -46,9 +46,9 @@ Event OnPlayerLoadGame()
 endEvent
 
 function CompatibilityCheck()
-	trace("========================================[Wearable Lanterns: Warning Start]========================================")
-	trace("                             Wearable Lanterns is now performing compatibility checks.                            ")
-	trace("========================================[ Wearable Lanterns: Warning End ]========================================")
+	trace("[Wearable Lanterns]=======================================================================================")
+	trace("[Wearable Lanterns]               Wearable Lanterns is now performing compatibility checks.               ")
+	trace("[Wearable Lanterns]=======================================================================================")
 	
 	if _WL_Upgraded_4_0.GetValueInt() != 2
 		Upgrade_4_0()
@@ -106,17 +106,16 @@ function CompatibilityCheck()
 	if bIsKhajiitLanternLoaded
 		_WL_KhajiitLanternWarning.Show()
 	endif
-	
-	trace("========================================[Wearable Lanterns: Warning Start]========================================")
-	trace("                                          Compatibility check complete.                                           ")
-	trace("========================================[ Wearable Lanterns: Warning End ]========================================")
+	trace("[Wearable Lanterns]=======================================================================================")
+	trace("[Wearable Lanterns]                       Compatibility check complete.                                   ")
+	trace("[Wearable Lanterns]=======================================================================================")
 endFunction
 
 function Upgrade_4_0()
 	; Load a meter preset for the user's display aspect ratio
 	WLConfig.ApplyMeterPreset(1)
 	
-	trace("[WearableLanterns] Upgraded to 4.0.")
+	trace("[Wearable Lanterns] Upgraded to 4.0.")
 	_WL_Upgraded_4_0.SetValueInt(2)
 endFunction
 

@@ -1,15 +1,7 @@
 readmes\wearablelanterns_readme.txt
 Interface\wearablelanterns\_wl_title.dds
 Interface\exported\widgets\wearablelanterns\meter.swf
-Interface\Translations\chesko_wearablelantern_czech.txt
 Interface\Translations\chesko_wearablelantern_english.txt
-Interface\Translations\chesko_wearablelantern_french.txt
-Interface\Translations\chesko_wearablelantern_german.txt
-Interface\Translations\chesko_wearablelantern_italian.txt
-Interface\Translations\chesko_wearablelantern_japanese.txt
-Interface\Translations\chesko_wearablelantern_polish.txt
-Interface\Translations\chesko_wearablelantern_russian.txt
-Interface\Translations\chesko_wearablelantern_spanish.txt
 meshes\chesko\lightspellactorfx_default.nif
 meshes\chesko\lightspellactorfx_default_front.nif
 meshes\chesko\lightspellactorfx_default_front_paper.nif
