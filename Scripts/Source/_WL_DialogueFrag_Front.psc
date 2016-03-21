@@ -26,6 +26,14 @@ Actor akSpeaker = akSpeakerRef as Actor
 		akSpeaker.AddItem(_WL_WearablePaperApparelFront)
 		akSpeaker.EquipItem(_WL_WearablePaperApparelFront, true, true)
 	endif
+	Keyword _WL_NPCLanternPositionDatastore = Game.GetFormFromFile(0x01D9A9, "Chesko_WearableLantern.esp") as Keyword
+	int form_id = akSpeaker.GetFormID()
+	int mod_index = form_id/16777216
+	if mod_index < 0
+		mod_index = 0
+	endif
+	string dskey = (form_id % 16777216) + "___" + Game.GetModName(mod_index)
+	StorageUtil.SetIntValue(_WL_NPCLanternPositionDatastore, dskey, 2) ; 1
 ;END CODE
 EndFunction
 ;END FRAGMENT

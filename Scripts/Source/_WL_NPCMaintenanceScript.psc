@@ -1,12 +1,11 @@
-scriptname _WL_NPCLanternHandler extends ObjectReference
+scriptname _WL_NPCMaintenanceScript extends ActiveMagicEffect
+
+import debug
 
 Actor property PlayerRef auto
-int property LanternIndex auto
 Keyword property _WL_NPCLanternPositionDatastore auto
+
 formlist property _WL_AllLanterns auto
-
-; Spell property _WL_NPCLanternSpell auto
-
 Armor property _WL_WearableLanternApparel auto
 Armor property _WL_WearableTorchbugApparel auto
 Armor property _WL_WearableTorchbugApparelRED auto
@@ -21,42 +20,94 @@ Armor property _WL_WearableLanternInvDisplay auto
 Armor property _WL_WearableTorchbugInvDisplay auto
 Armor property _WL_WearableTorchbugInvDisplayRED auto
 Armor property _WL_WearablePaperInvDisplay auto
+Actor this_actor = None
 
-Event OnContainerChanged(ObjectReference akNewContainer, ObjectReference akOldContainer)
-	if akNewContainer != PlayerRef && akNewContainer != none && (akNewContainer as Actor) != none
-		EquipInventoryLantern(akNewContainer as Actor, LanternIndex)
+State BlockEvents
+	Event OnEffectStart(Actor akTarget, Actor akCaster)
+	EndEvent
+	Event OnEffectFinish(Actor akTarget, Actor akCaster)
+	EndEvent
+EndState
+
+Event OnEffectStart(Actor akTarget, Actor akCaster)
+	trace("[Wearable Lanterns] _WL_NPCMaintenanceScript " + self + " OnEffectStart")
+	this_actor = akCaster
+	HandleLanternEquip(this_actor)
+EndEvent
+
+Event OnEffectFinish(Actor akTarget, Actor akCaster)
+	DestroyNonPlayableLanterns(this_actor)
+	trace("[Wearable Lanterns] _WL_NPCMaintenanceScript " + self + " OnEffectFinish, finishing...")
+	trace("[Wearable Lanterns] this_actor: " + this_actor)
+	if this_actor
+		ToggleNPCInventoryLantern()
 	endif
-endEvent
+EndEvent
 
-Event OnUnequipped(Actor akActor)
-	if akActor != PlayerRef
-		;if akActor.HasSpell(_WL_NPCLanternSpell)
-			;akActor.RemoveSpell(_WL_NPCLanternSpell)
-		;endif
-		debug.trace("[Wearable Lanterns] " + self + " _WL_NPCLanternHandler OnUnequipped")
-		
+function ToggleNPCInventoryLantern()
+	Armor this_lantern = None
+	if this_actor.IsEquipped(_WL_WearableLanternInvDisplay)
+		this_lantern = _WL_WearableLanternInvDisplay
+	elseif this_actor.IsEquipped(_WL_WearableTorchbugInvDisplay)
+		this_lantern = _WL_WearableTorchbugInvDisplay
+	elseif this_actor.IsEquipped(_WL_WearableTorchbugInvDisplayRED)
+		this_lantern = _WL_WearableTorchbugInvDisplayRED
+	elseif this_actor.IsEquipped(_WL_WearablePaperInvDisplay)
+		this_lantern = _WL_WearablePaperInvDisplay
 	endif
-endEvent
 
-function HandleLanternEquip(Actor akActor, int iIndex)
-	EquipInventoryLantern(akActor, iIndex)
+	debug.trace("this_lantern: " + this_lantern)
+
+	if this_lantern
+		GoToState("BlockEvents")
+		trace("[Wearable Lanterns] _WL_NPCMaintenanceScript unequipping lantern...")
+		this_actor.RemoveItem(this_lantern, 1)
+		GoToState("")
+		Utility.WaitMenuMode(3)
+		trace("[Wearable Lanterns] _WL_NPCMaintenanceScript equipping lantern...")
+		Game.GetPlayer().AddItem(this_lantern, 1, true)
+		Game.GetPlayer().RemoveItem(this_lantern, 1, true, this_actor)
+	endif
+	trace("[Wearable Lanterns] _WL_NPCMaintenanceScript lantern toggled, bye!")
+endFunction
+
+function HandleLanternEquip(Actor akActor)
+	int index = GetLanternIndex(akActor)
+	EquipInventoryLantern(akActor, index)
 	int position = GetLanternPositionForActor(akActor)
 	debug.trace("Last position: " + position)
 	if position == 0
-		EquipBackLantern(akActor, iIndex)
+		EquipBackLantern(akActor, index)
 	elseif position == 1
-		EquipFrontLantern(akActor, iIndex)
+		EquipFrontLantern(akActor, index)
 	endif
 endFunction
 
 function DestroyNonPlayableLanterns(Actor akActor)
-	while akActor.GetItemCount(_WL_AllLanterns) > 0
-		akActor.RemoveItem(_WL_AllLanterns, 1, abSilent = true)
-	endWhile
+	if akActor
+		while akActor.GetItemCount(_WL_AllLanterns) > 0
+			akActor.RemoveItem(_WL_AllLanterns, 1, abSilent = true)
+		endWhile
+	endif
+endFunction
+
+int function GetLanternIndex(Actor akActor)
+	if akActor.IsEquipped(_WL_WearableLanternInvDisplay)
+		debug.trace("returning index 0")
+		return 0
+	elseif akActor.IsEquipped(_WL_WearableTorchbugInvDisplay)
+		debug.trace("returning index 1")
+		return 1
+	elseif akActor.IsEquipped(_WL_WearableTorchbugInvDisplayRED)
+		debug.trace("returning index 2")
+		return 2
+	elseif akActor.IsEquipped(_WL_WearablePaperInvDisplay)
+		debug.trace("returning index 3")
+		return 3
+	endif
 endFunction
 
 function EquipInventoryLantern(Actor akActor, int iIndex)
-	debug.trace("[Wearable Lanterns] " + self + " _WL_NPCLanternHandler EquipInventoryLantern")
 	if iIndex == 0 					;Travel
 		akActor.EquipItem(_WL_WearableLanternInvDisplay, true, true)
 	else

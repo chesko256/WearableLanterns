@@ -79,6 +79,7 @@ int property LANTERN_OIL = 1 auto hidden
 int property LANTERN_TORCHBUG = 2 auto hidden
 int property LANTERN_TORCHBUGEMPTY = 3 auto hidden
 
+GlobalVariable property _WL_FollowerLanternToggle auto
 GlobalVariable property _WL_OilLevel auto
 GlobalVariable property _WL_PollenLevel auto
 GlobalVariable property _WL_gToggle auto
@@ -112,6 +113,7 @@ Keyword property LocTypeStore auto
 Form fCandleLanternHeld
 Form fCandleLanternHeldDroppedLit
 
+bool was_in_interior = false
 
 State BlockEvents
 
@@ -123,6 +125,12 @@ endState
 
 Event OnLocationChange(Location akOldLoc, Location akNewLoc)
 	SetShouldLightLanternAutomatically(akNewLoc)
+	if PlayerRef.IsInInterior() != was_in_interior
+		_WL_FollowerLanternToggle.SetValueInt(0)
+		Utility.Wait(1)
+		_WL_FollowerLanternToggle.SetValueInt(1)
+		was_in_interior = PlayerRef.IsInInterior()
+	endif
 endEvent
 
 Event OnAnimationEvent(ObjectReference akSource, string asEventName)
