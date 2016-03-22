@@ -3,7 +3,7 @@ Scriptname _WL_Compatibility extends ReferenceAlias
 import debug
 
 _WL_SkyUIConfigPanelScript property WLConfig Auto 			;SkyUI Configuration script
-_WL_LanternOil_v3 property LanternQuest auto
+ReferenceAlias property LanternQuestAlias auto
 _WL_OilMeterInterfaceHandler property OilMeterHandler auto
 _WL_PollenMeterInterfaceHandler property PollenMeterHandler auto
 
@@ -182,11 +182,11 @@ function AddPerks()
 endFunction
 
 function RegisterForEventsOnLoad()
-	LanternQuest.RegisterForSingleUpdateGameTime(0.1)
+	(LanternQuestAlias as _WL_LanternOil_v3).RegisterForSingleUpdateGameTime(0.1)
 	if _WL_SettingOffWhenSneaking.GetValueInt() == 2
-		LanternQuest.RegisterForSneakEvents()
+		(LanternQuestAlias as _WL_LanternOil_v3).RegisterForSneakEvents()
 	else
-		LanternQuest.UnregisterForSneakEvents()
+		(LanternQuestAlias as _WL_LanternOil_v3).UnregisterForSneakEvents()
 	endif
 	OilMeterHandler.RegisterForEvents()
 	PollenMeterHandler.RegisterForEvents()

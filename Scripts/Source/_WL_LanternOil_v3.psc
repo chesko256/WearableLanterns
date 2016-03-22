@@ -253,9 +253,13 @@ Event OnUpdate()
 	endif
 	
 	if SettingIsEnabled(_WL_SettingOil) && _WL_gToggle.GetValueInt() == 1 && current_lantern == LANTERN_OIL
+		WLDebug(0, "Registering for update.")
 		RegisterForSingleUpdate(5)
 	elseif SettingIsEnabled(_WL_SettingFeeding) && _WL_gToggle.GetValueInt() == 1 && current_lantern == LANTERN_TORCHBUG
+		WLDebug(0, "Registering for update.")
 		RegisterForSingleUpdate(5)
+	else
+		WLDebug(0, "Update registration no longer valid.")
 	endif
 endEvent
 

@@ -37,6 +37,7 @@ int General_HotkeyLantern_OID
 int General_HotkeyCheckFuel_OID
 int General_SettingPollenToggle_OID
 int General_SettingCheckFuelDisplayMenu_OID
+int General_SettingCheckFuelOnToggle_OID
 int Interface_UIMeterDisplay_OID
 int Interface_UIMeterLayout_OID
 int Interface_UIMeterDisplayTime_OID
@@ -73,6 +74,7 @@ GlobalVariable property _WL_SettingOffWhenSneaking auto
 GlobalVariable property _WL_SettingHoldActivateToggle auto
 GlobalVariable property _WL_SettingHoldActivateToggleControl auto
 GlobalVariable property _WL_SettingHoldActivateToggleDuration auto
+GlobalVariable property _WL_SettingCheckFuelOnToggle auto
 GlobalVariable Property _WL_SettingAutomatic auto
 GlobalVariable property _WL_SettingCheckFuelDisplay auto
 GlobalVariable property _WL_SettingFuelMeterDisplay_Contextual auto
@@ -307,6 +309,11 @@ function PageReset_General()
 	General_HotkeyLantern_OID = AddKeyMapOption("$WearableLanternsGeneralSettingHotkeyLantern", _WL_HotkeyPlayerLantern.GetValueInt())
 	General_HotkeyCheckFuel_OID = AddKeyMapOption("$WearableLanternsGeneralSettingHotkeyCheckFuel", _WL_HotkeyCheckFuel.GetValueInt())
 	General_SettingCheckFuelDisplayMenu_OID = AddMenuOption("$WearableLanternsGeneralSettingHotkeyCheckFuelDisplayMode", CheckFuelDisplayList[CheckFuelDisplayIndex])
+	if _WL_SettingCheckFuelOnToggle.GetValueInt() == 2
+		General_SettingCheckFuelOnToggle_OID = AddToggleOption("$WearableLanternsGeneralSettingCheckFuelOnToggle", true)
+	else
+		General_SettingCheckFuelOnToggle_OID = AddToggleOption("$WearableLanternsGeneralSettingCheckFuelOnToggle", false)
+	endif
 endFunction
 
 string[] FILL_DIRECTIONS
@@ -457,8 +464,12 @@ event OnOptionHighlight(int option)
 		SetInfoText("$WearableLanternsTurnOffWhenSneakingHighlight")
 	elseif option == General_HotkeyHoldUse_OID
 		SetInfoText("$WearableLanternsHotkeyLanternUseKeyHighlight")
+	elseif option == General_HotkeyHoldUseControl_OID
+		SetInfoText("$WearableLanternsHotkeyLanternUseKeyControlHighlight")
 	elseif option == General_HotkeyHoldUseDuration_OID
 		SetInfoText("$WearableLanternsHotkeyLanternUseKeyDurationHighlight")
+	elseif option == General_SettingCheckFuelOnToggle_OID
+		SetInfoText("$WearableLanternsCheckFuelOnToggleHighlight")
 	elseif option == General_SettingOilToggle_OID
 		SetInfoText("$WearableLanternsFuelHighlight")
 	elseif option == General_SettingPollenToggle_OID
@@ -581,6 +592,15 @@ event OnOptionSelect(int option)
 			configuring_oil_meter = false
 		endif
 		ForcePageReset()
+	elseif option == General_SettingCheckFuelOnToggle_OID
+		if _WL_SettingCheckFuelOnToggle.GetValueInt() == 2
+			SetToggleOptionValue(General_SettingCheckFuelOnToggle_OID, false)
+			_WL_SettingCheckFuelOnToggle.SetValueInt(1)
+		else
+			SetToggleOptionValue(General_SettingCheckFuelOnToggle_OID, true)
+			_WL_SettingCheckFuelOnToggle.SetValueInt(2)
+		endif
+		SaveSettingToCurrentProfile("check_fuel_on_toggle", _WL_SettingCheckFuelOnToggle.GetValueInt())
 
 	elseif option == SaveLoad_Enable_OID
 		if _WL_SettingAutoSaveLoad.GetValueInt() == 2
@@ -666,6 +686,10 @@ event OnOptionDefault(int option)
 		SetSliderOptionValue(General_HotkeyHoldUseDuration_OID, 1.0, "{1} sec")
 		_WL_SettingHoldActivateToggleDuration.SetValue(1.0)
 		SaveSettingToCurrentProfileFloat("hold_activate_toggle_duration", 1.0)
+	elseif option == General_SettingCheckFuelOnToggle_OID
+		SetToggleOptionValue(General_SettingCheckFuelOnToggle_OID, true)
+		_WL_SettingCheckFuelOnToggle.SetValueInt(2)
+		SaveSettingToCurrentProfile("check_fuel_on_toggle", 2)
 	elseif option == General_HotkeyLantern_OID
 		UnregisterForKey(_WL_HotkeyPlayerLantern.GetValueInt())
 		_WL_HotkeyPlayerLantern.SetValueInt(0)
@@ -1190,6 +1214,7 @@ endEvent
 Event OnUpdate()
 	if toggle_control_held
 		ToggleLantern()
+		toggle_control_held = false
 	endif
 EndEvent
 
@@ -1440,7 +1465,7 @@ function ToggleLantern()
 			LanternQuest.ToggleLanternOn()
 			LanternQuest.previous_lantern_state = true
 			_WL_OilLanternOn.Play(PlayerRef)
-			CheckFuel()
+			CheckFuel(true)
 			WLDebug(1, "Oil lantern turned on.")
 		endIf
 	elseif LanternQuest.current_lantern == LanternQuest.LANTERN_TORCHBUG
@@ -1451,13 +1476,17 @@ function ToggleLantern()
 		else
 			LanternQuest.ToggleLanternOn()
 			PHYBottleSmallH.Play(PlayerRef)
-			CheckFuel()
+			CheckFuel(true)
 			WLDebug(1, "Torchbug lantern turned on.")
 		endIf
 	endIf
 endFunction
 
-function CheckFuel()
+function CheckFuel(bool abFromToggle = false)
+	if abFromToggle && _WL_SettingCheckFuelOnToggle.GetValueInt() != 2
+		return
+	endif
+
 	int i = _WL_SettingCheckFuelDisplay.GetValueInt()
 	if i == 0  									;Meter, Message
 		if _WL_SettingOil.GetValueInt() == 2 && LanternQuest.current_lantern == LanternQuest.LANTERN_OIL
@@ -1721,6 +1750,10 @@ function SwitchToProfile(int aiProfileIndex)
 	if ival != -1
 		_WL_SettingCheckFuelDisplay.SetValueInt(ival)
 	endif
+	ival = LoadSettingFromProfile(aiProfileIndex, "check_fuel_on_toggle")
+	if ival != -1
+		_WL_SettingCheckFuelOnToggle.SetValueInt(ival)
+	endif
 	ival = LoadSettingFromProfile(aiProfileIndex, "meter_display_mode")
 	if ival != -1
 		_WL_SettingFuelMeterDisplay_Contextual.SetValueInt(ival)
@@ -1872,6 +1905,7 @@ function GenerateDefaultProfile(int aiProfileIndex)
 	JsonUtil.SetIntValue(profile_path, "hold_activate_toggle_control", 0)
 	JsonUtil.SetIntValue(profile_path, "automatic_mode", 1)
 	JsonUtil.SetIntValue(profile_path, "check_fuel_display", 0)
+	JsonUtil.SetIntValue(profile_path, "check_fuel_on_toggle", 2)
 	JsonUtil.SetIntValue(profile_path, "meter_display_mode", 2)
 	JsonUtil.SetIntValue(profile_path, "meter_display_time", 4)
 	JsonUtil.SetIntValue(profile_path, "oil_meter_color", 0xffff4d)
@@ -1915,6 +1949,7 @@ function SaveAllSettings(int aiProfileIndex)
 	JsonUtil.SetIntValue(profile_path, "hold_activate_toggle_control", _WL_SettingHoldActivateToggleControl.GetValueInt())
 	JsonUtil.SetIntValue(profile_path, "automatic_mode", _WL_SettingAutomatic.GetValueInt())
 	JsonUtil.SetIntValue(profile_path, "check_fuel_display", _WL_SettingCheckFuelDisplay.GetValueInt())
+	JsonUtil.SetIntValue(profile_path, "check_fuel_on_toggle", _WL_SettingCheckFuelOnToggle.GetValueInt())
 	JsonUtil.SetIntValue(profile_path, "meter_display_mode", _WL_SettingFuelMeterDisplay_Contextual.GetValueInt())
 	JsonUtil.SetIntValue(profile_path, "meter_display_time", _WL_SettingMeterDisplayTime.GetValueInt())
 	JsonUtil.SetIntValue(profile_path, "oil_meter_color", _WL_SettingMeterOilColor.GetValueInt())
