@@ -6,4 +6,4 @@ Adds a craftable, wearable travel lantern that can be hooked onto your belt, or 
 
 If **[Campfire](http://skyrimsurvival.com/home/campfire/)** is installed, you can craft travel and paper lanterns from Survival Skills: Create Item, and use lantern oil as tinder for your campfire.
 
-The lantern’s placement on the belt was inspired by Legend of Zelda: Twilight Princess. It also heralds the visual style of Dragon’s Dogma. The way you use and toggle your lantern (held or worn) can be changed using the SkyUI Mod Configuration Menu. Wearable Lanterns supports both keyboard and gamepad control.
+The lantern’s placement on the belt was inspired by *Legend of Zelda: Twilight Princess*. It also heralds the visual style of *Dragon’s Dogma*. The way you use and toggle your lantern (held or worn) can be changed using the SkyUI Mod Configuration Menu. Wearable Lanterns supports both keyboard and gamepad control.
