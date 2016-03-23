@@ -125,6 +125,8 @@ shutil.copyfile("./WearableLanterns/Chesko_WearableLantern.esp", dirname + "/Che
 shutil.copyfile("./WearableLanterns/SKSE/Plugins/StorageUtil.dll", dirname + "/SKSE/Plugins/StorageUtil.dll")
 shutil.copyfile("./tmp/Chesko_WearableLantern.bsa", dirname + "/Chesko_WearableLantern.bsa")
 shutil.copyfile("./WearableLanterns/readmes/wearablelanterns_readme.txt", dirname + "/readmes/wearablelanterns_readme.txt")
+shutil.copyfile("./WearableLanterns/readmes/wearablelanterns_changelog.txt", dirname + "/readmes/wearablelanterns_changelog.txt")
+shutil.copyfile("./WearableLanterns/readmes/wearablelanterns_license.txt", dirname + "/readmes/wearablelanterns_license.txt")
 
 # Clean Up
 print "Removing temp files..."

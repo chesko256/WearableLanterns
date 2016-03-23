@@ -168,7 +168,7 @@ Event OnUpdateGameTime()
 endEvent
 
 Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
-	if (akBaseObject as Armor && akBaseObject.HasKeyword(ArmorShield)) || ((akBaseObject as Weapon && PlayerRef.GetEquippedItemType(0) <= 4) || (PlayerRef.GetEquippedItemType(0) == 11 && !_WL_HeldLanterns.HasForm(akBaseObject)))
+	if IsShield_Safe(akBaseObject) || IsLeftHandWeaponOrTorch(akBaseObject)
 		WLDebug(1, "OnObjectEquipped Event, Weapon, Shield, or Torch")
 		DropLantern()
     elseif akBaseObject == _WL_WearableLanternInvDisplay
@@ -194,6 +194,31 @@ Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
 		LanternMutex(akBaseObject)
 	endif
 endEvent
+
+bool function IsShield_Safe(Form akBaseObject)
+	if akBaseObject as Armor && akBaseObject.HasKeyword(ArmorShield)
+		return true
+	else
+		return false
+	endif
+endFunction
+
+bool function IsLeftHandWeaponOrTorch(Form akBaseObject)
+	; Weapon
+	if (akBaseObject as Weapon && 					\
+		PlayerRef.GetEquippedItemType(0) > 0 && 	\
+		PlayerRef.GetEquippedItemType(0) <= 8)
+		return true
+
+	; Torch
+	elseif (akBaseObject as Light && 				\
+			!_WL_HeldLanterns.HasForm(akBaseObject))
+		return true
+	
+	else
+		return false
+	endif
+endFunction
 
 bool unequip_lock = false
 Event OnObjectUnequipped(Form akBaseObject, ObjectReference akReference)
@@ -380,6 +405,7 @@ function EquipNonPlayableLantern(int iLanternIndex)
 endFunction
 
 function DropLantern()
+	ObjectReference dropped_lantern = none
 	int iPosition = _WL_SettingPosition.GetValueInt()
 	if PlayerRef.IsEquipped(_WL_WearableLanternInvDisplay) && iPosition == 2
 		PlayerRef.UnequipItem(_WL_WearableLanternInvDisplay, abSilent = true)
@@ -388,7 +414,8 @@ function DropLantern()
 				return
 			else
 				PlayerRef.RemoveItem(_WL_WearableLanternInvDisplay, abSilent = true)
-				PlayerRef.PlaceAtMe(_WL_LanternDroppedLit)
+				dropped_lantern = PlayerRef.PlaceAtMe(_WL_LanternDroppedLit)
+
 			endif
 		endif
 	elseif PlayerRef.IsEquipped(_WL_WearableTorchbugInvDisplay) && iPosition == 2
@@ -401,7 +428,7 @@ function DropLantern()
 					GoToState("BlockEvents")
 				endif
 				PlayerRef.RemoveItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
-				PlayerRef.PlaceAtMe(_WL_TorchbugDroppedLit)
+				dropped_lantern = PlayerRef.PlaceAtMe(_WL_TorchbugDroppedLit)
 				GoToState("")
 			endif
 		endif
@@ -415,7 +442,7 @@ function DropLantern()
 					GoToState("BlockEvents")
 				endif
 				PlayerRef.RemoveItem(_WL_WearableTorchbugInvDisplayRED, abSilent = true)
-				PlayerRef.PlaceAtMe(_WL_TorchbugREDDroppedLit)
+				dropped_lantern = PlayerRef.PlaceAtMe(_WL_TorchbugREDDroppedLit)
 				GoToState("")
 			endif
 		endif
@@ -426,9 +453,15 @@ function DropLantern()
 				return
 			else
 				PlayerRef.RemoveItem(_WL_WearablePaperInvDisplay, abSilent = true)
-				PlayerRef.PlaceAtMe(_WL_PaperHeldDroppedLit)
+				dropped_lantern = PlayerRef.PlaceAtMe(_WL_PaperHeldDroppedLit)
 			endif
 		endif
+	endif
+
+	if dropped_lantern
+		dropped_lantern.MoveTo(dropped_lantern)
+		wait(0.2)
+		dropped_lantern.ApplyHavokImpulse(0.0, 0.0, -1.0, 1.0)		;Force to fall to the ground, like an item drop
 	endif
 endFunction
 

@@ -1,4 +1,6 @@
 readmes\wearablelanterns_readme.txt
+readmes\wearablelanterns_changelog.txt
+readmes\wearablelanterns_license.txt
 Interface\wearablelanterns\_wl_title.dds
 Interface\exported\widgets\wearablelanterns\meter.swf
 Interface\Translations\chesko_wearablelantern_english.txt
