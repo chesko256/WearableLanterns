@@ -52,6 +52,7 @@ Scripts\_WL_PollenMeter.pex
 Scripts\_WL_PollenMeterInterfaceHandler.pex
 Scripts\_WL_SkyUIConfigPanelScript.pex
 Scripts\_WL_Startup.pex
+Scripts\_WL_Strings.pex
 Scripts\_WL_SwapLitLanternScript.pex
 Scripts\_WL_TriggerLightEffect.pex
 Scripts\_WL_VendorStock.pex
@@ -72,6 +73,7 @@ Scripts\Source\_WL_PollenMeter.psc
 Scripts\Source\_WL_PollenMeterInterfaceHandler.psc
 Scripts\Source\_WL_SkyUIConfigPanelScript.psc
 Scripts\Source\_WL_Startup.psc
+Scripts\Source\_WL_Strings.psc
 Scripts\Source\_WL_SwapLitLanternScript.psc
 Scripts\Source\_WL_TriggerLightEffect.psc
 Scripts\Source\_WL_VendorStock.psc

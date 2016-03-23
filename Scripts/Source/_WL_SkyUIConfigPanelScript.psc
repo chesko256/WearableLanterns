@@ -3,6 +3,7 @@ Scriptname _WL_SkyUIConfigPanelScript extends SKI_ConfigBase conditional
 string CONFIG_PATH = "../WearableLanternsData/"
 
 _WL_LanternOil_v3 property LanternQuest auto
+_WL_Strings property StringsQuest auto
 Actor property PlayerRef auto
 
 bool config_is_open = false
@@ -1148,9 +1149,10 @@ event OnOptionKeyMapChange(int option, int keyCode, string conflictControl, stri
 endEvent
 
 bool function RemapHotkey(int option, int keyCode, string conflictControl, string conflictName, GlobalVariable akHotkeyGlobal)
+	_WL_Strings cs = StringsQuest
 	if conflictControl != ""
 		if conflictName != ""
-			bool b = ShowMessage("This key is already bound to " + conflictControl + " in " + conflictName + ". Undesirable behavior may occur; use with caution, or assign to a different control.")
+			bool b = ShowMessage(cs.HotkeyConflict1 + conflictControl + cs.HotkeyConflict2 + conflictName + cs.HotkeyConflict3_mod)
 			if b
 				akHotkeyGlobal.SetValueInt(keyCode)
 				RegisterForKey(akHotkeyGlobal.GetValueInt())
@@ -1158,7 +1160,7 @@ bool function RemapHotkey(int option, int keyCode, string conflictControl, strin
 				return true
 			endif
 		else
-			ShowMessage("This key is already bound to " + conflictControl + " in Skyrim. Please select a different key.", a_withCancel = false)
+			ShowMessage(cs.HotkeyConflict1 + conflictControl + cs.HotkeyConflict3_game, a_withCancel = false)
 			return false
 		endif
 	else

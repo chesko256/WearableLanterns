@@ -25,6 +25,9 @@ GlobalVariable property _WL_Upgraded_4_0 auto
 Ingredient property MountainFlowerYellow auto hidden
 Activator property FireflyBUG auto hidden
 
+int property SKSE_MIN_VERSION = 10703 autoReadOnly
+Message property _WL_SKSE_Error auto
+
 ;Legacy mod warnings
 bool bIsGuardLanternLoaded
 bool bIsKhajiitLanternLoaded
@@ -46,10 +49,12 @@ Event OnPlayerLoadGame()
 endEvent
 
 function CompatibilityCheck()
-	trace("[Wearable Lanterns]=======================================================================================")
-	trace("[Wearable Lanterns]               Wearable Lanterns is now performing compatibility checks.               ")
-	trace("[Wearable Lanterns]=======================================================================================")
+	trace("[Wearable Lanterns]=============================================================================================")
+	trace("[Wearable Lanterns]                  Wearable Lanterns is now performing compatibility checks.                  ")
+	trace("[Wearable Lanterns]=============================================================================================")
 	
+	CheckSKSE()
+
 	if _WL_Upgraded_4_0.GetValueInt() != 2
 		Upgrade_4_0()
 	endif
@@ -106,9 +111,9 @@ function CompatibilityCheck()
 	if bIsKhajiitLanternLoaded
 		_WL_KhajiitLanternWarning.Show()
 	endif
-	trace("[Wearable Lanterns]=======================================================================================")
-	trace("[Wearable Lanterns]                       Compatibility check complete.                                   ")
-	trace("[Wearable Lanterns]=======================================================================================")
+	trace("[Wearable Lanterns]=============================================================================================")
+	trace("[Wearable Lanterns]                                Compatibility check complete.                                ")
+	trace("[Wearable Lanterns]=============================================================================================")
 endFunction
 
 function Upgrade_4_0()
@@ -120,6 +125,22 @@ function Upgrade_4_0()
 	
 	trace("[Wearable Lanterns] Upgraded to 4.0.")
 	_WL_Upgraded_4_0.SetValueInt(2)
+endFunction
+
+function CheckSKSE()
+	bool skse_loaded = SKSE.GetVersion()
+	if skse_loaded
+		int skse_version = (SKSE.GetVersion() * 10000) + (SKSE.GetVersionMinor() * 100) + SKSE.GetVersionBeta()
+		if skse_version < SKSE_MIN_VERSION
+			_WL_SKSE_Error.Show(((skse_version as float) / 10000), ((SKSE_MIN_VERSION as float) / 10000))
+			debug.trace("[Wearable Lanterns][Error] Detected SKSE version " + ((skse_version as float) / 10000) + ", expected " + ((SKSE_MIN_VERSION as float) / 10000) + " or newer.")			
+		else
+			debug.trace("[Wearable Lanterns] Detected SKSE version " + ((skse_version as float) / 10000) + " (expected " + ((SKSE_MIN_VERSION as float) / 10000) + " or newer, success!)")
+		endif
+	else
+		_WL_SKSE_Error.Show(((0.0) / 10000), ((SKSE_MIN_VERSION as float) / 10000))
+		debug.trace("[Wearable Lanterns][Error] Detected SKSE version " + ((0.0) / 10000) + ", expected " + ((SKSE_MIN_VERSION as float) / 10000) + " or newer.")
+	endif
 endFunction
 
 function DLC1LoadUp()
@@ -202,7 +223,7 @@ endFunction
 bool function IsPluginLoaded(int iFormID, string sPluginName)
 	int i = Game.GetModByName(sPluginName)
 	if i != 255
-		debug.trace("[Frostfall] Loaded: " + sPluginName)
+		debug.trace("[Wearable Lanterns] Loaded: " + sPluginName)
 		return true
 	else
 		return false

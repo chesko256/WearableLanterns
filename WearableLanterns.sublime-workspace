@@ -4,12 +4,100 @@
 		"selected_items":
 		[
 			[
-				"Registerforeve",
-				"RegisterForEventsOnLoad"
+				"togglec",
+				"toggle_control_held"
+			],
+			[
+				"settingontog",
+				"_WL_SettingCheckFuelOnToggle"
+			],
+			[
+				"settingonto",
+				"_WL_SettingCheckFuelOnToggle"
+			],
+			[
+				"check_",
+				"check_fuel_on_toggle"
+			],
+			[
+				"check",
+				"check_fuel_on_toggle"
+			],
+			[
+				"General_HotkeyHold",
+				"General_HotkeyHoldUseControl_OID"
+			],
+			[
+				"this",
+				"this_lantern"
+			],
+			[
+				"Lanter",
+				"LanternIndex"
+			],
+			[
+				"OnEff",
+				"OnEffectFinish	ActiveMagicEffect.OnEffectFinish"
+			],
+			[
+				"this_",
+				"this_lantern"
+			],
+			[
+				"SetIntVa",
+				"SetIntValue	StorageUtil.SetIntValue (PapyrusUtil)"
 			],
 			[
 				"Compa",
-				"CompatibilityCheck"
+				"CompatibilityAlias"
+			],
+			[
+				"decode",
+				"decoded_contents"
+			],
+			[
+				"holdcon",
+				"_WL_SettingHoldActivateToggleControl"
+			],
+			[
+				"hold_activate_toggle_",
+				"hold_activate_toggle_control"
+			],
+			[
+				"_WL_SettingHold",
+				"_WL_SettingHoldActivateToggleControl"
+			],
+			[
+				"SaveSetting",
+				"SaveSettingToCurrentProfile"
+			],
+			[
+				"toggl",
+				"ToggleControlList"
+			],
+			[
+				"alms",
+				"AlmsiviTargets"
+			],
+			[
+				"ALm",
+				"AlmsiviTargets"
+			],
+			[
+				"Alm",
+				"AlmsiviTargets"
+			],
+			[
+				"Divi",
+				"DivineTargets"
+			],
+			[
+				"config",
+				"config_is_open"
+			],
+			[
+				"Registerforeve",
+				"RegisterForEventsOnLoad"
 			],
 			[
 				"SendEvent_For",
@@ -82,10 +170,6 @@
 			[
 				"lanter",
 				"lantern_slot"
-			],
-			[
-				"SaveSetting",
-				"SaveSettingToCurrentProfileFloat"
 			],
 			[
 				"pollen_meter",
@@ -198,10 +282,6 @@
 			[
 				"configur",
 				"configuring_pollen_meter"
-			],
-			[
-				"config",
-				"configuring_oil_meter"
 			],
 			[
 				"pollenhan",
@@ -434,86 +514,6 @@
 			[
 				"curentprofile",
 				"_SK_Setting_CurrentProfile"
-			],
-			[
-				"settingtimeoutdur",
-				"_SK_Setting_StateTimeoutDuration"
-			],
-			[
-				"settingsuccess",
-				"_SK_Setting_SpeechSuccessChance"
-			],
-			[
-				"settingfriend",
-				"Settings_FriendsAllowEntryToggle_OID"
-			],
-			[
-				"SimplyKnockSettings",
-				"SimplyKnockSettingsSuccessChance"
-			],
-			[
-				"settings_",
-				"Settings_StateTimeoutDuration_OID"
-			],
-			[
-				"duration",
-				"_SK_Setting_StateTimeoutDuration"
-			],
-			[
-				"setting",
-				"Settings_SpeechSuccessChance_OID"
-			],
-			[
-				"_SK_Se",
-				"_SK_Setting_SpeechSuccessChance"
-			],
-			[
-				"LocTyp",
-				"LocTypeHouse"
-			],
-			[
-				"linked",
-				"linked_door_location"
-			],
-			[
-				"prop",
-				"property"
-			],
-			[
-				"Current",
-				"CurrentNegotiationStateMarker"
-			],
-			[
-				"Curren",
-				"CurrentNegotiationStateMarker"
-			],
-			[
-				"SimplyKno",
-				"SimplyKnockInteriorState"
-			],
-			[
-				"Curr",
-				"CurrentNegotiationStateMarker"
-			],
-			[
-				"slept",
-				"slept_in_tent"
-			],
-			[
-				"OnSleep",
-				"OnSleepStart	ActiveMagicEffect.OnSleepStart"
-			],
-			[
-				"_Camp_PerkNode",
-				"_Camp_PerkNodeController"
-			],
-			[
-				"Compatibility",
-				"GetCompatibilitySystem"
-			],
-			[
-				"owner",
-				"owner_actor"
 			]
 		]
 	},
@@ -523,15 +523,110 @@
 			"file": "Scripts/Source/_WL_LanternOil_v3.psc",
 			"settings":
 			{
-				"buffer_size": 27887,
+				"buffer_size": 28282,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/E/ModOrganizerData/mods/SimplyKnock/Scripts/Source/_SK_SkyUIConfigPanelScript.psc",
+			"file": "/E/SteamLibrary/steamapps/common/Skyrim/Data/lantern.txt",
 			"settings":
 			{
-				"buffer_size": 15698,
+				"buffer_size": 199,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Scripts/Source/_WL_TriggerLightEffect.psc",
+			"settings":
+			{
+				"buffer_size": 624,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/E/ModOrganizerData/mods/SkywindTemp/fbmwInterventionScript.psc",
+			"settings":
+			{
+				"buffer_size": 3015,
+				"line_ending": "Windows",
+				"name": "Scriptname fbmwInterventionScript extends Quest"
+			}
+		},
+		{
+			"file": "ManifestCheck.bat",
+			"settings":
+			{
+				"buffer_size": 72,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Frost_Strings.psc",
+			"settings":
+			{
+				"buffer_size": 1077,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Camp_Strings.psc",
+			"settings":
+			{
+				"buffer_size": 1240,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "WLBuildRelease.py",
+			"settings":
+			{
+				"buffer_size": 5021,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Scripts/Source/_WL_VendorStock.psc",
+			"settings":
+			{
+				"buffer_size": 12890,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "WLArchiveManifest.txt",
+			"settings":
+			{
+				"buffer_size": 3666,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "import os\nimport shutil\nimport subprocess\nimport codecs\nfrom googleapiclient.discovery import build\ntranslate_file_name_header = 'chesko_wearablelantern_'\nlangs = [['cs', 'czech'], \n         ['fr', 'french'], \n         ['de', 'german'], \n         ['it', 'italian'], \n         ['ja', 'japanese'], \n         ['pl', 'polish'], \n         ['ru', 'russian'], \n         ['es', 'spanish']]\n\ndef translateValues(vals, lang_code):\n    api_key = open('../google_api_secret.txt').read()\n    service = build('translate', 'v2', developerKey=api_key)\n\n    translation_output = (service.translations().list(\n      source='en',\n      target=lang_code,\n      q=vals\n      ).execute())\n\n    return translation_output\n\ndef generateTranslationFile(keys, vals, lang):\n    print(\"Generating \" + lang[1] + \" MCM translation file...\")\n    file_contents = ''\n    translated_values_cleaned = []\n\n    translated_values = translateValues(vals, lang[0])\n    for dict in translated_values['translations']:\n        translated_values_cleaned.append(dict['translatedText'].replace('\\ N', '\\n').replace('\\ n', '\\n').replace('\\n', '\\\\n'))\n    \n    with open('./interface/translations/' + translate_file_name_header + lang[1] + '.txt', mode='wb') as output:\n        output.write(codecs.BOM_UTF16_LE)\n        for key, value in zip(keys, translated_values_cleaned):\n            file_contents += (key + '\\t' + value + '\\n')\n    \n        output.write((file_contents.encode('utf-16')))\n\n# Generate translation files\nkeys = []\nvalues = []\nwith open('./interface/translations/chesko_wearablelantern_english.txt', 'rb') as f:\n    contents = f.read()\n    decoded_contents = contents.decode('utf-16').encode('utf-8').split('\\r\\n')\n    for line in decoded_contents:\n        split_line = line.split('\\t')\n        keys.append(split_line[0])\n        values.append(split_line[1])\n\nfor lang in langs:\n    generateTranslationFile(keys, values, lang)\n",
+			"file": "trans.py",
+			"file_size": 1952,
+			"file_write_time": 131028344794964772,
+			"settings":
+			{
+				"buffer_size": 1896,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "import os\nimport shutil\nimport subprocess\n\nprint \" \"\nprint \"==============================\"\nprint \"|  Campfire Release Builder  |\"\nprint \"|            .(              |\"\nprint \"|           /%/\\             |\"\nprint \"|          (%(%))            |\"\nprint \"|         .-'..`-.           |\"\nprint \"|         `-'.'`-'           |\"\nprint \"==============================\"\nprint \" \"\nuser_input = raw_input(\"Enter the release version: \")\n\nos.chdir(\"..\\\\\")\n\n# Build the temp directory\nprint \"Creating temp directories...\"\ntempdir = \".\\\\tmp\\\\Data\\\\\"\nos.makedirs('./tmp/Data/readmes')\nos.makedirs('./tmp/Data/Interface/campfire')\nos.makedirs('./tmp/Data/Interface/Translations')\nos.makedirs('./tmp/Data/meshes/campfire')\nos.makedirs('./tmp/Data/Scripts/Source')\nos.makedirs('./tmp/Data/textures/campfire')\n\n# Copy the project files\nprint \"Copying project files...\"\nwith open(\"./Campfire/CampfireArchiveManifest.txt\") as manifest:\n    lines = manifest.readlines()\n    for line in lines:\n        shutil.copy(\".\\\\Campfire\\\\\" + line.rstrip('\\n'), tempdir + line.rstrip('\\n'))\n\n\n\n# Build the directories\ndirname = \"./Campfire \" + user_input + \" Release\"\nif not os.path.isdir(dirname):\n    print \"Creating new build...\"\n    os.mkdir(dirname)\nelse:\n    print \"Removing old build of same version...\"\n    shutil.rmtree(dirname)\n    os.mkdir(dirname)\n\nos.mkdir(dirname + \"/readmes\")\nos.makedirs(dirname + \"/SKSE/Plugins\")\n\n# Generate BSA archive\nprint \"Generating BSA archive...\"\nshutil.copy('./Campfire/Archive.exe', './tmp/Archive.exe')\nshutil.copy('./Campfire/CampfireArchiveBuilder.txt', './tmp/CampfireArchiveBuilder.txt')\nshutil.copy('./Campfire/CampfireArchiveManifest.txt', './tmp/CampfireArchiveManifest.txt')\nos.chdir(\"./tmp\")\nsubprocess.call(['./Archive.exe', './CampfireArchiveBuilder.txt'])\nos.chdir(\"..\\\\\")\n\n# Copy files\nshutil.copyfile(\"./Campfire/Campfire.esm\", dirname + \"/Campfire.esm\")\nshutil.copyfile(\"./tmp/Campfire.bsa\", dirname + \"/Campfire.bsa\")\nshutil.copyfile(\"./Campfire/SKSE/Plugins/StorageUtil.dll\", dirname + \"/SKSE/Plugins/StorageUtil.dll\")\nshutil.copyfile(\"./Campfire/readmes/Campfire_readme.txt\", dirname + \"/readmes/Campfire_readme.txt\")\nshutil.copyfile(\"./Campfire/readmes/Campfire_license.txt\", dirname + \"/readmes/Campfire_license.txt\")\nshutil.copyfile(\"./Campfire/readmes/Campfire_changelog.txt\", dirname + \"/readmes/Campfire_changelog.txt\")\n\n# Clean Up\nprint \"Removing temp files...\"\nshutil.rmtree(\"./tmp\")\n\n# Create release zip\nzip_name_ver = user_input.replace(\".\", \"_\")\nshutil.make_archive(\"./Campfire_\" + zip_name_ver + \"_Release\", format=\"zip\", root_dir=dirname)\nshutil.move(\"./Campfire_\" + zip_name_ver + \"_Release.zip\", dirname + \"/Campfire_\" + zip_name_ver + \"_Release.zip\")\nprint \"Created \" + dirname + \"/Campfire_\" + zip_name_ver + \"_Release.zip\"\nprint \"Done!\"\n",
+			"file": "/E/ModOrganizerData/mods/Campfire/Campfire_BuildRelease.py",
+			"file_size": 2861,
+			"file_write_time": 130877074266060696,
+			"settings":
+			{
+				"buffer_size": 2788,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Frost_ExposureSystem.psc",
+			"settings":
+			{
+				"buffer_size": 34447,
 				"line_ending": "Windows"
 			}
 		},
@@ -539,31 +634,7 @@
 			"file": "/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/CommonMeterInterfaceHandler.psc",
 			"settings":
 			{
-				"buffer_size": 9419,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/Common_SKI_MeterWidget.psc",
-			"settings":
-			{
-				"buffer_size": 5719,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Scripts/Source/_WL_OilMeterInterfaceHandler.psc",
-			"settings":
-			{
-				"buffer_size": 513,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Scripts/Source/_WL_PollenMeterInterfaceHandler.psc",
-			"settings":
-			{
-				"buffer_size": 452,
+				"buffer_size": 9980,
 				"line_ending": "Windows"
 			}
 		},
@@ -571,8 +642,34 @@
 			"file": "Scripts/Source/_WL_Compatibility.psc",
 			"settings":
 			{
-				"buffer_size": 6817,
+				"buffer_size": 7639,
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Scripts/Source/_WL_NPCLanternHandler.psc",
+			"settings":
+			{
+				"buffer_size": 456,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Scripts/Source/_WL_NPCMaintenanceScript.psc",
+			"settings":
+			{
+				"buffer_size": 982,
+				"line_ending": "Windows",
+				"name": "scriptname _WL_NPCMaintenanceScript extends Active"
+			}
+		},
+		{
+			"file": "Scripts/Source/_WL_NPCLanternActions.psc",
+			"settings":
+			{
+				"buffer_size": 4953,
+				"line_ending": "Windows",
+				"name": "scriptname _WL_NPCLanternActions extends Quest"
 			}
 		},
 		{
@@ -580,14 +677,6 @@
 			"settings":
 			{
 				"buffer_size": 131550,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "interface/translations/chesko_wearablelantern_english.txt",
-			"settings":
-			{
-				"buffer_size": 10382,
 				"line_ending": "Windows"
 			}
 		},
@@ -603,55 +692,40 @@
 			"file": "Scripts/Source/_WL_SkyUIConfigPanelScript.psc",
 			"settings":
 			{
-				"buffer_size": 84398,
+				"buffer_size": 88459,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Scripts/Source/JsonUtil.psc",
+			"file": "Scripts/Source/_WL_Strings.psc",
 			"settings":
 			{
-				"buffer_size": 12334,
+				"buffer_size": 317,
+				"line_ending": "Windows",
+				"name": "scriptname _WL_Strings extends Quest"
+			}
+		},
+		{
+			"file": "/E/ModOrganizerData/mods/SimplyKnock/Scripts/Source/_SK_PlayerAliasScript.psc",
+			"settings":
+			{
+				"buffer_size": 2944,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/E/ModOrganizerData/mods/Campfire/Scripts/Source/StorageUtil.psc",
+			"file": "/C/SKSE173/skse_1_07_03/Data/scripts/Source/Math.psc",
 			"settings":
 			{
-				"buffer_size": 39623,
+				"buffer_size": 1962,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/E/Program Files (x86)/Mod Organizer/overwrite/SKSE/Plugins/WearableLanternsData/profile1.json",
+			"file": "/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/Common_SKI_MeterWidget.psc",
 			"settings":
 			{
-				"buffer_size": 1014,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/E/Program Files (x86)/Mod Organizer/overwrite/SKSE/Plugins/WearableLanternsData/profile2.json",
-			"settings":
-			{
-				"buffer_size": 962,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/N/VR/Papyrus.0 (1).log",
-			"settings":
-			{
-				"buffer_size": 65475,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Scripts/Source/_WL_Startup.psc",
-			"settings":
-			{
-				"buffer_size": 581,
+				"buffer_size": 5719,
 				"line_ending": "Windows"
 			}
 		},
@@ -797,16 +871,52 @@
 	],
 	"file_history":
 	[
-		"/E/Program Files (x86)/Mod Organizer/overwrite/SKSE/Plugins/WearableLanternsData/common.json",
+		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/_WL_Startup.psc",
+		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/_WL_LanternOil_v3.psc",
+		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/JsonUtil.psc",
+		"/N/VR/Papyrus.0 (1).log",
+		"/E/Program Files (x86)/Mod Organizer/overwrite/SKSE/Plugins/WearableLanternsData/profile2.json",
 		"/E/Program Files (x86)/Mod Organizer/overwrite/SKSE/Plugins/WearableLanternsData/profile1.json",
+		"/E/ModOrganizerData/mods/Campfire/Scripts/Source/StorageUtil.psc",
+		"/E/ModOrganizerData/mods/WearableLanterns/interface/translations/chesko_wearablelantern_english.txt",
+		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/_WL_DialogueFrag_Front.psc",
+		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/_WL_DialogueFrag_Held.psc",
+		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/_WL_DialogueFrag_Back.psc",
+		"/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Frost_ArmorProtectionDatastoreHandler.psc",
+		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/StorageUtil.psc",
+		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/_WL_NPCSpellHandler.psc",
+		"/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Camp_BackpackToggle.psc",
+		"/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Camp_woodharvestscriptEFFECT.psc",
+		"/E/ModOrganizerData/mods/WearableLanterns/interface/translations/chesko_wearablelantern_japanese.txt",
+		"/E/ModOrganizerData/mods/WearableLanterns/chesko_wearablelantern_czech.txt",
+		"/E/ModOrganizerData/mods/WearableLanterns/chesko_wearablelantern_spanish.txt",
+		"/E/ModOrganizerData/mods/WearableLanterns/chesko_wearablelantern_french.txt",
+		"/E/ModOrganizerData/mods/WearableLanterns/chesko_wearablelantern_german.txt",
+		"/E/ModOrganizerData/mods/WearableLanterns/chesko_wearablelantern_italian.txt",
+		"/E/ModOrganizerData/mods/WearableLanterns/chesko_wearablelantern_polish.txt",
+		"/E/ModOrganizerData/mods/WearableLanterns/chesko_wearablelantern_japanese.txt",
+		"/E/ModOrganizerData/mods/WearableLanterns/chesko_wearablelantern_russian.txt",
+		"/E/ModOrganizerData/mods/WearableLanterns/outputfile.txt",
+		"/E/ModOrganizerData/mods/WearableLanterns/manifestcheck.py",
+		"/E/ModOrganizerData/mods/WearableLanterns/WLArchiveManifest.txt",
+		"/E/ModOrganizerData/mods/WearableLanterns/WLArchiveBuilder.txt",
+		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/_WL_PollenMeterInterfaceHandler.psc",
+		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/_WL_OilMeterInterfaceHandler.psc",
+		"/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/Common_SKI_MeterWidget.psc",
+		"/E/git/skyui/src/Common/skyui/components/Meter.as",
+		"/E/git/skyui/src/HUDWidgets/skyui/widgets/meter/MeterWidget.as",
+		"/C/SKSE173/skse_1_07_03/Data/scripts/Source/StringUtil.psc",
+		"/C/SKSE173/skse_1_07_03/Data/scripts/Source/ColorComponent.psc",
+		"/E/ModOrganizerData/mods/SimplyKnock/Scripts/Source/_SK_SkyUIConfigPanelScript.psc",
+		"/E/SteamLibrary/steamapps/common/Skyrim/Data/Scripts/Source/StringUtil.psc",
+		"/E/SteamLibrary/steamapps/common/Skyrim/Data/Scripts/Source/SKSE_1_7_2/StringUtil.psc",
+		"/E/Program Files (x86)/Mod Organizer/overwrite/SKSE/Plugins/WearableLanternsData/common.json",
 		"/E/Program Files (x86)/Mod Organizer/overwrite/SKSE/Plugins/SimplyKnockData/common.json",
 		"/E/ModOrganizerData/mods/SimplyKnock/Scripts/Source/_SK_PlayerAliasScript.psc",
 		"/E/ModOrganizerData/mods/Campfire/Scripts/Source/CampPerkNodeControllerBehavior.psc",
 		"/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/CommonMeterInterfaceHandler.psc",
-		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/_WL_PollenMeterInterfaceHandler.psc",
 		"/E/ModOrganizerData/mods/WearableLanterns/Scripts/Source/_WL_PollenMeter.psc",
 		"/E/ModOrganizerData/mods/PapyrusCommon/Scripts/Source/UI.psc",
-		"/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/Common_SKI_MeterWidget.psc",
 		"/E/git/skyui/dist/Data/Scripts/Source/SKI_WidgetBase.psc",
 		"/E/git/skyui/dist/Data/Scripts/Source/SKI_WidgetManager.psc",
 		"/E/Imported/skyui-master/skyui-master/src/hudmenu/HUDMenu.as",
@@ -888,43 +998,7 @@
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_DE_SkyUIConfigPanelScript.psc",
 		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ExposureSystem.psc",
 		"/C/Personal/ModOrganizer/mods/Campfire/Frostfall_BuildRelease.py",
-		"/C/Personal/ModOrganizer/mods/Campfire/.gitignore",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_DE_Compatibility.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_VendorStock.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/FrostMainLoopWorkingFileDELETEME.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_Main.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/BaseGame/defaultAddItemPotionScript.psc",
-		"/C/Personal/Frostfall/Scripts/Source/_DE_Tent.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_WetnessSystem.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ClimateSystem.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Camp_CampfireUseMonitor.psc",
-		"/C/snapweb/test/unit_tests/test_cal_db.py",
-		"/C/snapweb/bootsrv/update.py",
-		"/C/Git/snapweb/bootsrv/update.py",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_FrigidWaterSystem.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_DE_KindleEffectScript.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_TempRestoreExposureScript.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ShelterSystem.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_DE_ShelterTriggerScript.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ShelterDetectSensorScript.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_PlayerSpellMonitor.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_WarmHandsPackageRewrite.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_DE_ShelterDetectSensorScript.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/FrostfallAPI.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_RescueSystem.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_DE_Frag_TestWarmHandsPkg.psc",
-		"/C/snapweb/build.sh",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_HeatSourceSystem.psc",
-		"/C/Users/David/AppData/Local/Temp/Rar$DIa0.605/Papyrus.0.log",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_DE_ShelterDetectQuestScript.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_BaseSystem.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ShelterMonitor.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_ExposureSystemWORKINGFILE.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Frost_LightableFiresSystem.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/Skyrim_Eids.csv",
-		"/C/Personal/ModOrganizer/mods/Campfire/proccessed_forms.txt",
-		"/C/Personal/ModOrganizer/mods/Campfire/Scripts/Source/_Test_armoraliasscript.psc",
-		"/C/Personal/ModOrganizer/mods/Campfire/unprocessed_forms.txt"
+		"/C/Personal/ModOrganizer/mods/Campfire/.gitignore"
 	],
 	"find":
 	{
@@ -942,134 +1016,134 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"CleanProfile",
-			"GenerateDefaultProfile",
-			"SwitchToProfile",
-			"f",
-			"PollenMeterHandler",
-			"PollenMeter",
-			"OilMeter",
-			"RegisterForEventsOnLoad",
-			"SendEvent_ForceOilMeterDisplay",
-			"Meter.Alpha = Opacity.GetValue()",
-			"SendEvent_UpdateOilMeter",
-			"HandleMeterUpdate",
-			"RefillLantern",
-			"SetOilLevel",
-			"ToggleLanternOn",
-			"EquipNonPlayableLantern",
-			"SetLantern",
-			"DestroyNonDisplayLantern",
-			"LanternMutex",
-			"SetLantern",
-			"debug.trace",
-			"failed",
-			"debug.trace",
-			"CheckMeterRequirements",
-			"RequiredWornFormList",
-			"CheckMeterRequirements",
-			"return",
-			"RequiredWornFormList",
-			"return",
-			"debug",
-			"; debug",
-			"ForceOilMeterFlashIfEmpty",
-			"RefillLantern",
-			"SetOilLevel",
-			"ToggleLanternOn",
-			"checkfuel",
-			"CheckFuel",
-			"OnUpdate",
-			"SetOilLevel",
-			"RefillLantern",
-			"SetOilLevel",
-			"ToggleLanternOn",
-			"SetLantern",
-			"SendEvent_UpdateOilMeter",
-			"RefillLantern",
-			"SetOilLevel",
-			"RefillLantern",
-			"sendevent_updateoilmeter",
-			"LoadSettingFromProfile",
-			"SaveAllSettings",
-			"ApplyMeterPreset",
-			"OilMeter",
-			"opacity",
-			"General_SettingSlot_OID",
-			"slot_oid",
-			"done",
-			"confirm",
-			"ival",
-			"val",
+			"DLC1LoadUp",
 			"hotkey",
-			"; ",
-			"hotkey_create_item",
-			"_WL_HotkeyPlayerLantern",
-			"ConfigureMeter",
-			"_SK_Setting_CurrentProfile",
-			"_SK_Setting_AutoSaveLoad",
-			"profile_path",
-			"LoadProfileOnStartup",
-			"hold_activate_toggle_duration",
-			"pollen_meter_color",
-			"oil_meter_fill_direction",
-			"oil_meter_color",
-			"current_profile_index",
-			"last_profile",
-			"current_profile_index",
-			"auto_load",
-			"meter_display_time",
-			"meter_display_mode",
-			"check_fuel_display",
-			"automatic_mode",
-			"position",
-			"SetValue",
-			"_WL_SettingHoldActivateToggleDuration",
-			"_WL_SettingSlot",
-			"SaveSettingToCurrentProfile",
-			"fval = LoadSetting",
-			"ival = LoadSettingFromProfile",
-			"ival = LoadSe",
-			"ival",
-			"LoadSettingFromProfile",
-			"aiProfileIndex",
-			"saveload",
-			"_WL_SettingAutoSaveLoad",
-			"_WL_Setting",
-			"_WL_SettingMeterOilOpacity",
-			"_WL_SettingMeterDisplayTime",
-			"_WL_Setting",
-			"_WL_Setting_CurrentProfile",
-			"_WL_Setting_AutoSaveLoad",
-			"_WL_Setting_CurrentProfile",
-			"_SK_Setting_CurrentProfile",
-			"_SK_Setting_AutoSaveLoad",
-			"CONFIG_PATH",
-			"_SK_Setting_CurrentProfile",
-			"ShowProfileHelp",
+			"_SK_SKSE_Error",
 			"SimplyKnock",
-			"_WL_Setting_AutoSaveLoad",
-			"_SK_Setting_CurrentProfile",
-			"_WL_Setting_AutoSaveLoad",
-			"_SK_Setting_AutoSaveLoad",
-			"$Wearable",
-			"SimplyKnock",
-			"Simply Knock",
-			"SimplyKnock",
-			"Default: On",
-			"Default: Off",
-			"DropLantern",
-			"RequiredWornEquipment",
-			"RequiredWornFormList",
+			"Upgrade_4_0",
+			"/n",
+			"trace",
+			"debug.trace",
+			"SetShouldLightLanternAutomatically",
+			"registerforsingleupdategametime",
+			"OnUpdateGameTime",
+			"SetShouldLightLanternAutomatically",
+			"ToggleLanternOff",
+			"unregisterforupdate",
+			"ToggleLanternOff",
+			"unequip_lock",
+			"ToggleLanternOff",
+			"registerforsingleupdate",
+			"while",
+			"display_iterations",
+			"UpdateOil",
+			"O",
+			"while",
+			"display_iterations_remaining",
+			"UpdateOil",
+			"SetOilLevel",
+			"ToggleLanternOff",
+			"unregisterforupdate",
+			"LANTERN_OIL",
+			"UpdateOil",
+			"SetOilLevel",
+			"UpdateOil",
+			"SetOilLevel",
+			"UpdateOil",
+			"sendevent_checkmeterrequirements",
+			"RegisterForKeysOnLoad",
+			"LanternQuest",
+			"togglelantern",
+			"CheckFuel",
+			"ToggleLantern",
+			"SetOilLevel",
+			"togglelanternon",
+			"toggle",
+			"toggled on",
+			"_WL_SettingHoldActivateToggle",
+			"EquipFrontLantern",
+			"EquipHeldLantern",
+			"_WL_Wearable",
+			"Held",
+			"EquipBackLantern",
+			"DestroyNonPlayableLanterns",
+			"HandleLanternEquip",
+			"EquipInventoryLantern",
+			"this_lantern",
+			"_WL_NPCLanternPositionDatastore",
+			"_WL_AllLanterns",
+			"this_actor",
+			"HandleLanternEquip",
+			"PlayerRef",
+			"GetDatastoreKeyFromForm",
+			"GetLanternPositionForActor",
+			"EquipFrontLantern",
+			"EquipBackLantern",
+			"EquipInventoryLantern",
+			"GetLanternPositionForActor",
+			"EquipInventoryLantern",
+			"PlayerRef",
+			"GetDatastoreKeyFromForm",
+			"GetLanternPositionForActor",
+			"EquipFrontLantern",
+			"EquipBackLantern",
+			"EquipInventoryLantern",
+			"GetLanternIndex",
+			"E",
+			"e",
+			"DestroyNonPlayableLanterns",
+			"HandleLanternEquip",
+			"ToggleNPCInventoryLantern",
+			"this_actor",
+			"ToggleNPCInventoryLantern",
+			"EquipInventoryLantern",
 			"Form akItem",
-			"WLDebug",
-			"activate_button_held",
-			"Activate",
-			"oncontrol",
-			";",
-			"filldirection",
-			"aiFillDirectionIdx",
-			"UpdateMeterConfiguration"
+			"DestroyNonPlayableLanterns",
+			"iPosition",
+			"EquipItem",
+			"Front",
+			"_WL_NPCLanternSpell",
+			"UnequipItem",
+			"if",
+			"if i",
+			"if",
+			"akTarget",
+			"_Camp_ForceBlackVFX",
+			"EquipItem",
+			"Campfire",
+			"[03/18/2016 - 11:43:11PM] ",
+			"Compatibility",
+			"	",
+			"manifest",
+			"	",
+			"unregisterforcontrol",
+			"RegisterForControl",
+			"_WL_SettingHoldActivateToggle",
+			"RegisterForControl",
+			"General_HotkeyHoldUseControl_OID",
+			"holduse",
+			"Campfire",
+			"Frostfall",
+			"|\"",
+			"Frostfall",
+			"GetDistanceMoved",
+			"distance",
+			"property",
+			"Property",
+			"Auto",
+			"  ",
+			"Auto",
+			"Property",
+			"lanternlist",
+			"debug.trace",
+			"\"[Wearable Lanterns]",
+			"blendColors",
+			"shadeColor2",
+			"setColors",
+			"SetMeterColors",
+			"MainSecondaryColor",
+			"config_is_open",
+			"CleanProfile"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1096,15 +1170,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 27887,
+						"buffer_size": 28282,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								27019,
-								27019
+								9974,
+								9984
 							]
 						],
 						"settings":
@@ -1114,230 +1188,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 13916.0,
+						"translation.y": 4492.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "/E/ModOrganizerData/mods/SimplyKnock/Scripts/Source/_SK_SkyUIConfigPanelScript.psc",
+					"file": "/E/SteamLibrary/steamapps/common/Skyrim/Data/lantern.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 15698,
+						"buffer_size": 199,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6455,
-								6455
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 3363.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/CommonMeterInterfaceHandler.psc",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 9419,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2453,
-								2453
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/Common_SKI_MeterWidget.psc",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5719,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2163,
-								2176
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1091.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "Scripts/Source/_WL_OilMeterInterfaceHandler.psc",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 513,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								105,
-								105
-							]
-						],
-						"settings":
-						{
-							"history_list_is_closing": true,
-							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "Scripts/Source/_WL_PollenMeterInterfaceHandler.psc",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 452,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								352,
-								440
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "Scripts/Source/_WL_Compatibility.psc",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6817,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1351,
-								1351
-							]
-						],
-						"settings":
-						{
-							"history_list_is_closing": true,
-							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 395.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Frost_Compatibility.psc",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 131550,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								18727,
-								18747
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 8091.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 18,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "interface/translations/chesko_wearablelantern_english.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 10382,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3898,
-								3898
+								148,
+								148
 							]
 						],
 						"settings":
@@ -1345,27 +1216,27 @@
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 912.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 14,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
-					"file": "/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Frost_SkyUIConfigPanelScript.psc",
+					"buffer": 2,
+					"file": "Scripts/Source/_WL_TriggerLightEffect.psc",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 66309,
+						"buffer_size": 624,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								51983,
-								51983
+								212,
+								212
 							]
 						],
 						"settings":
@@ -1374,230 +1245,76 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 19160.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 0,
-			"sheets":
-			[
-				{
-					"buffer": 10,
-					"file": "Scripts/Source/_WL_SkyUIConfigPanelScript.psc",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 84398,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								75558,
-								75558
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 33391.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
+					"stack_index": 19,
 					"type": "text"
 				},
 				{
-					"buffer": 11,
-					"file": "Scripts/Source/JsonUtil.psc",
+					"buffer": 3,
+					"file": "/E/ModOrganizerData/mods/SkywindTemp/fbmwInterventionScript.psc",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 12334,
+						"buffer_size": 3015,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								581,
-								581
+								1967,
+								1967
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": -0.0,
-						"translation.y": 2850.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "/E/ModOrganizerData/mods/Campfire/Scripts/Source/StorageUtil.psc",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 39623,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								704,
-								704
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
-							"tab_size": 3,
-							"translate_tabs_to_spaces": true
+							"auto_name": "Scriptname fbmwInterventionScript extends Quest",
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1596.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 9,
 					"type": "text"
 				},
 				{
-					"buffer": 13,
-					"file": "/E/Program Files (x86)/Mod Organizer/overwrite/SKSE/Plugins/WearableLanternsData/profile1.json",
+					"buffer": 4,
+					"file": "ManifestCheck.bat",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1014,
+						"buffer_size": 72,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								413,
-								413
+								72,
+								72
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Batch File/Batch File.sublime-syntax"
 						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.x": 55.0,
+						"translation.y": -0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 14,
-					"file": "/E/Program Files (x86)/Mod Organizer/overwrite/SKSE/Plugins/WearableLanternsData/profile2.json",
+					"buffer": 5,
+					"file": "/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Frost_Strings.psc",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 962,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								113,
-								113
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 13,
-					"type": "text"
-				},
-				{
-					"buffer": 15,
-					"file": "/N/VR/Papyrus.0 (1).log",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 65475,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								62932,
-								62932
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 11988.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
-					"type": "text"
-				},
-				{
-					"buffer": 0,
-					"file": "Scripts/Source/_WL_LanternOil_v3.psc",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 27887,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4639,
-								4639
-							]
-						],
-						"settings":
-						{
-							"history_list_is_closing": true,
-							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": -0.0,
-						"translation.y": 1881.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 16,
-					"type": "text"
-				},
-				{
-					"buffer": 16,
-					"file": "Scripts/Source/_WL_Startup.psc",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 581,
+						"buffer_size": 1077,
 						"regions":
 						{
 						},
@@ -1616,11 +1333,598 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 17,
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Camp_Strings.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1240,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								455,
+								455
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "WLBuildRelease.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5021,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3360,
+								3360
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1881.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 25,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "Scripts/Source/_WL_VendorStock.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12890,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								587,
+								587
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": -0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 20,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "WLArchiveManifest.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3666,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								188,
+								188
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 21,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "trans.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1896,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1445,
+								1895
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 399.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 24,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "/E/ModOrganizerData/mods/Campfire/Campfire_BuildRelease.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2788,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								41,
+								41
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 22,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Frost_ExposureSystem.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 34447,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13505,
+								13573
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 7380.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 23,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/CommonMeterInterfaceHandler.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9980,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6071,
+								6071
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2915.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 15,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "Scripts/Source/_WL_Compatibility.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7639,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								253,
+								253
+							]
+						],
+						"settings":
+						{
+							"history_list_is_closing": true,
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 16,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "Scripts/Source/_WL_NPCLanternHandler.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 456,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								151,
+								151
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 16,
+					"file": "Scripts/Source/_WL_NPCMaintenanceScript.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 982,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								132,
+								132
+							]
+						],
+						"settings":
+						{
+							"auto_name": "scriptname _WL_NPCMaintenanceScript extends Active",
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
 					"buffer": 17,
+					"file": "Scripts/Source/_WL_NPCLanternActions.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4953,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1800,
+								1800
+							]
+						],
+						"settings":
+						{
+							"auto_name": "scriptname _WL_NPCLanternActions extends Quest",
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 646.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 18,
+					"file": "/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Frost_Compatibility.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 131550,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								18438,
+								18438
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 8091.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 17,
+					"type": "text"
+				},
+				{
+					"buffer": 19,
+					"file": "/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Frost_SkyUIConfigPanelScript.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 66309,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								46422,
+								46422
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 19160.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 18,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 20,
+					"file": "Scripts/Source/_WL_SkyUIConfigPanelScript.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 88459,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								52030,
+								52030
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 19388.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "Scripts/Source/_WL_Compatibility.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7639,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2194,
+								2204
+							],
+							[
+								4983,
+								4993
+							]
+						],
+						"settings":
+						{
+							"history_list_is_closing": true,
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2288.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 21,
+					"file": "Scripts/Source/_WL_Strings.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 317,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								317,
+								317
+							]
+						],
+						"settings":
+						{
+							"auto_name": "scriptname _WL_Strings extends Quest",
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 22,
+					"file": "/E/ModOrganizerData/mods/SimplyKnock/Scripts/Source/_SK_PlayerAliasScript.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2944,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								120,
+								207
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 23,
+					"file": "/C/SKSE173/skse_1_07_03/Data/scripts/Source/Math.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1962,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1202,
+								1260
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 26,
+					"type": "text"
+				},
+				{
+					"buffer": 24,
+					"file": "/E/ModOrganizerData/mods/CheskoPapyrusShared/Scripts/Source/Common_SKI_MeterWidget.psc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5719,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"history_list_is_closing": true,
+							"syntax": "Packages/SublimePapyrus/Papyrus.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3078.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 25,
 					"file": "/E/ModOrganizerData/mods/Campfire/Scripts/Source/_Camp_SkyUIConfigPanelScript.psc",
 					"semi_transient": false,
 					"settings":
@@ -1632,8 +1936,8 @@
 						"selection":
 						[
 							[
-								39894,
-								39904
+								41583,
+								41680
 							]
 						],
 						"settings":
@@ -1642,10 +1946,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 16443.0,
+						"translation.y": 16842.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 15,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -1679,7 +1983,7 @@
 		"cols":
 		[
 			0.0,
-			0.0947916666667,
+			0.307291666667,
 			1.0
 		],
 		"rows":
@@ -1711,8 +2015,64 @@
 		"selected_items":
 		[
 			[
+				"",
+				"Source\\_WL_SkyUIConfigPanelScript.psc"
+			],
+			[
+				"oil",
+				"Source\\_WL_LanternOil_v3.psc"
+			],
+			[
+				"npclan",
+				"Source\\_WL_NPCLanternActions.psc"
+			],
+			[
+				"common",
+				"Source\\CommonMeterInterfaceHandler.psc"
+			],
+			[
 				"wlcompa",
 				"Source\\_WL_Compatibility.psc"
+			],
+			[
+				"trigger",
+				"Source\\_WL_TriggerLightEffect.psc"
+			],
+			[
+				"storag",
+				"Source\\StorageUtil.psc"
+			],
+			[
+				"dialo",
+				"Source\\_WL_DialogueFrag_Front.psc"
+			],
+			[
+				"frag",
+				"Source\\_WL_DialogueFrag_Back.psc"
+			],
+			[
+				"wleffect",
+				"Source\\_WL_TriggerLightEffect.psc"
+			],
+			[
+				"wl_trigg",
+				"Source\\_WL_TriggerLightEffect.psc"
+			],
+			[
+				"fra",
+				"Source\\_WL_DialogueFrag_Back.psc"
+			],
+			[
+				"np",
+				"Source\\_WL_NPCLanternHandler.psc"
+			],
+			[
+				"wlvendor",
+				"Source\\_WL_VendorStock.psc"
+			],
+			[
+				"meter",
+				"Source\\Common_SKI_MeterWidget.psc"
 			],
 			[
 				"_wl",
@@ -1725,10 +2085,6 @@
 			[
 				"ski_",
 				"Source\\Common_SKI_MeterWidget.psc"
-			],
-			[
-				"common",
-				"Source\\CommonMeterInterfaceHandler.psc"
 			],
 			[
 				"ski",
@@ -1749,10 +2105,6 @@
 			[
 				"fuelme",
 				"Source\\_WL_FuelMeter.psc"
-			],
-			[
-				"meter",
-				"Source\\_WL_FuelMeterUpdate.psc"
 			],
 			[
 				"wlw",
@@ -1837,10 +2189,6 @@
 			[
 				"camptentsys",
 				"_Camp_TentSystem.psc"
-			],
-			[
-				"",
-				"CampCampfire.psc"
 			],
 			[
 				"behavior",
@@ -2177,50 +2525,6 @@
 			[
 				"campapi",
 				"CampfireAPI.psc"
-			],
-			[
-				"compatibil",
-				"_Camp_Compatibility.psc"
-			],
-			[
-				"memobject",
-				"_Camp_SurvivalVisionSearchMemObjects.psc"
-			],
-			[
-				"ui",
-				"BaseGame/UI.psc"
-			],
-			[
-				"survival",
-				"_Camp_SurvivalVisionSearch.psc"
-			],
-			[
-				"frostwood",
-				"_Frost_WoodActivatorScript.psc"
-			],
-			[
-				"roaring",
-				"_Camp_CampfireType_RoaringScript.psc"
-			],
-			[
-				"internalapi",
-				"_CampfireInternalAPI.psc"
-			],
-			[
-				"perknode",
-				"_Camp_PerkNode.psc"
-			],
-			[
-				"nodecontroller",
-				"_Camp_PerkNodeControllerBehavior.psc"
-			],
-			[
-				"nodecontroll",
-				"_Camp_PerkNodeController.psc"
-			],
-			[
-				"conditions",
-				"_Camp_ConditionValues.psc"
 			]
 		],
 		"width": 0.0

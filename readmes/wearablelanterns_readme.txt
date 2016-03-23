@@ -11,6 +11,9 @@
 
 ===================================================
 
+Go to skyrimsurvival.com/home/wearable-lanterns for up-to-date mod documentation.
+
+
 Date: 3/23/2016
 
 Upgrade Instructions
@@ -90,6 +93,10 @@ The billboard glow effect on all lanterns has been removed in order to improve v
 
 	Followers will now remember the position that their lantern was last in.
 
+	You can now configure a SkyUI MCM hotkey using the same key as another mod. You are still warned about the conflict.
+
+	All lanterns now behave identically when using Automatic Mode.
+
 
 Bug Fixes
 =========
@@ -111,6 +118,10 @@ Notes
 	The mod should still be compatible with the Wearable Lanterns SMIM Patch by telamont(http://www.nexusmods.com/skyrim/mods/34535).
 
 	The mod should still be compatible with Glass fix for Chesko's Wearable Lanterns by Uncheat(http://www.nexusmods.com/skyrim/mods/52348).
+
+
+
+
 
 ////////////////Update 3.0b:
 
