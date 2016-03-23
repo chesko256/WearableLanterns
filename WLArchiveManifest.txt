@@ -36,6 +36,7 @@ meshes\chesko\_wl_wearabletorchbugmesh_held_empty.nif
 Scripts\CommonMeterInterfaceHandler.pex
 Scripts\Common_SKI_MeterWidget.pex
 Scripts\JsonUtil.pex
+Scripts\StorageUtil.pex
 Scripts\PRKF__WL_CatchTorchbug_020162FA.pex
 Scripts\_WL_Compatibility.pex
 Scripts\_WL_DialogueFrag_Back.pex
@@ -43,6 +44,8 @@ Scripts\_WL_DialogueFrag_Front.pex
 Scripts\_WL_DialogueFrag_Held.pex
 Scripts\_WL_LanternOil_v3.pex
 Scripts\_WL_NPCLanternHandler.pex
+Scripts\_WL_NPCLanternActions.pex
+Scripts\_WL_NPCMaintenanceScript.pex
 Scripts\_WL_OilMeter.pex
 Scripts\_WL_OilMeterInterfaceHandler.pex
 Scripts\_WL_PollenMeter.pex
@@ -53,6 +56,7 @@ Scripts\_WL_SwapLitLanternScript.pex
 Scripts\_WL_TriggerLightEffect.pex
 Scripts\_WL_VendorStock.pex
 Scripts\Source\JsonUtil.psc
+Scripts\Source\StorageUtil.psc
 Scripts\Source\PRKF__WL_CatchTorchbug_020162FA.psc
 Scripts\Source\_WL_Compatibility.psc
 Scripts\Source\_WL_DialogueFrag_Back.psc
@@ -60,6 +64,8 @@ Scripts\Source\_WL_DialogueFrag_Front.psc
 Scripts\Source\_WL_DialogueFrag_Held.psc
 Scripts\Source\_WL_LanternOil_v3.psc
 Scripts\Source\_WL_NPCLanternHandler.psc
+Scripts\Source\_WL_NPCLanternActions.psc
+Scripts\Source\_WL_NPCMaintenanceScript.psc
 Scripts\Source\_WL_OilMeter.psc
 Scripts\Source\_WL_OilMeterInterfaceHandler.psc
 Scripts\Source\_WL_PollenMeter.psc

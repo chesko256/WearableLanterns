@@ -11,6 +11,107 @@
 
 ===================================================
 
+Date: 3/23/2016
+
+Upgrade Instructions
+====================
+* Only upgrading from 3.0b is supported. For all other versions, you will probably need to start a new game.
+
+* Starting a new game will always result in a cleaner, more straight-forward installation experience.
+
+* Every person's game is different; your mileage may vary.  You might have to start a new game anyway.
+
+* SkyUI 4.1+ and SKSE 1.7.3+ is required. To use Paper Lanterns, Dragonborn is required.
+
+* To upgrade:
+
+    1. Back up your save games! Do not skip this step!
+    
+    2. Unequip all worn lanterns from yourself and followers.
+
+    3. Go into an interior cell (house, inn, etc).
+
+    4. Save your game. Exit the game.
+
+    5. Download and install Wearable Lanterns 4 using a mod manager.
+	(You may receive a warning from your mod manager that certain shared components, such as StorageUtil.dll, JsonUtil, etc, will be overwritten from other mods. This is fine; accept the overwrite. Wearable Lanterns 4 includes portions of PapyrusUtil 3.2 and my common meter component files which are used in many of my mods, which are up to date as of this writing.)
+
+    6. Deactivate Wearable Lanterns 3.0b in your mod manager.
+
+    7. Activate Wearable Lanterns 4 in your mod manager.
+
+    8. Start the game and load the save you previously made. Your lanterns should function and the MCM should be updated.
+	(If you have Papyrus logging enabled, you will receive a wide ranging number of errors in your log file. These are expected and are an artifact of the upgrade procedure. They will (mostly) only appear once and can be ignored.)
+
+
+Features and Changes
+====================
+
+	New option: Lantern Slot - You can now select which slot all worn lanterns use.
+	
+	New option: Turn Off When Sneaking - This will turn off your lantern automatically when sneaking. Works with both Manual and Automatic mode.
+
+	New option: Hold 'Use' to Toggle - If enabled, this allows you to toggle your lantern on or off by holding the 'Use' key, similar to activating the Pip-Boy light in Fallout. You can also configure the duration to hold the key.
+	
+	Lanterns now only consume one slot (55 by default). 
+
+	Campfire compatibility:
+		Campfire now has a Travel Lantern recipe when using Survival Skill: Create Item.
+		Campfire now has a Paper Lantern recipe when using Survival Skill: Create Item.
+		Lantern Oil can now be used as tinder. It is a "high quality" tinder, one rank below Dwarven Oil.
+
+	Controller-Friendly: The new "Hold Use to Toggle" feature makes it easy for controller users to turn their lantern on and off by just holding the A button. And each time you turn your lantern on, your remaining fuel is displayed, lessening the need for a dedicated "Check Fuel" hotkey.
+
+	Settings Profiles: Settings profiles were added, similar to my other mods. All of your configuration settings are saved to a profile and persist across saves, loads, and new games. Spend less time setting things up and more time playing the game.
+In line with this, Wearable Lanterns now requires SKSE 1.7.3+ and now includes portions of PapyrusUtil 3.2.
+
+Rewritten for Performance: Many portions of Wearable Lanterns have been entirely rewritten in order to improve performance and reduce the likelihood of an error.
+Most of the mod is now entirely event-driven.
+	Reduced the amount of processing ("script heaviness") required down to the bare minimum. An update loop only happens if the player is using a lantern with oil burning / pollen consumption turned on. Instead of running every 2 seconds, that loop now runs every 5 seconds. The rate of oil / pollen consumption remains the same.
+	Generally improved the speed and responsiveness of the mod.
+	Tons of code clean-up in order to bring the quality up to my current standards.
+
+	How torchbugs are caught has changed. To catch a torchbug, equip an empty bug lantern and simply click on a torchbug. You will place it in your lantern.
+
+	Bottles of lantern oil with less than full amounts (1.0oz, 5.5oz, etc) have been removed. The only bottle of lantern oil is a full bottle. When a bottle of oil is used, the oil acts like a global timer across all lanterns until it is used up. When the global "oil level" is empty, a new bottle is used. (This change significantly reduced system complexity and possibility of errors.)
+
+	The "Pollen" item has been removed. Flowers are now used directly and act as a global timer for all torchbug lanterns.
+
+	You can now toggle your lantern on and off when using Automatic Mode.
+
+	The mod will no longer prevent you from equipping both a torch and a worn lantern. (Doing so is still not recommended due to a higher likelihood of visual abnormalities.) The mod will prevent you from equipping more than one lantern.
+	
+	Messages that mention ounces of oil or pinches of pollen are now worded using terms like "half full", "almost empty", and so on.
+The billboard glow effect on all lanterns has been removed in order to improve visual quality and compatibility with most ENBs.
+
+	The way meters are configured and displayed has received a massive overhaul. You now have complete control over the display of the oil and pollen meter compared to previous versions. There are also dozens of minor display enhancements.
+
+	Text notifications at 50% and 10% remaining fuel will only display if you don't have a fuel item in your inventory (lantern oil, flowers). Meters will still briefly display if set to Contextual display mode.
+
+	Followers will now remember the position that their lantern was last in.
+
+
+Bug Fixes
+=========
+
+	Included an SEQ file so that NPC dialogue will work immediately.
+
+	Compatibility checks on start-up no longer generate Papyrus log errors.
+
+	The general reliability of follower lantern behavior has been improved.
+
+	The CTD related to sneaking when with a follower wearing a lantern seems to have been fixed.
+
+
+Notes
+=====
+
+	The billboard glow effect on all lanterns has been removed in order to improve visual quality and compatibility with most ENBs. This makes the Wearable Lanterns - Lighting Fix by IcePenguin(http://www.nexusmods.com/skyrim/mods/64125) no longer necessary. 
+
+	The mod should still be compatible with the Wearable Lanterns SMIM Patch by telamont(http://www.nexusmods.com/skyrim/mods/34535).
+
+	The mod should still be compatible with Glass fix for Chesko's Wearable Lanterns by Uncheat(http://www.nexusmods.com/skyrim/mods/52348).
+
 ////////////////Update 3.0b:
 
 * Fixed an issue where the number of lanterns stocked by vendors can continue to increase without limit over time.

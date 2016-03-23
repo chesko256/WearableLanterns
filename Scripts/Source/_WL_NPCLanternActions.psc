@@ -27,7 +27,6 @@ function HandleLanternEquip(Actor akActor)
 	int index = GetLanternIndex(akActor)
 	EquipInventoryLantern(akActor, index)
 	int position = GetLanternPositionForActor(akActor)
-	debug.trace("Last position: " + position)
 	if position == 0
 		EquipBackLantern(akActor, index)
 	elseif position == 1
@@ -47,16 +46,12 @@ endFunction
 
 int function GetLanternIndex(Actor akActor)
 	if akActor.IsEquipped(_WL_WearableLanternInvDisplay)
-		debug.trace("returning index 0")
 		return 0
 	elseif akActor.IsEquipped(_WL_WearableTorchbugInvDisplay)
-		debug.trace("returning index 1")
 		return 1
 	elseif akActor.IsEquipped(_WL_WearableTorchbugInvDisplayRED)
-		debug.trace("returning index 2")
 		return 2
 	elseif akActor.IsEquipped(_WL_WearablePaperInvDisplay)
-		debug.trace("returning index 3")
 		return 3
 	endif
 endFunction
@@ -131,12 +126,10 @@ Armor function GetCurrentInventoryLantern(Actor akActor)
 	elseif akActor.IsEquipped(_WL_WearablePaperInvDisplay)
 		this_lantern = _WL_WearablePaperInvDisplay
 	endif
-	debug.trace("this_lantern: " + this_lantern)
 	return this_lantern
 endFunction
 
 int function GetLanternPositionForActor(Actor akActor)
-	debug.trace("Getting lantern position for actor " + akActor + "...")
 	string dskey = GetDatastoreKeyFromForm(akActor)
 	int pos = StorageUtil.GetIntValue(_WL_NPCLanternPositionDatastore, dskey, -1)
 	if pos != -1

@@ -112,6 +112,9 @@ function CompatibilityCheck()
 endFunction
 
 function Upgrade_4_0()
+	; Re-run the MCM initialization.
+	WLConfig.OnConfigInit()
+
 	; Load a meter preset for the user's display aspect ratio
 	WLConfig.ApplyMeterPreset(1)
 	
