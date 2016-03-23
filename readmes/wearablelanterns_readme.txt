@@ -20,3 +20,5 @@ http://skyrimsurvival.com/home/wearable-lanterns
 for the most current documentation for Wearable Lanterns.
 
 For accepted use, translation, and licensing, please see wearablelanterns_license.txt
+
+Wearable Lanterns is developed on GitHub. You can view the public repository here: https://github.com/chesko256/WearableLanterns
