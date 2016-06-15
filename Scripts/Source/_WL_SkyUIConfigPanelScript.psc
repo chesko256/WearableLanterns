@@ -784,7 +784,7 @@ event OnOptionDefault(int option)
 			_WL_SettingMeterPollenYPos.SetValue(NORMAL_METER_BOTTOMRIGHT_16_9_Y)
 			SetSliderOptionValue(Interface_UIMeterYPos_OID, NORMAL_METER_BOTTOMRIGHT_16_9_Y, "{1}")
 			UpdateMeterConfiguration(1)
-			SaveSettingToCurrentProfileFloat("oil_meter_ypos", NORMAL_METER_BOTTOMRIGHT_16_9_Y)
+			SaveSettingToCurrentProfileFloat("pollen_meter_ypos", NORMAL_METER_BOTTOMRIGHT_16_9_Y)
 		endif		
 	endif
 endEvent
@@ -1183,7 +1183,7 @@ event OnOptionColorAccept(int option, int color)
 			SetColorOptionValue(option, color)
 			PollenHandler.SetMeterColors(color, -1)
 			SaveSettingToCurrentProfile("pollen_meter_color", color)
-		endif		
+		endif
 	endif
 endEvent
 
