@@ -70,6 +70,7 @@ Message property _WL_LanternOilRemainingMostlyEmpty auto
 Message property _WL_LanternOilRemainingEmptyRanOut auto
 Message property _WL_LanternPollenRemainingEmptyRanOut auto
 Message property _WL_LanternOilUsed auto
+Message property _WL_DropLitPrompt auto
 
 ; enum
 int property current_lantern = 0 auto hidden
@@ -170,7 +171,10 @@ endEvent
 Event OnObjectEquipped(Form akBaseObject, ObjectReference akReference)
 	if IsShield_Safe(akBaseObject) || IsLeftHandWeaponOrTorch(akBaseObject)
 		WLDebug(1, "OnObjectEquipped Event, Weapon, Shield, or Torch")
-		DropLantern()
+		int iPosition = _WL_SettingPosition.GetValueInt()
+		if iPosition == 2
+			DropLantern()
+		endif
     elseif akBaseObject == _WL_WearableLanternInvDisplay
     	SetLantern(akBaseObject, 0, LANTERN_OIL, "Lantern")
 	elseif akBaseObject == _WL_WearableTorchbugInvDisplay
@@ -264,7 +268,9 @@ EndEvent
 
 Event OnItemRemoved(Form akBaseItem, int aiItemCount, ObjectReference akItemReference, ObjectReference akDestContainer)
 	if _WL_InvBugLanterns.HasForm(akBaseItem) && akDestContainer == none && PlayerRef.IsSneaking()
-		ReleaseTorchbugMenu(akBaseItem)
+		ReleaseTorchbugMenu(akBaseItem, akItemReference)
+	elseif akBaseItem.HasKeyword(_WL_InventoryLantern) && akDestContainer == none
+		DropLitLanternPrompt(akBaseItem)
 	endif
 endEvent
 
@@ -326,7 +332,7 @@ function CatchTorchbug(ObjectReference akTorchbug)
 	endif
 endFunction
 
-function ReleaseTorchbugMenu(Form akBaseObject)
+function ReleaseTorchbugMenu(Form akBaseObject, ObjectReference akItemReference)
 	int ibutton = _WL_TorchbugDropRelease.Show()
 	if ibutton == 0						;Release
 		if akBaseObject == _WL_WearableTorchbugInvDisplay
@@ -341,7 +347,7 @@ function ReleaseTorchbugMenu(Form akBaseObject)
 			endif
 		endif
 	elseif ibutton == 1
-		;do nothing
+		; Do nothing
 	endif
 endFunction
 
@@ -355,6 +361,13 @@ ObjectReference function FindAndDropEmptyBugLantern(Form akBaseObject)
 	wait(0.2)
 	myEmptyLantern.ApplyHavokImpulse(0.0, 0.0, -1.0, 1.0)		;Force to fall to the ground, like an item drop
 	return myEmptyLantern
+endFunction
+
+function FindAndRemoveLantern(Form akBaseObject)
+	objectreference myDroppedLantern = Game.FindClosestReferenceOfTypeFromRef(akBaseObject, PlayerRef, 350.0)
+	if myDroppedLantern != none
+		myDroppedLantern.Delete()
+	endif
 endFunction
 
 function EquipNonPlayableLantern(int iLanternIndex)
@@ -406,53 +419,102 @@ endFunction
 
 function DropLantern()
 	ObjectReference dropped_lantern = none
-	int iPosition = _WL_SettingPosition.GetValueInt()
-	if PlayerRef.IsEquipped(_WL_WearableLanternInvDisplay) && iPosition == 2
+	if PlayerRef.IsEquipped(_WL_WearableLanternInvDisplay)
 		PlayerRef.UnequipItem(_WL_WearableLanternInvDisplay, abSilent = true)
 		if SettingIsEnabled(_WL_SettingDropLit) && !IsInMenuMode()
 			if SettingIsEnabled(_WL_SettingOil) && _WL_Oillevel.GetValue() <= 0.0
 				return
 			else
+				GoToState("BlockEvents")
 				PlayerRef.RemoveItem(_WL_WearableLanternInvDisplay, abSilent = true)
 				dropped_lantern = PlayerRef.PlaceAtMe(_WL_LanternDroppedLit)
-
+				GoToState("")
 			endif
 		endif
-	elseif PlayerRef.IsEquipped(_WL_WearableTorchbugInvDisplay) && iPosition == 2
+	elseif PlayerRef.IsEquipped(_WL_WearableTorchbugInvDisplay)
 		PlayerRef.UnequipItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
 		if SettingIsEnabled(_WL_SettingDropLit) && !IsInMenuMode()
 			if SettingIsEnabled(_WL_SettingFeeding) && _WL_PollenLevel.GetValueInt() <= 0
 				return
 			else
-				if PlayerRef.IsSneaking()
-					GoToState("BlockEvents")
-				endif
+				GoToState("BlockEvents")
 				PlayerRef.RemoveItem(_WL_WearableTorchbugInvDisplay, abSilent = true)
 				dropped_lantern = PlayerRef.PlaceAtMe(_WL_TorchbugDroppedLit)
 				GoToState("")
 			endif
 		endif
-	elseif PlayerRef.IsEquipped(_WL_WearableTorchbugInvDisplayRED) && iPosition == 2
+	elseif PlayerRef.IsEquipped(_WL_WearableTorchbugInvDisplayRED)
 		PlayerRef.UnequipItem(_WL_WearableTorchbugInvDisplayRED, abSilent = true)
 		if SettingIsEnabled(_WL_SettingDropLit) && !IsInMenuMode()
 			if SettingIsEnabled(_WL_SettingFeeding) && _WL_PollenLevel.GetValueInt() <= 0
 				return
 			else
-				if PlayerRef.IsSneaking()
-					GoToState("BlockEvents")
-				endif
+				GoToState("BlockEvents")
 				PlayerRef.RemoveItem(_WL_WearableTorchbugInvDisplayRED, abSilent = true)
 				dropped_lantern = PlayerRef.PlaceAtMe(_WL_TorchbugREDDroppedLit)
 				GoToState("")
 			endif
 		endif
-	elseif PlayerRef.IsEquipped(_WL_WearablePaperInvDisplay) && iPosition == 2
+	elseif PlayerRef.IsEquipped(_WL_WearablePaperInvDisplay)
 		PlayerRef.UnequipItem(_WL_WearablePaperInvDisplay, abSilent = true)
 		if SettingIsEnabled(_WL_SettingDropLit) && !IsInMenuMode()
 			if SettingIsEnabled(_WL_SettingOil) && _WL_Oillevel.GetValue() <= 0.0
 				return
 			else
+				GoToState("BlockEvents")
 				PlayerRef.RemoveItem(_WL_WearablePaperInvDisplay, abSilent = true)
+				dropped_lantern = PlayerRef.PlaceAtMe(_WL_PaperHeldDroppedLit)
+				GoToState("")
+			endif
+		endif
+	endif
+
+	if dropped_lantern
+		dropped_lantern.MoveTo(dropped_lantern)
+		wait(0.2)
+		dropped_lantern.ApplyHavokImpulse(0.0, 0.0, -1.0, 1.0)		;Force to fall to the ground, like an item drop
+	endif
+endFunction
+
+function DropLitLanternPrompt(Form akBaseObject)
+	ObjectReference dropped_lantern = none
+	if akBaseObject == _WL_WearableLanternInvDisplay
+		if SettingIsEnabled(_WL_SettingOil) && _WL_Oillevel.GetValue() <= 0.0
+			return
+		else
+			int i = _WL_DropLitPrompt.Show()
+			if i == 0
+				FindAndRemoveLantern(_WL_WearableLanternInvDisplay)
+				dropped_lantern = PlayerRef.PlaceAtMe(_WL_LanternDroppedLit)
+			endif
+		endif
+	elseif akBaseObject == _WL_WearableTorchbugInvDisplay
+		if SettingIsEnabled(_WL_SettingFeeding) && _WL_PollenLevel.GetValueInt() <= 0
+			return
+		else
+			int i = _WL_DropLitPrompt.Show()
+			if i == 0
+				FindAndRemoveLantern(_WL_WearableTorchbugInvDisplay)
+				dropped_lantern = PlayerRef.PlaceAtMe(_WL_TorchbugDroppedLit)
+			endif
+		endif
+	elseif akBaseObject == _WL_WearableTorchbugInvDisplayRED
+		if SettingIsEnabled(_WL_SettingFeeding) && _WL_PollenLevel.GetValueInt() <= 0
+			return
+		else
+			int i = _WL_DropLitPrompt.Show()
+			if i == 0
+				FindAndRemoveLantern(_WL_WearableTorchbugInvDisplayRED)
+				dropped_lantern = PlayerRef.PlaceAtMe(_WL_TorchbugREDDroppedLit)
+			endif
+		endif
+	elseif akBaseObject == _WL_WearablePaperInvDisplay
+		if SettingIsEnabled(_WL_SettingOil) && _WL_Oillevel.GetValue() <= 0.0
+			return
+		else
+			int i = _WL_DropLitPrompt.Show()
+			if i == 0
+				FindAndRemoveLantern(_WL_WearablePaperInvDisplay)
 				dropped_lantern = PlayerRef.PlaceAtMe(_WL_PaperHeldDroppedLit)
 			endif
 		endif
