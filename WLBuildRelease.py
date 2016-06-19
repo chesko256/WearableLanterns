@@ -2,6 +2,7 @@ import os
 import shutil
 import subprocess
 import codecs
+import requests
 from googleapiclient.discovery import build
 
 translate_file_name_header = 'chesko_wearablelantern_'
@@ -13,6 +14,19 @@ langs = [['cs', 'czech'],
          ['pl', 'polish'], 
          ['ru', 'russian'], 
          ['es', 'spanish']]
+
+def yandexTranslateValues(vals, lang_code):
+    api_key = open('./yandex_api_secret.txt').read()
+    
+    return_vals = []
+    for val in vals:
+        r = requests.get('https://translate.yandex.net/api/v1.5/tr.json/translate?key=' + api_key + '&text=' + val + '&lang=en-' + lang_code)
+        rv = r.json()['text'][0]
+        print rv.encode('utf8')
+        return_vals.append(rv)
+
+    return return_vals
+
 
 def translateValues(vals, lang_code):
     api_key = open('./google_api_secret.txt').read()
@@ -31,9 +45,9 @@ def generateTranslationFile(keys, vals, lang):
     file_contents = ''
     translated_values_cleaned = []
 
-    translated_values = translateValues(vals, lang[0])
-    for dict in translated_values['translations']:
-        translated_values_cleaned.append(dict['translatedText'].replace('\ N', '\n').replace('\ n', '\n').replace('\n', '\\n'))
+    translated_values = yandexTranslateValues(vals, lang[0])
+    for v in translated_values:
+        translated_values_cleaned.append(v.replace('\ N', '\n').replace('\ n', '\n').replace('\n', '\\n'))
     
     with open('./tmp/Data/interface/translations/' + translate_file_name_header + lang[1] + '.txt', mode='wb') as output:
         output.write(codecs.BOM_UTF16_LE)

@@ -10,8 +10,8 @@ E-mail - chesko.tesmod@gmail.com
 
 ===================================================
 
-Version: 4.0
-Date: 3/23/2016
+Version: 4.0.2
+Date: 6/18/2016
 
 Please see:
 

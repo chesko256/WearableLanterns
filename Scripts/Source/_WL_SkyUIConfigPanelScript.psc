@@ -45,8 +45,7 @@ int Interface_UIMeterDisplayTime_OID
 int Interface_UIMeterColor_OID
 int Interface_UIMeterOpacity_OID
 int Interface_UIMeterFillDirection_OID
-int Interface_UIMeterHeight_OID
-int Interface_UIMeterWidth_OID
+int Interface_UIMeterScale_OID
 int Interface_UIMeterXPos_OID
 int Interface_UIMeterYPos_OID
 int Interface_UIMeterHAnchor_OID
@@ -378,8 +377,7 @@ function PageReset_Interface()
 		Interface_UIMeterColor_OID = AddColorOption("$WearableLanternsInterfaceSettingUIColor", _WL_SettingMeterOilColor.GetValueInt())
 		Interface_UIMeterOpacity_OID = AddSliderOption("$WearableLanternsInterfaceSettingUIMeterOpacity", _WL_SettingMeterOilOpacity.GetValue(), "{0}%")
 		Interface_UIMeterFillDirection_OID = AddMenuOption("$WearableLanternsInterfaceSettingUIMeterFillDirection", FillDirectionList[_WL_SettingMeterOilFillDirection.GetValueInt()])
-		Interface_UIMeterHeight_OID = AddSliderOption("$WearableLanternsInterfaceSettingUIMeterHeight", _WL_SettingMeterOilHeight.GetValue(), "{1}")
-		Interface_UIMeterWidth_OID = AddSliderOption("$WearableLanternsInterfaceSettingUIMeterLength", _WL_SettingMeterOilWidth.GetValue(), "{1}")
+		Interface_UIMeterScale_OID = AddSliderOption("$WearableLanternsInterfaceSettingUIMeterScale", GetMeterScale(_WL_SettingMeterOilWidth.GetValue(), NORMAL_METER_DEFAULT_WIDTH), "{2}")
 		Interface_UIMeterXPos_OID = AddSliderOption("$WearableLanternsInterfaceSettingUIMeterXPos", _WL_SettingMeterOilXPos.GetValue(), "{1}")
 		Interface_UIMeterYPos_OID = AddSliderOption("$WearableLanternsInterfaceSettingUIMeterYPos", _WL_SettingMeterOilYPos.GetValue(), "{1}")
 		Interface_UIMeterHAnchor_OID = AddMenuOption("$WearableLanternsInterfaceSettingUIMeterHAnchor", HorizontalAnchorList[_WL_SettingMeterOilHAnchor.GetValueInt()])
@@ -390,8 +388,7 @@ function PageReset_Interface()
 		Interface_UIMeterColor_OID = AddColorOption("$WearableLanternsInterfaceSettingUIColor", _WL_SettingMeterPollenColor.GetValueInt())
 		Interface_UIMeterOpacity_OID = AddSliderOption("$WearableLanternsInterfaceSettingUIMeterOpacity", _WL_SettingMeterPollenOpacity.GetValue(), "{0}%")
 		Interface_UIMeterFillDirection_OID = AddMenuOption("$WearableLanternsInterfaceSettingUIMeterFillDirection", FillDirectionList[_WL_SettingMeterPollenFillDirection.GetValueInt()])
-		Interface_UIMeterHeight_OID = AddSliderOption("$WearableLanternsInterfaceSettingUIMeterHeight", _WL_SettingMeterPollenHeight.GetValue(), "{1}")
-		Interface_UIMeterWidth_OID = AddSliderOption("$WearableLanternsInterfaceSettingUIMeterLength", _WL_SettingMeterPollenWidth.GetValue(), "{1}")
+		Interface_UIMeterScale_OID = AddSliderOption("$WearableLanternsInterfaceSettingUIMeterScale", GetMeterScale(_WL_SettingMeterPollenWidth.GetValue(), NORMAL_METER_DEFAULT_WIDTH), "{2}")
 		Interface_UIMeterXPos_OID = AddSliderOption("$WearableLanternsInterfaceSettingUIMeterXPos", _WL_SettingMeterPollenXPos.GetValue(), "{1}")
 		Interface_UIMeterYPos_OID = AddSliderOption("$WearableLanternsInterfaceSettingUIMeterYPos", _WL_SettingMeterPollenYPos.GetValue(), "{1}")
 		Interface_UIMeterHAnchor_OID = AddMenuOption("$WearableLanternsInterfaceSettingUIMeterHAnchor", HorizontalAnchorList[_WL_SettingMeterPollenHAnchor.GetValueInt()])
@@ -485,16 +482,14 @@ event OnOptionHighlight(int option)
 		SetInfoText("$WearableLanternsMeterDisplayHighlight")
 	elseif option == Interface_UIMeterLayout_OID
 		SetInfoText("$WearableLanternsMeterLayoutHighlight")
-	elseif option == Interface_UIMeterWidth_OID
-		SetInfoText("$WearableLanternsMeterLengthHighlight")
 	elseif option == Interface_UIMeterOpacity_OID
 		SetInfoText("$WearableLanternsMeterOpacityHighlight")
 	elseif option == Interface_UIMeterDisplayTime_OID
 		SetInfoText("$WearableLanternsMeterDisplayTimeHighlight")
 	elseif option == Interface_UIMeterFillDirection_OID
 		SetInfoText("$WearableLanternsMeterFillDirectionHighlight")
-	elseif option == Interface_UIMeterHeight_OID
-		SetInfoText("$WearableLanternsMeterHeightHighlight")
+	elseif option == Interface_UIMeterScale_OID
+		SetInfoText("$WearableLanternsMeterScaleHighlight")
 	elseif option == Interface_UIMeterColor_OID
 		SetInfoText("$WearableLanternsMeterColorHighlight")
 	elseif option == Interface_UIMeterXPos_OID
@@ -738,28 +733,20 @@ event OnOptionDefault(int option)
 			UpdateMeterConfiguration(1)
 			SaveSettingToCurrentProfileFloat("pollen_meter_opacity", 100.0)
 		endif
-	elseif option == Interface_UIMeterHeight_OID
+	elseif option == Interface_UIMeterScale_OID
 		if configuring_oil_meter
 			_WL_SettingMeterOilHeight.SetValue(NORMAL_METER_DEFAULT_HEIGHT)
-			SetSliderOptionValue(Interface_UIMeterHeight_OID, NORMAL_METER_DEFAULT_HEIGHT, "{1}")
+			_WL_SettingMeterOilWidth.SetValue(NORMAL_METER_DEFAULT_WIDTH)
+			SetSliderOptionValue(Interface_UIMeterScale_OID, 1.0, "{2}")
 			UpdateMeterConfiguration(0)
 			SaveSettingToCurrentProfileFloat("oil_meter_height", NORMAL_METER_DEFAULT_HEIGHT)
-		elseif configuring_pollen_meter
-			_WL_SettingMeterPollenHeight.SetValue(NORMAL_METER_DEFAULT_HEIGHT)
-			SetSliderOptionValue(Interface_UIMeterHeight_OID, NORMAL_METER_DEFAULT_HEIGHT, "{1}")
-			UpdateMeterConfiguration(1)
-			SaveSettingToCurrentProfileFloat("pollen_meter_height", NORMAL_METER_DEFAULT_HEIGHT)
-		endif
-	elseif option == Interface_UIMeterWidth_OID
-		if configuring_oil_meter
-			_WL_SettingMeterOilWidth.SetValue(NORMAL_METER_DEFAULT_WIDTH)
-			SetSliderOptionValue(Interface_UIMeterWidth_OID, NORMAL_METER_DEFAULT_WIDTH, "{1}")
-			UpdateMeterConfiguration(0)
 			SaveSettingToCurrentProfileFloat("oil_meter_width", NORMAL_METER_DEFAULT_WIDTH)
 		elseif configuring_pollen_meter
+			_WL_SettingMeterPollenHeight.SetValue(NORMAL_METER_DEFAULT_HEIGHT)
 			_WL_SettingMeterPollenWidth.SetValue(NORMAL_METER_DEFAULT_WIDTH)
-			SetSliderOptionValue(Interface_UIMeterWidth_OID, NORMAL_METER_DEFAULT_WIDTH, "{1}")
+			SetSliderOptionValue(Interface_UIMeterScale_OID, 1.0, "{2}")
 			UpdateMeterConfiguration(1)
+			SaveSettingToCurrentProfileFloat("pollen_meter_height", NORMAL_METER_DEFAULT_HEIGHT)
 			SaveSettingToCurrentProfileFloat("pollen_meter_width", NORMAL_METER_DEFAULT_WIDTH)
 		endif
 	elseif option == Interface_UIMeterXPos_OID
@@ -817,29 +804,17 @@ event OnOptionSliderOpen(int option)
 			SetSliderDialogRange(0.0, 100.0)
 			SetSliderDialogInterval(1.0)
 		endif
-	elseif option == Interface_UIMeterHeight_OID
+	elseif option == Interface_UIMeterScale_OID
 		if configuring_oil_meter
-			SetSliderDialogStartValue(_WL_SettingMeterOilHeight.GetValue())
-			SetSliderDialogDefaultValue(NORMAL_METER_DEFAULT_HEIGHT)
-			SetSliderDialogRange(NORMAL_METER_MIN_HEIGHT, NORMAL_METER_MAX_HEIGHT)
-			SetSliderDialogInterval(0.1)
+			SetSliderDialogStartValue(GetMeterScale(_WL_SettingMeterOilWidth.GetValue(), NORMAL_METER_DEFAULT_WIDTH))
+			SetSliderDialogDefaultValue(1.0)
+			SetSliderDialogRange(0.0, 1.0)
+			SetSliderDialogInterval(0.05)
 		elseif configuring_pollen_meter
-			SetSliderDialogStartValue(_WL_SettingMeterPollenHeight.GetValue())
-			SetSliderDialogDefaultValue(NORMAL_METER_DEFAULT_HEIGHT)
-			SetSliderDialogRange(NORMAL_METER_MIN_HEIGHT, NORMAL_METER_MAX_HEIGHT)
-			SetSliderDialogInterval(0.1)
-		endif
-	elseif option == Interface_UIMeterWidth_OID
-		if configuring_oil_meter
-			SetSliderDialogStartValue(_WL_SettingMeterOilWidth.GetValue())
-			SetSliderDialogDefaultValue(NORMAL_METER_DEFAULT_WIDTH)
-			SetSliderDialogRange(NORMAL_METER_MIN_WIDTH, NORMAL_METER_MAX_WIDTH)
-			SetSliderDialogInterval(0.1)
-		elseif configuring_pollen_meter
-			SetSliderDialogStartValue(_WL_SettingMeterPollenWidth.GetValue())
-			SetSliderDialogDefaultValue(NORMAL_METER_DEFAULT_WIDTH)
-			SetSliderDialogRange(NORMAL_METER_MIN_WIDTH, NORMAL_METER_MAX_WIDTH)
-			SetSliderDialogInterval(0.1)
+			SetSliderDialogStartValue(GetMeterScale(_WL_SettingMeterPollenWidth.GetValue(), NORMAL_METER_DEFAULT_WIDTH))
+			SetSliderDialogDefaultValue(1.0)
+			SetSliderDialogRange(0.0, 1.0)
+			SetSliderDialogInterval(0.05)
 		endif
 	elseif option == Interface_UIMeterXPos_OID
 		if configuring_oil_meter
@@ -895,29 +870,21 @@ event OnOptionSliderAccept(int option, float value)
 			UpdateMeterConfiguration(1)
 			SaveSettingToCurrentProfileFloat("pollen_meter_opacity", value)
 		endif
-	elseif option == Interface_UIMeterHeight_OID
+	elseif option == Interface_UIMeterScale_OID
 		if configuring_oil_meter
-			_WL_SettingMeterOilHeight.SetValue(value)
-			SetSliderOptionValue(Interface_UIMeterHeight_OID, value, "{1}")
+			_WL_SettingMeterOilHeight.SetValue(NORMAL_METER_DEFAULT_HEIGHT * value)
+			_WL_SettingMeterOilWidth.SetValue(NORMAL_METER_DEFAULT_WIDTH * value)
+			SetSliderOptionValue(Interface_UIMeterScale_OID, value, "{2}")
 			UpdateMeterConfiguration(0)
-			SaveSettingToCurrentProfileFloat("oil_meter_height", value)
+			SaveSettingToCurrentProfileFloat("oil_meter_height", _WL_SettingMeterOilHeight.GetValue())
+			SaveSettingToCurrentProfileFloat("oil_meter_width", _WL_SettingMeterOilWidth.Getvalue())
 		elseif configuring_pollen_meter
-			_WL_SettingMeterPollenHeight.SetValue(value)
-			SetSliderOptionValue(Interface_UIMeterHeight_OID, value, "{1}")
+			_WL_SettingMeterPollenHeight.SetValue(NORMAL_METER_DEFAULT_HEIGHT * value)
+			_WL_SettingMeterPollenWidth.SetValue(NORMAL_METER_DEFAULT_WIDTH * value)
+			SetSliderOptionValue(Interface_UIMeterScale_OID, value, "{2}")
 			UpdateMeterConfiguration(1)
-			SaveSettingToCurrentProfileFloat("pollen_meter_height", value)
-		endif
-	elseif option == Interface_UIMeterWidth_OID
-		if configuring_oil_meter
-			_WL_SettingMeterOilWidth.SetValue(value)
-			SetSliderOptionValue(Interface_UIMeterWidth_OID, value, "{1}")
-			UpdateMeterConfiguration(0)
-			SaveSettingToCurrentProfileFloat("oil_meter_width", value)
-		elseif configuring_pollen_meter
-			_WL_SettingMeterPollenWidth.SetValue(value)
-			SetSliderOptionValue(Interface_UIMeterWidth_OID, value, "{1}")
-			UpdateMeterConfiguration(1)
-			SaveSettingToCurrentProfileFloat("pollen_meter_width", value)
+			SaveSettingToCurrentProfileFloat("pollen_meter_height", _WL_SettingMeterPollenHeight.GetValue())
+			SaveSettingToCurrentProfileFloat("pollen_meter_width", _WL_SettingMeterPollenWidth.GetValue())
 		endif
 	elseif option == Interface_UIMeterXPos_OID
 		if configuring_oil_meter
@@ -2019,6 +1986,10 @@ function SendEvent_WearableLanternRemovePollenMeter()
     if handle
         ModEvent.Send(handle)
     endif
+endFunction
+
+float function GetMeterScale(float afCurrentWidth, float afBaseWidth)
+	return afCurrentWidth / afBaseWidth
 endFunction
 
 function WLDebug(int aiSeverity, string asLogMessage)

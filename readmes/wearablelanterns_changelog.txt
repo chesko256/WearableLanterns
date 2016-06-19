@@ -5,6 +5,38 @@ Wearable Lanterns
 Change Log
 
 ===================================================
+Release 4.0.2 (6/18/2016) 
+
+Features and Changes
+====================
+
+When dropping a lantern from your inventory, you will now be prompted if you want to drop the lantern lit, or unlit.
+
+Replaced Height and Width options in the meter config page with Scale instead.
+
+Added a Settings Profile read / write test at start-up that will notify the player of an issue if profiles cannot be read from / written to.
+
+Bug Fixes
+=========
+
+Fixed a bug in a piece of code shared with Frostfall / Last Seed.
+
+Fixed a bug where the Y position of the pollen meter was not being saved correctly.
+
+
+Release 4.0.1 (3/24/2016) 
+
+Bug Fixes 
+========= 
+
+Fixed a bug where the player would hear a lantern toggle when holding a control or pressing a hotkey, even when a lantern was not equipped. 
+
+Fixed a bug when using "Hold Control" with the "Use" control, where activating books in the world would cause the lantern to toggle after you were finished reading it. 
+
+The lantern will no longer toggle when using "Hold Control" and the "Use" control when grabbing and moving an object in the world. 
+
+Fixed a bug where machine-translated MCM translation files had an error on the "General" page title line.
+
 Release 4.0 (3/23/2016)
 
 Upgrade Instructions

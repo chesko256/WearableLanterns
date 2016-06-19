@@ -27,6 +27,7 @@ Activator property FireflyBUG auto hidden
 
 int property SKSE_MIN_VERSION = 10703 autoReadOnly
 Message property _WL_SKSE_Error auto
+Message property _WL_Error_JSONReadWrite auto
 
 ;Legacy mod warnings
 bool bIsGuardLanternLoaded
@@ -54,6 +55,11 @@ function CompatibilityCheck()
 	trace("[Wearable Lanterns]=============================================================================================")
 	
 	CheckSKSE()
+
+	bool can_read_write = CheckJSONReadWrite()
+	if !can_read_write
+		_WL_Error_JSONReadWrite.Show()
+	endif
 
 	if _WL_Upgraded_4_0.GetValueInt() != 2
 		Upgrade_4_0()
@@ -125,6 +131,58 @@ function Upgrade_4_0()
 	
 	trace("[Wearable Lanterns] Upgraded to 4.0.")
 	_WL_Upgraded_4_0.SetValueInt(2)
+endFunction
+
+bool function CheckJSONReadWrite()
+	; Attempt to open the file and write a value.
+	string path = "../WearableLanternsData/startup_test_file"
+	string test_key = "test_key"
+	JsonUtil.IntListResize(path, test_key, 7)
+	JsonUtil.IntListSet(path, test_key, 0, 0)
+	JsonUtil.IntListSet(path, test_key, 1, 1)
+	JsonUtil.IntListSet(path, test_key, 2, 100)
+	JsonUtil.IntListSet(path, test_key, 3, 1000)
+	JsonUtil.IntListSet(path, test_key, 4, 5555)
+	JsonUtil.IntListSet(path, test_key, 5, -1)
+	JsonUtil.IntListSet(path, test_key, 6, 123456)
+
+	; Test saving the file.
+	bool save_success = JsonUtil.Save(path)
+	if !save_success
+		debug.trace("[Frostfall][ERROR] Could not save test JSON file. Check that you have folder read/write permissions to Skyrim/Data/SKSE/FrostfallData (or, for Mod Organizer users, Mod Organizer/overwrite/SKSE/FrostfallData).")
+		return false
+	endif
+
+	; Test loading the file.
+	bool load_success = JsonUtil.Load(path)
+	if !load_success
+		debug.trace("[Frostfall][ERROR] Could not load test JSON file. Check that you have folder read/write permissions to Skyrim/Data/SKSE/FrostfallData (or, for Mod Organizer users, Mod Organizer/overwrite/SKSE/FrostfallData).")
+		return false
+	endif
+	; Test reading back the values.
+	int val0 = JsonUtil.IntListGet(path, test_key, 0)
+	int val1 = JsonUtil.IntListGet(path, test_key, 1)
+	int val2 = JsonUtil.IntListGet(path, test_key, 2)
+	int val3 = JsonUtil.IntListGet(path, test_key, 3)
+	int val4 = JsonUtil.IntListGet(path, test_key, 4)
+	int val5 = JsonUtil.IntListGet(path, test_key, 5)
+	int val6 = JsonUtil.IntListGet(path, test_key, 6)
+
+	if val0 == 0 		&& \
+	   val1 == 1 		&& \
+	   val2 == 100 		&& \
+	   val3 == 1000 	&& \
+	   val4 == 5555 	&& \
+	   val5 == -1   	&& \
+	   val6 == 123456
+
+	    ; Success - Clear the values for the next test.
+		JsonUtil.IntListClear(path, test_key)
+		return true
+	else
+		debug.trace("[Frostfall][ERROR] Could not read from test JSON file. Check that you have folder read/write permissions to Skyrim/Data/SKSE/FrostfallData (or, for Mod Organizer users, Mod Organizer/overwrite/SKSE/FrostfallData).")
+		return false
+	endif
 endFunction
 
 function CheckSKSE()
