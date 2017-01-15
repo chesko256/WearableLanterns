@@ -5,6 +5,30 @@ Wearable Lanterns
 Change Log
 
 ===================================================
+<<<<<<< HEAD
+Release 4.0.3 (1/10/2017) 
+
+Features and Changes
+====================
+
+Skyrim Special Edition now supported!
+
+Removed SkyUI and SKSE requirements for Classic Skyrim.
+
+"Turn Off when Sneaking" is now on by default.
+
+Added the "Options: Wearable Lanterns", "Lantern: Toggle" and "Lantern: Check Fuel" powers, which are granted on Special Edition or when SkyUI is not installed.
+
+Bug Fixes
+=========
+
+"Turn Off when Sneaking" no longer affects followers, in order to avoid a CTD. To disable your followers' lanterns, speak to them and select "About your lantern...", "(All Followers) Keep your lantern off for now." You can select another option from the same dialogue menu to re-enable them.
+
+When using "Hold Control to Toggle", if using the Sprint key, your lantern will no longer toggle on or off when sprinting, only when standing still with the key pressed.
+
+
+=======
+>>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 Release 4.0.2 (6/18/2016) 
 
 Features and Changes
