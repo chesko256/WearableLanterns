@@ -58,8 +58,6 @@ Scripts\_WL_Strings.pex
 Scripts\_WL_SwapLitLanternScript.pex
 Scripts\_WL_TriggerLightEffect.pex
 Scripts\_WL_VendorStock.pex
-<<<<<<< HEAD
-Scripts\_WL_Conditions.pex
 Scripts\_WL_Conditions.pex
 Scripts\_WL_DialogueFrag_Stealth.pex
 Scripts\_WL_DialogueFrag_StealthOff.pex
@@ -74,8 +72,6 @@ Scripts\Source\_WL_LegacyCheckFuel.psc
 Scripts\Source\_WL_LegacyMenu.psc
 Scripts\Source\_WL_LegacyToggleLantern.psc
 Scripts\Source\_WL_SKSETypesDelegate.psc
-=======
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 Scripts\Source\JsonUtil.psc
 Scripts\Source\StorageUtil.psc
 Scripts\Source\PRKF__WL_CatchTorchbug_020162FA.psc

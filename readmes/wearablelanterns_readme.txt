@@ -10,13 +10,8 @@ E-mail - chesko.tesmod@gmail.com
 
 ===================================================
 
-<<<<<<< HEAD
 Version: 4.0.3
 Date: 1/10/2017
-=======
-Version: 4.0.2
-Date: 6/18/2016
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 
 Please see:
 

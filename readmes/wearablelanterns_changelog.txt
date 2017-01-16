@@ -5,7 +5,7 @@ Wearable Lanterns
 Change Log
 
 ===================================================
-<<<<<<< HEAD
+
 Release 4.0.3 (1/10/2017) 
 
 Features and Changes
@@ -27,8 +27,6 @@ Bug Fixes
 When using "Hold Control to Toggle", if using the Sprint key, your lantern will no longer toggle on or off when sprinting, only when standing still with the key pressed.
 
 
-=======
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 Release 4.0.2 (6/18/2016) 
 
 Features and Changes
