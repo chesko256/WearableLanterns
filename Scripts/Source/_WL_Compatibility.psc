@@ -2,10 +2,8 @@ Scriptname _WL_Compatibility extends ReferenceAlias
 
 import debug
 
-<<<<<<< HEAD
 _WL_Conditions property Conditions auto 					; Condition values
 ReferenceAlias property LanternQuestAlias auto
-
 
 Actor property PlayerRef auto
 Perk property _WL_CatchTorchbug auto
@@ -14,16 +12,6 @@ Spell property _WL_LegacyToggleLanternSpell auto
 Spell property _WL_LegacyCheckFuelSpell auto
 
 bool property isSKSELoaded auto hidden
-=======
-_WL_SkyUIConfigPanelScript property WLConfig Auto 			;SkyUI Configuration script
-ReferenceAlias property LanternQuestAlias auto
-_WL_OilMeterInterfaceHandler property OilMeterHandler auto
-_WL_PollenMeterInterfaceHandler property PollenMeterHandler auto
-
-Actor property PlayerRef auto
-Perk property _WL_CatchTorchbug auto
-
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 bool property bIsSKYUILoaded auto hidden
 bool property bIsDLC1Loaded auto hidden
 bool property bIsDLC2Loaded auto hidden
@@ -33,11 +21,8 @@ Formlist property _WL_PollenFlowers auto
 Formlist property _WL_GlowingBugList auto
 FormList property _WL_InteriorWorldspaces auto
 
-<<<<<<< HEAD
 GlobalVariable property _WL_SettingOil auto
 GlobalVariable property _WL_SettingFeeding auto
-=======
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 GlobalVariable property _WL_SettingOffWhenSneaking auto
 GlobalVariable property _WL_Upgraded_4_0 auto
 
@@ -60,7 +45,6 @@ Message property _WL_GuardLanternWarning auto
 Message property _WL_KhajiitLanternWarning auto
 Message property _WL_SkyUIErrorMessage auto
 
-<<<<<<< HEAD
 bool function GetSKSELoaded()
 	return isSKSELoaded
 endFunction
@@ -70,38 +54,22 @@ Event OnPlayerLoadGame()
 	RegisterForEventsOnLoad()
 	AddPerks()
 	AddSpells()
-=======
-Event OnPlayerLoadGame()
-	CompatibilityCheck()
-	WLConfig.LoadProfileOnStartup()
-	RegisterForEventsOnLoad()
-	AddPerks()
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 	RegisterForKeysOnLoad()
 endEvent
 
 function CompatibilityCheck()
 	trace("[Wearable Lanterns]=============================================================================================")
 	trace("[Wearable Lanterns]                  Wearable Lanterns is now performing compatibility checks.                  ")
-<<<<<<< HEAD
 	trace("[Wearable Lanterns]     Errors related to missing files may follow. These are NORMAL and should be ignored.     ")
-=======
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 	trace("[Wearable Lanterns]=============================================================================================")
 	
 	CheckSKSE()
 
-<<<<<<< HEAD
 	if isSKSELoaded
 		bool can_read_write = CheckJSONReadWrite()
 		if !can_read_write
 			_WL_Error_JSONReadWrite.Show()
 		endif
-=======
-	bool can_read_write = CheckJSONReadWrite()
-	if !can_read_write
-		_WL_Error_JSONReadWrite.Show()
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 	endif
 
 	if _WL_Upgraded_4_0.GetValueInt() != 2
@@ -127,13 +95,6 @@ function CompatibilityCheck()
 		RemovePaperLanterns()
 	endif
 
-<<<<<<< HEAD
-=======
-	if !bIsSKYUILoaded
-		_WL_SkyUIErrorMessage.Show()
-	endif
-
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 	if GetFirefly
 		FireflyBUG = GetFirefly
 		bIsBUGSLoaded = true
@@ -166,7 +127,6 @@ function CompatibilityCheck()
 	trace("[Wearable Lanterns]=============================================================================================")
 	trace("[Wearable Lanterns]                                Compatibility check complete.                                ")
 	trace("[Wearable Lanterns]=============================================================================================")
-<<<<<<< HEAD
 
 	if bIsSKYUILoaded
 		SendEvent_SKSE_LoadProfileOnStartup()
@@ -179,19 +139,6 @@ function Upgrade_4_0()
 		trace("[Wearable Lanterns] Upgraded to 4.0.")
 		_WL_Upgraded_4_0.SetValueInt(2)
 	endif
-=======
-endFunction
-
-function Upgrade_4_0()
-	; Re-run the MCM initialization.
-	WLConfig.OnConfigInit()
-
-	; Load a meter preset for the user's display aspect ratio
-	WLConfig.ApplyMeterPreset(1)
-	
-	trace("[Wearable Lanterns] Upgraded to 4.0.")
-	_WL_Upgraded_4_0.SetValueInt(2)
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 endFunction
 
 bool function CheckJSONReadWrite()
@@ -251,7 +198,6 @@ function CheckSKSE()
 	if skse_loaded
 		int skse_version = (SKSE.GetVersion() * 10000) + (SKSE.GetVersionMinor() * 100) + SKSE.GetVersionBeta()
 		if skse_version < SKSE_MIN_VERSION
-<<<<<<< HEAD
 			isSKSELoaded = false
 			;_WL_SKSE_Error.Show(((skse_version as float) / 10000), ((SKSE_MIN_VERSION as float) / 10000))
 			debug.trace("[Wearable Lanterns][Warning] Detected SKSE version " + ((skse_version as float) / 10000) + ", expected " + ((SKSE_MIN_VERSION as float) / 10000) + " or newer.")			
@@ -263,16 +209,6 @@ function CheckSKSE()
 		isSKSELoaded = false
 		;_WL_SKSE_Error.Show(((0.0) / 10000), ((SKSE_MIN_VERSION as float) / 10000))
 		debug.trace("[Wearable Lanterns][Warning] Detected SKSE version " + ((0.0) / 10000) + ", expected " + ((SKSE_MIN_VERSION as float) / 10000) + " or newer.")
-=======
-			_WL_SKSE_Error.Show(((skse_version as float) / 10000), ((SKSE_MIN_VERSION as float) / 10000))
-			debug.trace("[Wearable Lanterns][Error] Detected SKSE version " + ((skse_version as float) / 10000) + ", expected " + ((SKSE_MIN_VERSION as float) / 10000) + " or newer.")			
-		else
-			debug.trace("[Wearable Lanterns] Detected SKSE version " + ((skse_version as float) / 10000) + " (expected " + ((SKSE_MIN_VERSION as float) / 10000) + " or newer, success!)")
-		endif
-	else
-		_WL_SKSE_Error.Show(((0.0) / 10000), ((SKSE_MIN_VERSION as float) / 10000))
-		debug.trace("[Wearable Lanterns][Error] Detected SKSE version " + ((0.0) / 10000) + ", expected " + ((SKSE_MIN_VERSION as float) / 10000) + " or newer.")
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 	endif
 endFunction
 
@@ -293,11 +229,7 @@ function DLC1LoadUp()
 endFunction
 
 function DLC2LoadUp()
-<<<<<<< HEAD
 	Conditions.DLC2Loaded = true
-=======
-	WLConfig.DLC2Loaded = true
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 endFunction
 
 Activator function GetBUGSLoaded()
@@ -333,11 +265,7 @@ Activator function GetBUGSLoaded()
 endFunction
 
 function RemovePaperLanterns()
-<<<<<<< HEAD
 	Conditions.DLC2Loaded = false
-=======
-	WLConfig.DLC2Loaded = false
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 endFunction
 
 function AddPerks()
@@ -346,7 +274,6 @@ function AddPerks()
 	endif
 endFunction
 
-<<<<<<< HEAD
 function AddSpells()
 	if bIsSKYUILoaded
 		if PlayerRef.HasSpell(_WL_LegacyConfigSpell)
@@ -373,8 +300,6 @@ function AddSpells()
 	endif
 endFunction
 
-=======
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 function RegisterForEventsOnLoad()
 	(LanternQuestAlias as _WL_LanternOil_v3).RegisterForSingleUpdateGameTime(0.1)
 	if _WL_SettingOffWhenSneaking.GetValueInt() == 2
@@ -382,7 +307,6 @@ function RegisterForEventsOnLoad()
 	else
 		(LanternQuestAlias as _WL_LanternOil_v3).UnregisterForSneakEvents()
 	endif
-<<<<<<< HEAD
 	SendEvent_SKSE_RegisterForEventsOnLoad()
 endFunction
 
@@ -451,22 +375,5 @@ bool function IsPluginLoaded(int iFormID, string sPluginName)
 		else
 			return false
 		endif
-=======
-	OilMeterHandler.RegisterForEvents()
-	PollenMeterHandler.RegisterForEvents()
-endFunction
-
-Function RegisterForKeysOnLoad()
-	WLConfig.RegisterForKeysOnLoad()
-endFunction
-
-bool function IsPluginLoaded(int iFormID, string sPluginName)
-	int i = Game.GetModByName(sPluginName)
-	if i != 255
-		debug.trace("[Wearable Lanterns] Loaded: " + sPluginName)
-		return true
-	else
-		return false
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 	endif
 endFunction

@@ -7,10 +7,6 @@ import utility
 
 Actor property PlayerRef auto
 ReferenceAlias property CompatibilityAlias auto
-<<<<<<< HEAD
-=======
-_WL_SkyUIConfigPanelScript property Config auto
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 FormList property _WL_InteriorWorldspaces auto
 
 ;Settings
@@ -68,7 +64,6 @@ Message property _WL_TorchbugCatch auto
 Message property _WL_TorchbugNoPollen auto
 Message property _WL_TorchbugRemainingFlowers auto
 Message property _WL_TorchbugFlowersUsed auto
-<<<<<<< HEAD
 Message property _WL_LanternOilUsed auto
 Message property _WL_DropLitPrompt auto
 
@@ -80,14 +75,6 @@ Message property _WL_LanternOilRemainingMostlyFull auto
 Message property _WL_LanternOilRemainingEmptyRanOut auto
 Message property _WL_LanternPollenRemainingEmptyRanOut auto
 Message property _WL_LanternOilRemainingFull auto
-=======
-Message property _WL_LanternOilRemainingHalfFull auto
-Message property _WL_LanternOilRemainingMostlyEmpty auto
-Message property _WL_LanternOilRemainingEmptyRanOut auto
-Message property _WL_LanternPollenRemainingEmptyRanOut auto
-Message property _WL_LanternOilUsed auto
-Message property _WL_DropLitPrompt auto
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 
 ; enum
 int property current_lantern = 0 auto hidden
@@ -271,7 +258,6 @@ function SetLantern(Form akBaseObject, int aiLanternIndex, int aiLanternState, s
 	;The player has a lantern
 	current_lantern = aiLanternState
 	ToggleLanternOn()
-<<<<<<< HEAD
 
 	if (CompatibilityAlias as _WL_Compatibility).bIsSKYUILoaded
 		SendEvent_SKSE_CheckFuel()
@@ -318,9 +304,6 @@ function ShowPollenRemainingMessage(int pollen_level)
 	elseif pollen_level == 32
 		_WL_LanternOilRemainingFull.Show()
 	endif
-=======
-	Config.CheckFuel()
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 endFunction
 
 Event OnItemAdded(Form akBaseItem, int aiItemCount, ObjectReference akItemReference, ObjectReference akSourceContainer)
@@ -886,7 +869,6 @@ bool function IsRefInInterior(ObjectReference akReference)
 	endif
 endFunction
 
-<<<<<<< HEAD
 function SendEvent_SKSE_CheckFuel()
 	if (CompatibilityAlias as _WL_Compatibility).isSKSELoaded
 		WLDebug(0, "SendEvent_CheckFuel")
@@ -904,18 +886,10 @@ function SendEvent_UpdateOilMeter()
 		if handle
 			ModEvent.Send(handle)
 		endif
-=======
-function SendEvent_UpdateOilMeter()
-	WLDebug(0, "SendEvent_UpdateOilMeter")
-	int handle = ModEvent.Create("WearableLanterns_UpdateOilMeter")
-	if handle
-		ModEvent.Send(handle)
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 	endif
 endFunction
 
 function SendEvent_ForceOilMeterDisplay(bool abFlash = false)
-<<<<<<< HEAD
 	if (CompatibilityAlias as _WL_Compatibility).isSKSELoaded
 		WLDebug(0, "SendEvent_ForceOilMeterDisplay")
 		int handle = ModEvent.Create("WearableLanterns_ForceOilMeterDisplay")
@@ -923,35 +897,20 @@ function SendEvent_ForceOilMeterDisplay(bool abFlash = false)
 			ModEvent.PushBool(handle, abFlash)
 			ModEvent.Send(handle)
 		endif
-=======
-	WLDebug(0, "SendEvent_ForceOilMeterDisplay")
-	int handle = ModEvent.Create("WearableLanterns_ForceOilMeterDisplay")
-	if handle
-		ModEvent.PushBool(handle, abFlash)
-		ModEvent.Send(handle)
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 	endif
 endFunction
 
 function SendEvent_UpdatePollenMeter()
-<<<<<<< HEAD
 	if (CompatibilityAlias as _WL_Compatibility).isSKSELoaded
 		WLDebug(0, "SendEvent_UpdatePollenMeter")
 		int handle = ModEvent.Create("WearableLanterns_UpdatePollenMeter")
 		if handle
 			ModEvent.Send(handle)
 		endif
-=======
-	WLDebug(0, "SendEvent_UpdatePollenMeter")
-	int handle = ModEvent.Create("WearableLanterns_UpdatePollenMeter")
-	if handle
-		ModEvent.Send(handle)
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 	endif
 endFunction
 
 function SendEvent_ForcePollenMeterDisplay(bool abFlash = false)
-<<<<<<< HEAD
 	if (CompatibilityAlias as _WL_Compatibility).isSKSELoaded
 		WLDebug(0, "SendEvent_ForcePollenMeterDisplay")
 		int handle = ModEvent.Create("WearableLanterns_ForcePollenMeterDisplay")
@@ -959,30 +918,16 @@ function SendEvent_ForcePollenMeterDisplay(bool abFlash = false)
 			ModEvent.PushBool(handle, abFlash)
 			ModEvent.Send(handle)
 		endif
-=======
-	WLDebug(0, "SendEvent_ForcePollenMeterDisplay")
-	int handle = ModEvent.Create("WearableLanterns_ForcePollenMeterDisplay")
-	if handle
-		ModEvent.PushBool(handle, abFlash)
-		ModEvent.Send(handle)
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 	endif
 endFunction
 
 function SendEvent_CheckMeterRequirements()
-<<<<<<< HEAD
 	if (CompatibilityAlias as _WL_Compatibility).isSKSELoaded
 		WLDebug(0, "SendEvent_CheckMeterRequirements")
 		int handle = ModEvent.Create("WearableLanterns_CheckMeterRequirements")
 		if handle
 			ModEvent.Send(handle)
 		endif
-=======
-	WLDebug(0, "SendEvent_CheckMeterRequirements")
-	int handle = ModEvent.Create("WearableLanterns_CheckMeterRequirements")
-	if handle
-		ModEvent.Send(handle)
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 	endif
 endFunction
 

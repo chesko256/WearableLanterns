@@ -26,7 +26,6 @@ Actor akSpeaker = akSpeakerRef as Actor
 		akSpeaker.AddItem(_WL_WearablePaperApparelFront)
 		akSpeaker.EquipItem(_WL_WearablePaperApparelFront, true, true)
 	endif
-<<<<<<< HEAD
 	if (CompatibilityAlias as _WL_Compatibility).GetSKSELoaded()
 		Keyword _WL_NPCLanternPositionDatastore = Game.GetFormFromFile(0x01D9A9, "Chesko_WearableLantern.esp") as Keyword
 		int form_id = akSpeaker.GetFormID()
@@ -37,16 +36,6 @@ Actor akSpeaker = akSpeakerRef as Actor
 		string dskey = (form_id % 16777216) + "___" + Game.GetModName(mod_index)
 		StorageUtil.SetIntValue(_WL_NPCLanternPositionDatastore, dskey, 2) ; 1
 	endif
-=======
-	Keyword _WL_NPCLanternPositionDatastore = Game.GetFormFromFile(0x01D9A9, "Chesko_WearableLantern.esp") as Keyword
-	int form_id = akSpeaker.GetFormID()
-	int mod_index = form_id/16777216
-	if mod_index < 0
-		mod_index = 0
-	endif
-	string dskey = (form_id % 16777216) + "___" + Game.GetModName(mod_index)
-	StorageUtil.SetIntValue(_WL_NPCLanternPositionDatastore, dskey, 2) ; 1
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -66,7 +55,4 @@ Armor property _WL_WearableLanternInvDisplay auto
 Armor property _WL_WearableTorchbugInvDisplay auto
 Armor property _WL_WearableTorchbugInvDisplayRED auto
 Armor property _WL_WearablePaperInvDisplay auto
-<<<<<<< HEAD
 ReferenceAlias property CompatibilityAlias auto
-=======
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19

@@ -1,10 +1,6 @@
 scriptname _WL_NPCLanternActions extends Quest
 
-<<<<<<< HEAD
-
 ReferenceAlias property CompatibilityAlias auto
-=======
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 Keyword property _WL_NPCLanternPositionDatastore auto
 formlist property _WL_AllLanterns auto
 
@@ -31,7 +27,6 @@ Light property _WL_PaperHeld auto
 function HandleLanternEquip(Actor akActor)
 	int index = GetLanternIndex(akActor)
 	EquipInventoryLantern(akActor, index)
-<<<<<<< HEAD
 	int position
 	if (CompatibilityAlias as _WL_Compatibility).GetSKSELoaded()
 		position = GetLanternPositionForActor(akActor)
@@ -39,9 +34,6 @@ function HandleLanternEquip(Actor akActor)
 		position = 0
 	endif
 
-=======
-	int position = GetLanternPositionForActor(akActor)
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 	if position == 0
 		EquipBackLantern(akActor, index)
 	elseif position == 1

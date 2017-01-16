@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 Scriptname _WL_SkyUIConfigPanelScript extends SKI_ConfigBase
-=======
-Scriptname _WL_SkyUIConfigPanelScript extends SKI_ConfigBase conditional
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 
 string CONFIG_PATH = "../WearableLanternsData/"
 
@@ -12,10 +8,7 @@ Actor property PlayerRef auto
 
 bool config_is_open = false
 bool toggle_control_held = false
-<<<<<<< HEAD
 string whichControl = ""
-=======
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 string[] MeterDisplayList
 string[] MeterLayoutList
 string[] BrightnessList
@@ -67,11 +60,6 @@ int SaveLoad_DefaultProfile_OID
 int SaveLoad_ProfileHelp_OID
 int SaveLoad_Enable_OID
 
-<<<<<<< HEAD
-=======
-bool property DLC2Loaded auto hidden conditional
-
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 GlobalVariable property _WL_OilLevel auto
 GlobalVariable property _WL_PollenLevel auto
 
@@ -666,15 +654,9 @@ event OnOptionDefault(int option)
 		SaveSettingToCurrentProfile("auto_drop_lit", 2)
 	elseif option == General_SettingOffWhenSneaking_OID
 		SetToggleOptionValue(General_SettingOffWhenSneaking_OID, false)
-<<<<<<< HEAD
 		_WL_SettingOffWhenSneaking.SetValueInt(2)
 		LanternQuest.RegisterForSneakEvents()
 		SaveSettingToCurrentProfile("off_when_sneaking", 2)
-=======
-		_WL_SettingOffWhenSneaking.SetValueInt(1)
-		LanternQuest.UnregisterForSneakEvents()
-		SaveSettingToCurrentProfile("off_when_sneaking", 1)
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 	elseif option == General_SettingOilToggle_OID
 		SetToggleOptionValue(General_SettingOilToggle_OID, false)
 		_WL_SettingOil.SetValueInt(1)
@@ -1185,10 +1167,7 @@ endEvent
 Event OnControlDown(string control)
 	if _WL_SettingHoldActivateToggle.GetValueInt() == 2 && control == HOLD_CONTROLS[_WL_SettingHoldActivateToggleControl.GetValueInt()] && !Utility.IsInMenuMode()
 		toggle_control_held = true
-<<<<<<< HEAD
 		whichControl = control
-=======
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 		RegisterForSingleUpdate(_WL_SettingHoldActivateToggleDuration.GetValue())
 	endif
 endEvent
@@ -1197,26 +1176,18 @@ Event OnControlUp(string control, float HoldTime)
 	if control == HOLD_CONTROLS[_WL_SettingHoldActivateToggleControl.GetValueInt()] && !Utility.IsInMenuMode()
 		Utility.Wait(0.1)
 		toggle_control_held = false
-<<<<<<< HEAD
 		whichControl = ""
-=======
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 		UnregisterForUpdate()
 	endif
 endEvent
 
 Event OnUpdate()
 	if toggle_control_held
-<<<<<<< HEAD
 		if whichControl != "Sprint" || (whichControl == "Sprint" && !PlayerRef.IsSprinting())
 			ToggleLantern()
 		endif
 		toggle_control_held = false
 		whichControl = ""
-=======
-		ToggleLantern()
-		toggle_control_held = false
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 	endif
 EndEvent
 
@@ -1902,11 +1873,7 @@ function GenerateDefaultProfile(int aiProfileIndex)
 	JsonUtil.SetIntValue(profile_path, "fuel_oil", 1)
 	JsonUtil.SetIntValue(profile_path, "fuel_pollen", 1)
 	JsonUtil.SetIntValue(profile_path, "lantern_slot", 55)
-<<<<<<< HEAD
 	JsonUtil.SetIntValue(profile_path, "off_when_sneaking", 2)
-=======
-	JsonUtil.SetIntValue(profile_path, "off_when_sneaking", 1)
->>>>>>> ebf678e6a17c5f3ee0723e851e1ff4497e77fe19
 	JsonUtil.SetIntValue(profile_path, "hold_activate_toggle", 1)
 	JsonUtil.SetIntValue(profile_path, "hold_activate_toggle_control", 0)
 	JsonUtil.SetIntValue(profile_path, "automatic_mode", 1)
