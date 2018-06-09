@@ -3,7 +3,10 @@ scriptname _WL_SKSETypesDelegate extends Quest
 accessing types that will make the game blow up if SKSE / SkyUI is not available through the
 use of Mod Events.}
 
-_WL_SkyUIConfigPanelScript property WLConfig Auto 			;SkyUI Configuration script
+import SKI_ConfigBase
+import _WL_SkyUIConfigPanelScript
+
+_WL_SkyUIConfigPanelScript property WLConfig auto 			;SkyUI Configuration script
 _WL_OilMeterInterfaceHandler property OilMeterHandler auto
 _WL_PollenMeterInterfaceHandler property PollenMeterHandler auto
 

@@ -1,6 +1,7 @@
 Scriptname _WL_Compatibility extends ReferenceAlias
 
 import debug
+import game
 
 _WL_Conditions property Conditions auto 					; Condition values
 ReferenceAlias property LanternQuestAlias auto
