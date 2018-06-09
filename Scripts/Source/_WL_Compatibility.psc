@@ -1,6 +1,7 @@
 Scriptname _WL_Compatibility extends ReferenceAlias
 
 import debug
+import game
 
 _WL_Conditions property Conditions auto 					; Condition values
 ReferenceAlias property LanternQuestAlias auto
@@ -78,7 +79,7 @@ function CompatibilityCheck()
 
 	bIsDLC1Loaded = IsPluginLoaded(0x02009403, "Dawnguard.esm")
 	bIsDLC2Loaded = IsPluginLoaded(0x0201FB99, "Dragonborn.esm")
-	bIsSKYUILoaded = IsPluginLoaded(0x01000814, "SkyUI.esp")
+	bIsSKYUILoaded = IsPluginLoaded(0x01000814, "SkyUI_SE.esp")
 	Activator GetFirefly = GetBUGSLoaded()
 	
 	if bIsDLC1Loaded

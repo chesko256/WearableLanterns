@@ -1,5 +1,8 @@
 Scriptname _WL_SkyUIConfigPanelScript extends SKI_ConfigBase
 
+import _WL_OilMeter
+import _WL_PollenMeter
+
 string CONFIG_PATH = "../WearableLanternsData/"
 
 _WL_LanternOil_v3 property LanternQuest auto
