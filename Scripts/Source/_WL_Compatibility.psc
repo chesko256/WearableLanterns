@@ -78,7 +78,7 @@ function CompatibilityCheck()
 
 	bIsDLC1Loaded = IsPluginLoaded(0x02009403, "Dawnguard.esm")
 	bIsDLC2Loaded = IsPluginLoaded(0x0201FB99, "Dragonborn.esm")
-	bIsSKYUILoaded = IsPluginLoaded(0x01000814, "SkyUI.esp")
+	bIsSKYUILoaded = IsPluginLoaded(0x01000814, "SkyUI_SE.esp")
 	Activator GetFirefly = GetBUGSLoaded()
 	
 	if bIsDLC1Loaded
